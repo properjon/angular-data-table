@@ -15,7 +15,7 @@
       },
       link: function($scope, el, attributes){
         $scope.render = function(){
-          $scope.codepenUrl = $sce.trustAsResourceUrl('//codepen.io/marjan-georgiev/embed/' + $scope.codepenId +  '/?height=600&theme-id=0&default-tab=result');
+          $scope.codepenUrl = $sce.trustAsResourceUrl('//codepen.io/properjon/embed/' + $scope.codepenId +  '/?height=600&theme-id=0&default-tab=result');
         }
 
         $scope.render();

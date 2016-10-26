@@ -52,6 +52,11 @@
         content: 'expressive-columns',
         group: 'Templates'
       },{
+        name: 'Popover',
+        codepen: 'qavZLW',
+        content: 'popover',
+        group: 'Template'
+      },{
         name: 'Checkbox Selection',
         codepen: 'kkqdwK',
         content: 'checkbox-selection',
