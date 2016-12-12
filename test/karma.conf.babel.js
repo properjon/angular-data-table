@@ -104,8 +104,9 @@ export default (config) => {
     config.customLaunchers = customLaunchers;
 
     config.browsers = Object.keys(customLaunchers);
-
     config.reporters = ['progress', 'dots', 'coverage', 'saucelabs'];
+    config.singleRun = true;
+  }
 
     config.coverageReporter.reporters = [
       {
