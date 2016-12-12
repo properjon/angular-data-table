@@ -1,5 +1,7 @@
 const istanbul = require('browserify-istanbul'),
   isparta = require('isparta'),
+
+  // Configure more at: https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
   customLaunchers = {
     sl_chrome: {
       base: 'SauceLabs',
@@ -14,6 +16,7 @@ const istanbul = require('browserify-istanbul'),
       version: '11.0'
     }
   },
+
   karmaBaseConfig = {
     frameworks: ['angular', 'jasmine', 'sinon', 'browserify'],
 
@@ -103,5 +106,14 @@ export default (config) => {
     config.browsers = Object.keys(customLaunchers);
 
     config.reporters = ['progress', 'dots', 'coverage', 'saucelabs'];
+
+    config.coverageReporter.reporters = [
+      {
+        type: 'lcovonly'
+      },
+      {
+        type: 'json'
+      }
+    ];
   }
 };
