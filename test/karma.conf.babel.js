@@ -77,15 +77,15 @@ const istanbul = require('browserify-istanbul'),
   };
 
 export default (config) => {
+
+  config.set(karmaBaseConfig);
+
   if (process.env.TRAVIS) {
     config.sauceLabs = {
       testName: 'angular-data-table unit tests'
     };
     config.customLaunchers = customLaunchers;
     config.browsers = Object.keys(customLaunchers);
-    config.reporters = ['dots', 'saucelabs'];
-    config.singleRun = true;
+    config.reporters = ['progress', 'dots', 'coverage', 'saucelabs'];
   }
-
-  config.set(karmaBaseConfig);
 };
