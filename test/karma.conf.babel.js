@@ -84,6 +84,8 @@ export default (config) => {
     config.sauceLabs = {
       testName: 'angular-data-table unit tests'
     };
+    config.startConnect = false;
+    config.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
     config.customLaunchers = customLaunchers;
     config.browsers = Object.keys(customLaunchers);
     config.reporters = ['progress', 'dots', 'coverage', 'saucelabs'];
