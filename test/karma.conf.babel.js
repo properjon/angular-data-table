@@ -101,6 +101,8 @@ export default (config) => {
       startConnect: false
     };
 
+    config.startConnect = false;
+    config.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
     config.customLaunchers = customLaunchers;
 
     config.browsers = Object.keys(customLaunchers);
