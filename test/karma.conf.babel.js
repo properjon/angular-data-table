@@ -89,7 +89,7 @@ export default (config) => {
       process.exit(1)
     }
 
-    config.sauceLabs: {
+    config.sauceLabs = {
       testName: 'angular-data-table unit tests',
       recordScreenshots: false,
       connectOptions: {
