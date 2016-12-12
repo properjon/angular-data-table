@@ -9,9 +9,9 @@ const istanbul = require('browserify-istanbul'),
     },
     sl_ie_11: {
       base: 'SauceLabs',
-      browserName: 'internet explorer',
+      browserName: 'Internet Explorer',
       platform: 'Windows 7',
-      version: '35'
+      version: '11.0'
     }
   },
   karmaBaseConfig = {
