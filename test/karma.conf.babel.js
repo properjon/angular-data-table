@@ -89,7 +89,7 @@ export default (config) => {
       process.exit(1)
     }
 
-    config.sauceLabs = {
+    config.sauceLabs: {
       testName: 'angular-data-table unit tests',
       recordScreenshots: false,
       connectOptions: {
@@ -101,11 +101,10 @@ export default (config) => {
       startConnect: false
     };
 
-    config.startConnect = false;
-    config.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
     config.customLaunchers = customLaunchers;
 
     config.browsers = Object.keys(customLaunchers);
+
     config.reporters = ['progress', 'dots', 'coverage', 'saucelabs'];
     config.singleRun = true;
   }
