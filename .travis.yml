@@ -5,7 +5,7 @@ branches:
   only:
   - master
 before_install:
-- npm install -g gulp jspm protractor forever codecov
+- npm install -g gulp jspm protractor forever codecov codeclimate-test-reporter
 - jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN
 before_script:
 - jspm install

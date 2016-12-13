@@ -187,26 +187,23 @@ gulp.task('release-es6-min', function () {
 // Test Tasks
 // ------------------------------------------------------------
 
-gulp.task('unit', ['compile'], function (callback) {
+function _startKarma(callback, singleRun) {
   var server = new KarmaServer({
     configFile: nPath.join(__dirname, 'test/karma.conf.js'),
-    singleRun: true
+    singleRun: singleRun
   }, () => (
     callback()
   ));
 
   server.start();
+}
+
+gulp.task('unit', ['compile'], function (callback) {
+  _startKarma(callback, false);
 });
 
-gulp.task('unit-watch', ['compile'], function (callback) {
-  var server = new KarmaServer({
-    configFile: nPath.join(__dirname, 'test/karma.conf.js'),
-    singleRun: false
-  }, () => (
-    callback()
-  ));
-
-  server.start();
+gulp.task('unit:watch', ['compile'], function (callback) {
+  _startKarma(callback, false);
 });
 
 gulp.task('e2e', ['serve'], function (callback) {
