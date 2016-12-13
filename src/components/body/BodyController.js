@@ -16,16 +16,24 @@ export class BodyController{
 
     this.setTreeAndGroupColumns();
     this.setConditionalWatches();
-    this.options.refreshRows = this.rowsUpdated.bind(this);
 
-    $scope.$watch(()=>(this.options.columns), (newVal, oldVal) => {
+    $scope.$watch('body.options.columns', (newVal, oldVal) => {
       if (newVal) {
+        const origTreeColumn = this.treeColumn,
+          origGroupColumn = this.groupColumn;
+
         this.setTreeAndGroupColumns();
 
         this.setConditionalWatches();
 
-        if (!this.options.refreshRows) {
-          this.options.refreshRows = this.rowsUpdated.bind(this);
+        if (origGroupColumn !== this.treeColumn || origGroupColumn !== this.groupColumn) {
+          this.rowsUpdated(this.rows);
+
+          if (this.treeColumn) {
+            this.refreshTree();
+          } else if (this.groupColumn) {
+            this.refreshGroups();
+          }
         }
       }
     }, true);
@@ -33,14 +41,16 @@ export class BodyController{
     $scope.$watchCollection('body.rows', this.rowsUpdated.bind(this));
   }
 
-  setTreeAndGroupColumns(){
+  setTreeAndGroupColumns() {
     this.treeColumn = this.options.columns.find((c) => {
       return c.isTreeColumn;
     });
 
-    this.groupColumn = this.options.columns.find((c) => {
-      return c.group;
-    });
+    if (!this.treeColumn) {
+      this.groupColumn = this.options.columns.find((c) => {
+        return c.group;
+      });
+    }
   }
 
   setConditionalWatches(){
@@ -48,10 +58,11 @@ export class BodyController{
       watchListener()
     ));
 
-    if(this.options.scrollbarV || (!this.options.scrollbarV && this.options.paging.externalPaging)){
+    if (this.options.scrollbarV || (!this.options.scrollbarV && this.options.paging.externalPaging)) {
       var sized = false;
+
       this.watchListeners.push(this.$scope.$watch('body.options.paging.size', (newVal, oldVal) => {
-        if(!sized || newVal > oldVal){
+        if (!sized || newVal > oldVal) {
           this.getRows();
           sized = true;
         }
@@ -74,22 +85,20 @@ export class BodyController{
   }
 
   rowsUpdated(newVal, oldVal){
-    if(!newVal){
+    if (!newVal) {
       this.getRows(true);
-    }
-
-    if(newVal) {
-      if(!this.options.paging.externalPaging){
+    } else {
+      if (!this.options.paging.externalPaging) {
         this.options.paging.count = newVal.length;
       }
 
       this.count = this.options.paging.count;
 
-      if(this.treeColumn || this.groupColumn){
+      if (this.treeColumn || this.groupColumn) {
         this.buildRowsByGroup();
       }
 
-      if(this.options.scrollbarV){
+      if (this.options.scrollbarV) {
         let refresh = newVal && oldVal && (newVal.length === oldVal.length
           || newVal.length < oldVal.length);
 
@@ -97,18 +106,18 @@ export class BodyController{
       } else {
         let rows = this.rows;
 
-        if(this.treeColumn){
+        if (this.treeColumn) {
           rows = this.buildTree();
-        } else if(this.groupColumn){
+        } else if (this.groupColumn) {
           rows = this.buildGroups();
         }
 
-        if(this.options.paging.externalPaging){
+        if (this.options.paging.externalPaging) {
           let idxs = this.getFirstLastIndexes(),
               idx = idxs.first;
 
           this.tempRows.splice(0, this.tempRows.length);
-          while(idx < idxs.last){
+          while (idx < idxs.last) {
             this.tempRows.push(rows[idx++])
           }
         } else {
