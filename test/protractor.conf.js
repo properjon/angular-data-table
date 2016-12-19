@@ -14,8 +14,6 @@ if (process.env.TRAVIS) {
     'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
     'build': process.env.TRAVIS_BUILD_NUMBER
   };
-// } else {
-//   config.seleniumAddress = 'http://localhost:4444/wd/hub';
 }
 
 exports.config = config;
