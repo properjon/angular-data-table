@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 export class BodyController{
 
   /**
@@ -14,8 +12,10 @@ export class BodyController{
     this.tempRows = [];
     this.watchListeners = [];
 
-    this.setTreeAndGroupColumns();
-    this.setConditionalWatches();
+    if (this.options) {
+      this.setTreeAndGroupColumns();
+      this.setConditionalWatches();
+    }
 
     $scope.$watch('body.options.columns', (newVal, oldVal) => {
       if (newVal) {
@@ -43,16 +43,14 @@ export class BodyController{
   }
 
   setTreeAndGroupColumns() {
-    if (this.options && this.options.columns) {
-      this.treeColumn = this.options.columns.find((c) => {
-        return c.isTreeColumn;
-      });
+    this.treeColumn = this.options.columns.find((c) => {
+      return c.isTreeColumn;
+    });
 
-      if (!this.treeColumn) {
-        this.groupColumn = this.options.columns.find((c) => {
-          return c.group;
-        });
-      }
+    if (!this.treeColumn) {
+      this.groupColumn = this.options.columns.find((c) => {
+        return c.group;
+      });
     }
   }
 
@@ -61,7 +59,7 @@ export class BodyController{
       watchListener()
     ));
 
-    if (this.options && this.options.scrollbarV || (!this.options.scrollbarV && this.options.paging.externalPaging)) {
+    if (this.options.scrollbarV || (!this.options.scrollbarV && this.options.paging.externalPaging)) {
       var sized = false;
 
       this.watchListeners.push(this.$scope.$watch('body.options.paging.size', (newVal, oldVal) => {
@@ -87,7 +85,7 @@ export class BodyController{
     }
   }
 
-  rowsUpdated(newVal, oldVal){
+  rowsUpdated(newVal, oldVal) {
     if (!newVal) {
       this.getRows(true);
     } else {
@@ -294,6 +292,8 @@ export class BodyController{
     var temp = [];
 
     angular.forEach(this.rowsByGroup, (v, k) => {
+      console.log('buildGroups', this.rowsByGroup, v, k);
+      
       temp.push({
         name: k,
         group: true
