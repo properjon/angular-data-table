@@ -108,7 +108,6 @@ export default (config) => {
 
     config.reporters = ['progress', 'dots', 'coverage', 'saucelabs'];
     config.singleRun = true;
-  }
 
     config.coverageReporter.reporters = [
       {
