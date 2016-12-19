@@ -8,7 +8,7 @@ branches:
   - master
 
 before_install:
-- npm install -g gulp jspm protractor forever codecov codeclimate-test-reporter && jspm install
+- npm install -g gulp jspm protractor forever codecov codeclimate-test-reporter
 - jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN
 
 before_script:
@@ -19,9 +19,6 @@ after_success:
 - bash <(curl -s https://codecov.io/bash)
 - test $TRAVIS_TEST_RESULT = 0
 - gulp release
-
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
 
 script:
 - gulp unit
