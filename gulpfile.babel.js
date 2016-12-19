@@ -1,5 +1,3 @@
-require('chromedriver');
-
 var nPath = require('path'),
   gulp = require('gulp'),
   plumber = require('gulp-plumber'),
