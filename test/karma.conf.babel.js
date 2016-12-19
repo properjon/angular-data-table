@@ -37,6 +37,7 @@ const istanbul = require('browserify-istanbul'),
 
     browserify: {
       debug: true,
+      extensions: ['.js'],
       transform: [
         istanbul({
           instrumenter: isparta,
@@ -45,7 +46,7 @@ const istanbul = require('browserify-istanbul'),
             '**/*.spec.js'
           ]
         }),
-        'babelify'
+        'babelify' // Note: uses .babelrc
       ]
     },
 
