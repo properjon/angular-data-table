@@ -18,7 +18,7 @@ const istanbul = require('browserify-istanbul'),
   },
 
   karmaBaseConfig = {
-    frameworks: ['angular', 'jasmine', 'sinon', 'browserify'],
+    frameworks: ['angular', 'browserify', 'source-map-support', 'jasmine', 'sinon'],
 
     angular: ['mocks'],
 
