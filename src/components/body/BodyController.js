@@ -303,8 +303,6 @@ export default class BodyController {
     var temp = [];
 
     angular.forEach(this.rowsByGroup, (v, k) => {
-      console.log('buildGroups', this.rowsByGroup, v, k);
-
       temp.push({
         name: k,
         group: true
