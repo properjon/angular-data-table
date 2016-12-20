@@ -1,4 +1,4 @@
-import { BodyController } from './BodyController';
+import BodyController from './BodyController';
 
 export default function BodyDirective($timeout){
   return {
