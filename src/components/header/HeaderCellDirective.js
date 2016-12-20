@@ -1,4 +1,4 @@
-import { HeaderCellController } from './HeaderCellController';
+import HeaderCellController from './HeaderCellController';
 
 export default function HeaderCellDirective($compile){
   return {

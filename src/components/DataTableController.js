@@ -46,8 +46,7 @@ export class DataTableController {
   defaults(){
     this.expanded = this.expanded || {};
 
-    this.options = angular.extend(angular.
-      copy(TableDefaults), this.options);
+    this.options = angular.extend(angular.copy(TableDefaults), this.options);
 
     angular.forEach(TableDefaults.paging, (v,k) => {
       if(!this.options.paging[k]){
