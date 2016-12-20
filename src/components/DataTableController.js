@@ -1,4 +1,3 @@
-import angular from 'angular';
 import { TableDefaults, ColumnDefaults } from '../defaults';
 import { AdjustColumnWidths, ForceFillColumnWidths } from '../utils/math';
 import { ColumnsByPin, ColumnGroupWidths, CamelCase, ObjectId, ScrollbarWidth } from '../utils/utils';
@@ -9,12 +8,12 @@ export class DataTableController {
    * @param  {scope}
    * @param  {filter}
    */
+
   /*@ngInject*/
-  constructor($scope, $filter, $log, $transclude){
+  constructor($scope, $filter){
     Object.assign(this, {
       $scope: $scope,
-      $filter: $filter,
-      $log: $log
+      $filter: $filter
     });
 
     this.defaults();

@@ -1,4 +1,3 @@
-import angular from 'angular';
 import { HeaderCellController } from './HeaderCellController';
 
 export function HeaderCellDirective($compile){

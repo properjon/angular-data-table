@@ -1,4 +1,3 @@
-import angular from 'angular';
 import { DataTableController } from './DataTableController';
 import { ScrollbarWidth, ObjectId } from '../utils/utils';
 import { throttle } from '../utils/throttle';

@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 /**
  * Sortable Directive
  * http://jsfiddle.net/RubaXa/zLq5J/3/

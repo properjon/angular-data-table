@@ -1,4 +1,3 @@
-import angular from 'angular';
 import { HeaderController } from './HeaderController';
 
 export function HeaderDirective($timeout){
