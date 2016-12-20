@@ -1,6 +1,6 @@
 import { HeaderCellController } from './HeaderCellController';
 
-export function HeaderCellDirective($compile){
+export default function HeaderCellDirective($compile){
   return {
     restrict: 'E',
     controller: HeaderCellController,

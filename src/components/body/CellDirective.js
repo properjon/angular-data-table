@@ -1,6 +1,6 @@
 import { CellController } from './CellController';
 
-export function CellDirective($rootScope, $compile, $log, $timeout){
+export default function CellDirective($rootScope, $compile, $log, $timeout){
   return {
     restrict: 'E',
     controller: CellController,

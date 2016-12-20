@@ -1,6 +1,6 @@
 import { NextSortDirection } from '../../utils/utils';
 
-export class HeaderCellController{
+export default class HeaderCellController{
   constructor($scope){
     this.$scope = $scope;
 

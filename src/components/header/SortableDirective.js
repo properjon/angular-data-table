@@ -4,7 +4,7 @@
  * https://jsfiddle.net/hrohxze0/6/
  * @param {function}
  */
-export function SortableDirective($timeout) {
+export default function SortableDirective($timeout) {
   return {
     restrict: 'A',
     scope: {

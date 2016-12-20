@@ -3,7 +3,7 @@ import { ScrollbarWidth, ObjectId } from '../utils/utils';
 import { throttle } from '../utils/throttle';
 import { DataTableService } from './DataTableService';
 
-export function DataTableDirective($window, $timeout, $parse){
+export default function DataTableDirective($window, $timeout, $parse){
   return {
     restrict: 'E',
     replace: true,
