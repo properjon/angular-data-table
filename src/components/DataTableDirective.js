@@ -101,10 +101,13 @@ export default function DataTableDirective($window, $timeout, $parse){
             ctrl.adjustColumns();
           };
 
-          $window.addEventListener('resize',
+          function _calculateResize() {
             throttle(() => {
               $timeout(resize);
-            }));
+            });
+          }
+
+          $window.addEventListener('resize', _calculateResize);
 
           // When an item is hidden for example
           // in a tab with display none, the height

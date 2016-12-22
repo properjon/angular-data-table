@@ -46,6 +46,7 @@ export class DataTableController {
     var watch = this.$scope.$watch('dt.rows', (newVal) => {
       if (newVal) {
         watch();
+        
         this.onSorted();
       }
     });
