@@ -1,0 +1,23 @@
+{
+  "name": "angular-data-table-gh-pages",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonshaffer/angular-data-table.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonshaffer/angular-data-table/issues"
+  },
+  "homepage": "https://github.com/jonshaffer/angular-data-table#readme",
+  "dependencies": {
+    "node-static": "^0.7.9"
+  }
+}
