@@ -1,73 +1,140 @@
 import BodyController from './BodyController';
+import SpecHelper from './BodyController.spechelper.json';
+import { TableDefaults } from '../../defaults';
+
+import '../../utils/polyfill';
 
 describe('BodyController', function () {
   const defaultOptions = {
-    columns: [],
-    paging: {}
-  };
+      columns: [],
+      paging: {}
+    },
+    olympicOptions = {
+      columns: SpecHelper.Olympics.Columns,
+      paging: {
+        size: 0,
+        count: 0,
+        offset: 0
+      }
+    },
+    olympicRows = SpecHelper.Olympics.Rows;;
 
-  let $scope = null,
+  let scope = null,
     ctrl = null,
-    setCtrl = null;
+    setController = null;
 
-  beforeEach(() => {
-    angular.module('DataTables.Mock', []);
-    angular.mock.module('DataTables.Mock');
-  });
+  beforeEach(inject((_$rootScope_) => {
+    setController = (options, rows = []) => {
+      options = Object.assign({}, TableDefaults, options);
 
-  beforeEach(
-    inject((_$rootScope_) => {
+      scope = _$rootScope_.$new();
 
-      setCtrl = (options = defaultOptions, rows = []) => {
-        $scope = _$rootScope_.$new();
-
-        $scope.body = {
-          options: defaultOptions,
-          rows: []
-        };
-
-        ctrl = new BodyController($scope);
-
-        $scope.body.options = options;
-        $scope.body.rows = rows;
-
-        ctrl.options = options;
-        ctrl.rows = rows;
+      scope.body = {
+        options,
+        rows
       };
-    })
-  );
+
+      ctrl = new BodyController(scope);
+
+      Object.assign(ctrl, {
+        options,
+        rows
+      });
+    };
+  }));
 
   it('should export a function', () => {
     expect(BodyController).toEqual(jasmine.any(Function));
   });
 
   describe('when initializing', () => {
-    const options = {
-        columns: [
-          { name: 'Athlete', prop: 'athlete', width: 300 },
-          { name: 'Country', prop: 'country', group: true },
-          { name: 'Year', prop: 'year' },
-          { name: 'Sport', prop: 'sport' }
-        ],
-        paging: {
-          size: 0,
-          count: 0,
-          offset: 0
-        }
-      },
-      rows = [
-        {'athlete':'Michael Phelps','age':19,'country':'United States','year':2004,'date':'29/08/2004','sport':'Swimming','gold':6,'silver':0,'bronze':2,'total':8},
-        {'athlete':'Michael Phelps','age':27,'country':'United States','year':2012,'date':'12/08/2012','sport':'Swimming','gold':4,'silver':2,'bronze':0,'total':6},
-        {'athlete':'Natalie Coughlin','age':25,'country':'United States','year':2008,'date':'24/08/2008','sport':'Swimming','gold':1,'silver':2,'bronze':3,'total':6},
-        {'athlete':'Aleksey Nemov','age':24,'country':'Russia','year':2000,'date':'01/10/2000','sport':'Gymnastics','gold':2,'silver':1,'bronze':3,'total':6},
-        {'athlete':'Alicia Coutts','age':24,'country':'Australia','year':2012,'date':'12/08/2012','sport':'Swimming','gold':1,'silver':3,'bronze':1,'total':5},
-        {'athlete':'Missy Franklin','age':17,'country':'United States','year':2012,'date':'12/08/2012','sport':'Swimming','gold':4,'silver':0,'bronze':1,'total':5}
-      ];
+    const angularVersion = angular.copy(angular.version);
 
-    it('should not be empty', () => {
-      setCtrl(options, rows);
+    it('should set ctrl', () => {
+      setController(olympicOptions, olympicRows);
 
-      expect(ctrl).not.toBe({});
+      spyOn(ctrl, 'setTreeAndGroupColumns');
+      spyOn(ctrl, 'setConditionalWatches');
+
+      ctrl.$onInit();
+
+      expect(ctrl).not.toEqual({});
     });
-  })
+
+    it('should set ctrl if under angular 1.5', () => {
+      angular.version.major = 1;
+      angular.version.minor = 4;
+
+      setController(olympicOptions, olympicRows);
+
+      spyOn(ctrl, 'setTreeAndGroupColumns');
+      spyOn(ctrl, 'setConditionalWatches');
+
+      expect(ctrl).not.toEqual({});
+
+      angular.version = angularVersion;
+    });
+  });
+
+  describe('when setting tree and group columns', () => {
+    beforeEach(() => {
+      setController(olympicOptions, olympicRows);
+
+      ctrl.$onInit();
+    });
+
+    it('should set the group column accurately', () => {
+      expect(ctrl.groupColumn).toEqual(olympicOptions.columns[1])
+    });
+
+    it('should not set tree column', () => {
+      expect(ctrl.treeColumn).toBe(undefined);
+    });
+
+    it('should not set tree or group column if options is not set', () => {
+      ctrl.options = false;
+
+      ctrl.treeColumn = false;
+      ctrl.groupColumn = false;
+
+      ctrl.setTreeAndGroupColumns();
+
+      expect(ctrl.treeColumn).toBe(false);
+      expect(ctrl.groupColumn).toBe(false);
+    });
+
+    it('should not set group column if a tree column is set', () => {
+      ctrl.options.columns[0].isTreeColumn = true;
+
+      ctrl.setTreeAndGroupColumns();
+
+      expect(ctrl.treeColumn).toEqual(olympicOptions.columns[0]);
+      expect(ctrl.groupColumn).not.toEqual(ctrl.options.columns[1]);
+    });
+  });
+
+  describe('when setting conditional watches', () => {
+    beforeEach(() => {
+      setController(olympicOptions, olympicRows);
+
+      ctrl.$onInit();
+    });
+
+    it('should not set watches when no vertical scrollbar or external paging', () => {
+      ctrl.options.scrollbarV = false;
+      ctrl.options.paging.externalPaging = false;
+
+      ctrl.setConditionalWatches();
+
+      expect(ctrl.watchListeners.length).toBe(0);
+    });
+
+    it('should set watches when vertical scrollbar', () => {
+      ctrl.options.scrollbarV = true;
+
+      ctrl.setConditionalWatches();
+
+      expect(ctrl.watchListeners.length).toBe(3);
+    });
+  });
 });

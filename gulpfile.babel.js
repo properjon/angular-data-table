@@ -13,7 +13,8 @@ var nPath = require('path'),
   rollup = require('rollup'),
   rename = require('gulp-rename'),
   uglify = require('gulp-uglify'),
-  header = require('gulp-header');
+  header = require('gulp-header'),
+  gutils = require('gulp-util');
 
 var KarmaServer = require('karma').Server;
 
@@ -76,7 +77,7 @@ gulp.task('compile', function (callback) {
 //
 // Dev Mode Tasks
 // ------------------------------------------------------------
-gulp.task('serve', ['compile'], function (done) {
+gulp.task('serve', ['compile'], function (callback) {
   browserSync({
     open: false,
     port: 9000,
@@ -87,7 +88,7 @@ gulp.task('serve', ['compile'], function (done) {
         next();
       }
     }
-  }, done);
+  }, callback);
 });
 
 gulp.task('watch', ['serve'], function () {
@@ -131,44 +132,25 @@ gulp.task('release-build', function () {
   });
 });
 
-gulp.task('release-umd', function () {
-  return gulp.src('release/dataTable.es6.js')
-    .pipe(babel({
-      plugins: [
-        'transform-es2015-modules-umd'
-      ],
-      moduleId: 'DataTable'
-    }))
-    .pipe(ngAnnotate({
-      gulpWarnings: false
-    }))
-    .pipe(header(banner, { pkg: pkg }))
-    .pipe(rename('dataTable.js'))
-    .pipe(gulp.dest('release/'))
-});
+const RELEASE = {
+  UMD: {
+    EXTENSION: '',
+    PLUGINS: ['transform-es2015-modules-umd']
+  },
+  COMMON: {
+    EXTENSION: '.cjs',
+    PLUGINS: ['transform-es2015-modules-commonjs']
+  },
+  MIN: {
+    EXTENSION: '.min',
+    PLUGINS: ['transform-es2015-modules-umd']
+  }
+};
 
-gulp.task('release-common', function () {
+function _releaser(RELEASE) {
   return gulp.src('release/dataTable.es6.js')
     .pipe(babel({
-      plugins: [
-        'transform-es2015-modules-commonjs'
-      ],
-      moduleId: 'DataTable'
-    }))
-    .pipe(ngAnnotate({
-      gulpWarnings: false
-    }))
-    .pipe(header(banner, { pkg: pkg }))
-    .pipe(rename('dataTable.cjs.js'))
-    .pipe(gulp.dest('release/'))
-});
-
-gulp.task('release-es6-min', function () {
-  return gulp.src('release/dataTable.es6.js')
-    .pipe(babel({
-      plugins: [
-        'transform-es2015-modules-umd'
-      ],
+      plugins: RELEASE.PLUGINS,
       moduleId: 'DataTable'
     }))
     .pipe(ngAnnotate({
@@ -176,24 +158,38 @@ gulp.task('release-es6-min', function () {
     }))
     .pipe(uglify())
     .pipe(header(banner, { pkg: pkg }))
-    .pipe(rename('dataTable.min.js'))
+    .pipe(rename(`dataTable${RELEASE.EXTENSION}.js`))
     .pipe(gulp.dest('release/'))
+}
+
+gulp.task('release-umd', function () {
+  return _releaser(RELEASE.UMD)
 });
 
+gulp.task('release-common', function () {
+  return _releaser(RELEASE.COMMON)
+});
+
+gulp.task('release-es6-min', function () {
+  return _releaser(RELEASE.MIN)
+});
 
 //
 // Test Tasks
 // ------------------------------------------------------------
-
 function _startKarma(callback, singleRun) {
-  var server = new KarmaServer({
+  new KarmaServer({
     configFile: nPath.join(__dirname, 'test/karma.conf.js'),
-    singleRun: singleRun
-  }, () => (
-    callback()
-  ));
-
-  server.start();
+    singleRun
+  }, (errors) => {
+       if (errors === 0) {
+           callback();
+       } else {
+           callback(new gutils.PluginError('karma', {
+               message: `${err} test${err > 1 ? 's' : ''} failed`
+           }));
+       }
+   }).start();
 }
 
 gulp.task('unit', ['compile'], function (callback) {
@@ -211,9 +207,11 @@ gulp.task('e2e', ['serve'], function (callback) {
       debug: false,
       autoStartStopServer: true
     }))
-    .on('error', (e) => (
-      console.log(e)
-    ))
+    .on('error', (e) => {
+      callback(new gutils.PluginError('protractor', {
+        message: e
+      }));
+    })
     .on('end', callback);
 });
 
