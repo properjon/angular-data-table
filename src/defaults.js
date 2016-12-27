@@ -63,7 +63,7 @@ export const TableDefaults = {
   // if you can reorder columns
   reorderable: true,
 
-  // sorting by multiple columns or only one at a time
+  // sorting by single or multiple columns
   sortType: 'multiple',
 
   internal: {
