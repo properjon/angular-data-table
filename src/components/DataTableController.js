@@ -50,6 +50,13 @@ export class DataTableController {
         this.onSorted();
       }
     });
+
+    // re-sort when adding rows
+    this.$scope.$watchCollection('dt.rows', (newVal, oldVal) => {
+        if (newVal && oldVal && newVal.length > oldVal.length) {
+            this.onSorted();
+        }
+    });
   }
 
   /**
