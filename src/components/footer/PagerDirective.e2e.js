@@ -4,7 +4,7 @@ describe('PagerDirective', function () {
   it('should have active class on first pager', () => {
     expect(element.all(by.css('ul.pager li')).count()).toBe(9);
 
-    expect(element.all(by.css('ul.pager li'))[2].getAttribute('class')).toMatch('active');
+    expect(document.getElementsByClassName('pager')[0].getElementsByTagName('li')[2].getAttribute('class')).toMatch('active');
   });
 
   it('should display 10 rows', () => {

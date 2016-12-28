@@ -6,6 +6,6 @@ describe('DataTable: Basic', function () {
   });
 
   it('should display 100 rows', () => {
-    expect(element.all(by.css('dt-row')).count()).toBe(100);
+    expect(document.getElementsByClassName('dt-row')).toBe(100);
   });
 });
