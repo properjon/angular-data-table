@@ -1,17 +1,26 @@
 describe('DataTableDirective', function () {
   describe('sorting', function () {
+      var colHeaderList,
+          colHeader1,
+          colHeader1Icon,
+          colHeader2,
+          colHeader2Icon,
+          row1Column1;
+
       beforeEach(function () {
            browser.get('http://localhost:9000/demos/sort.html');
+
+           colHeaderList = by.repeater('column in header.columns[\'center\'] track by column.$id');
+           colHeader1 = element(colHeaderList.row(0));
+           colHeader1Icon = colHeader1.element(by.css('.sort-btn'));
+           colHeader2 = element(colHeaderList.row(1));
+           colHeader2Icon = colHeader2.element(by.css('.sort-btn'));
+           row1Column1 = element.all(by.css('.dt-cell')).first();
       });
 
       describe('multi column', function () {
           it('should be able to sort by multiple columns', function() {
-              var colHeaderList = by.repeater('column in header.columns[\'center\'] track by column.$id'),
-                   colHeader1 = element(colHeaderList.row(0)),
-                   colHeader1Icon = colHeader1.element(by.css('.sort-btn')),
-                   colHeader2 = element(colHeaderList.row(1)),
-                   colHeader2Icon = colHeader2.element(by.css('.sort-btn')),
-                   row1Column1 = element.all(by.css('.dt-cell')).first();
+
 
               colHeader1.click();
 
@@ -27,14 +36,8 @@ describe('DataTableDirective', function () {
           });
 
           it('should only sort by one column at a time', function () {
-              var colHeaderList = by.repeater('column in header.columns[\'center\'] track by column.$id'),
-                   colHeader1 = element(colHeaderList.row(0)),
-                   colHeader1Icon = colHeader1.element(by.css('.sort-btn')),
-                   colHeader2 = element(colHeaderList.row(1)),
-                   colHeader2Icon = colHeader2.element(by.css('.sort-btn')),
-                   row1Column1 = element.all(by.css('.dt-cell')).first();
-
               colHeader2.click();
+              
               setTimeout(function () {
                   colHeader1.click();
               }, 10);
