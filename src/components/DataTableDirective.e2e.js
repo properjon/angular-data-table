@@ -20,8 +20,6 @@ describe('DataTableDirective', function () {
 
       describe('multi column', function () {
           it('should be able to sort by multiple columns', function() {
-
-
               colHeader1.click();
 
               expect(hasClass(colHeader1Icon, 'icon-up')).toBe(true);
@@ -37,7 +35,7 @@ describe('DataTableDirective', function () {
 
           it('should only sort by one column at a time', function () {
               colHeader2.click();
-              
+
               setTimeout(function () {
                   colHeader1.click();
               }, 10);
