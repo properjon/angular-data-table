@@ -45,7 +45,7 @@ const istanbul = require('browserify-istanbul'),
     ],
 
     preprocessors: {
-      '../src/**/*.js': ['browserify'],
+      '../src/**/*!(.e2e).js': ['browserify'],
       'dataTable.mock.js': ['browserify']
     },
 
