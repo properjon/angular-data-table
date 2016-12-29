@@ -26,3 +26,4 @@ exclude_paths:
   - "demos/"
   - "test/"
   - "**/*.spec.js"
+  - "**/*.e2e.js"
