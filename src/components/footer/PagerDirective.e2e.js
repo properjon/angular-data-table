@@ -2,12 +2,15 @@ describe('PagerDirective', function () {
   browser.get('http://localhost:9000/demos/paging.html');
 
   it('should have active class on first pager', () => {
-    expect(element.all(by.css('ul.pager li')).count()).toBe(9);
-
-    expect(document.getElementsByClassName('pager')[0].getElementsByTagName('li')[2].getAttribute('class')).toMatch('active');
+    element.all(by.css('ul.pager li')).then(function(items) {
+      expect(items.length).toBe(9);
+      expect(items[2].getAttribute('class')).toContain('active');
+    });
   });
 
   it('should display 10 rows', () => {
-    expect(element.all(by.css('div.dt-row')).count()).toBe(10);
+    element.all(by.css('.dt-row')).then(function(items) {
+      expect(items.length).toBe(10);
+    });
   });
 });
