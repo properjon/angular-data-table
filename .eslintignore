@@ -1,4 +1,5 @@
 **/*{.,-}min.js
+**/*{.,-}e2e.js
 node_modules
 jspm_packages
 bower_components

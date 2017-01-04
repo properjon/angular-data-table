@@ -1,4 +1,4 @@
-describe('DataTable: Basic Demo', function () {
+describe('DataTable: Basic Demo', () => {
   browser.get('http://localhost:9000/demos/basic.html');
 
   it('should display table body', () => {

@@ -1,33 +1,34 @@
 import { requestAnimFrame } from '../../utils/utils';
-import { StyleTranslator } from './StyleTranslator';
-import { TranslateXY } from '../../utils/translate';
+import StyleTranslator from './StyleTranslator';
 
-export default function ScrollerDirective($timeout, $rootScope){
+export default function ScrollerDirective() {
   return {
     restrict: 'E',
-    require:'^dtBody',
+    require: '^dtBody',
     transclude: true,
     replace: true,
     template: '<div ng-style="scrollerStyles()" ng-transclude></div>',
-    link: function($scope, $elm, $attrs, ctrl){
-      var ticking = false,
-          lastScrollY = 0,
-          lastScrollX = 0,
-          parent = $elm.parent();
+    /* eslint-disable no-param-reassign */
+    link($scope, $elm, $attrs, ctrl) {
+      const parent = $elm.parent();
+
+      let ticking = false;
+      let lastScrollY = 0;
+      let lastScrollX = 0;
 
       ctrl.options.internal.styleTranslator =
         new StyleTranslator(ctrl.options.rowHeight);
 
-      ctrl.options.internal.setYOffset = function(offsetY){
+      ctrl.options.internal.setYOffset = (offsetY) => {
         parent[0].scrollTop = offsetY;
       };
 
-      function update(){
+      function update() {
         ctrl.options.internal.offsetY = lastScrollY;
         ctrl.options.internal.offsetX = lastScrollX;
         ctrl.updatePage();
 
-        if(ctrl.options.scrollbarV){
+        if (ctrl.options.scrollbarV) {
           ctrl.getRows();
         }
 
@@ -35,16 +36,16 @@ export default function ScrollerDirective($timeout, $rootScope){
         ctrl.options.$outer.$digest();
 
         ticking = false;
-      };
+      }
 
       function requestTick() {
-        if(!ticking) {
+        if (!ticking) {
           requestAnimFrame(update);
           ticking = true;
         }
-      };
+      }
 
-      parent.on('scroll', function(ev) {
+      parent.on('scroll', () => {
         lastScrollY = this.scrollTop;
         lastScrollX = this.scrollLeft;
         requestTick();
@@ -54,14 +55,15 @@ export default function ScrollerDirective($timeout, $rootScope){
         parent.off('scroll');
       });
 
-      $scope.scrollerStyles = function(){
-        if(ctrl.options.scrollbarV){
+      $scope.scrollerStyles = () => {
+        if (ctrl.options.scrollbarV) {
           return {
-            height: ctrl.count * ctrl.options.rowHeight + 'px'
-          }
+            height: `${ctrl.count * ctrl.options.rowHeight}px`,
+          };
         }
-      };
 
-    }
+        return '';
+      };
+    },
   };
-};
+}

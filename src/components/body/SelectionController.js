@@ -1,4 +1,4 @@
-import { KEYS } from '../../utils/keys';
+import KEYS from '../../utils/keys';
 
 export default class SelectionController {
 
@@ -82,7 +82,8 @@ export default class SelectionController {
   selectRow(event, index, row) {
     if (this.options.selectable) {
       if (this.options.multiSelect) {
-        const isCtrlKeyDown = event.ctrlKey || event.metaKey;
+        // TODO: verify isCtrlKeyDown is unneeded
+        const isCtrlKeyDown = event.ctrlKey || event.metaKey; // eslint-disable-line no-unused-vars
         const isShiftKeyDown = event.shiftKey;
 
         if (isShiftKeyDown) {

@@ -45,6 +45,7 @@ const karmaBaseConfig = {
   ],
 
   preprocessors: {
+    './karma.helper.js': ['browserify'],
     '../src/**/*!(.e2e).js': ['browserify'],
     'dataTable.mock.js': ['browserify'],
   },

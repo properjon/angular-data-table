@@ -1,25 +1,25 @@
-import { PagerController } from './PagerController';
+import PagerController from './PagerController';
 
 import { TableDefaults } from '../../defaults';
 
-describe('PagerController', function () {
-  let ctrl = null,
-    scope = null,
-    setController = null;
+describe('PagerController', () => {
+  let ctrl = null;
+  let scope = null;
+  let setController = null;
 
   beforeEach(inject((_$rootScope_) => {
     setController = (bindings) => {
-      bindings = Object.assign({}, TableDefaults.paging, bindings);
+      const newBindings = Object.assign({}, TableDefaults.paging, bindings);
 
       scope = _$rootScope_.$new();
 
-      scope.pager = bindings;
+      scope.pager = newBindings;
 
       spyOn(scope, '$watch');
 
       ctrl = new PagerController(scope);
 
-      Object.assign(ctrl, bindings);
+      Object.assign(ctrl, newBindings);
     };
   }));
 
@@ -52,7 +52,7 @@ describe('PagerController', function () {
     beforeEach(() => {
       setController({
         size: 5,
-        count: 50
+        count: 50,
       });
 
       ctrl.$onInit();
@@ -76,7 +76,7 @@ describe('PagerController', function () {
     beforeEach(() => {
       setController({
         size: 5,
-        count: 50
+        count: 50,
       });
 
       ctrl.$onInit();
@@ -123,7 +123,7 @@ describe('PagerController', function () {
     beforeEach(() => {
       setController({
         size: 5,
-        count: 50
+        count: 50,
       });
 
       ctrl.$onInit();
@@ -154,7 +154,7 @@ describe('PagerController', function () {
     beforeEach(() => {
       setController({
         size: 5,
-        count: 50
+        count: 50,
       });
 
       ctrl.$onInit();

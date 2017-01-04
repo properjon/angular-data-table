@@ -1,5 +1,5 @@
-import { PositionHelper } from './PositionHelper';
+import PositionHelper from './PositionHelper';
 
-describe('PositionHelper', function() {
+describe('PositionHelper', () => {
   //
 });

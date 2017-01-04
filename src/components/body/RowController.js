@@ -1,15 +1,15 @@
 import { DeepValueGetter } from '../../utils/utils';
-import { TranslateXY } from '../../utils/translate';
+import TranslateXY from '../../utils/translate';
 
-export class RowController {
+export default class RowController {
 
   /**
    * Returns the value for a given column
    * @param  {col}
    * @return {value}
    */
-  getValue(col){
-    if(!col.prop) return '';
+  getValue(col) {
+    if (!col.prop) return '';
     return DeepValueGetter(this.row, col.prop);
   }
 
@@ -17,10 +17,10 @@ export class RowController {
    * Invoked when a cell triggers the tree toggle
    * @param  {cell}
    */
-  onTreeToggled(cell){
+  onTreeToggled(cell) {
     this.onTreeToggle({
-      cell: cell,
-      row: this.row
+      cell,
+      row: this.row,
     });
   }
 
@@ -29,15 +29,15 @@ export class RowController {
    * @param  {group}
    * @return {styles object}
    */
-  stylesByGroup( group){
-    var styles = {
-      width: this.columnWidths[group] + 'px'
+  stylesByGroup(group) {
+    const styles = {
+      width: `${this.columnWidths[group]}px`,
     };
 
-    if(group === 'left'){
+    if (group === 'left') {
       TranslateXY(styles, this.options.internal.offsetX, 0);
-    } else if(group === 'right'){
-      var offset = (((this.columnWidths.total - this.options.internal.innerWidth) -
+    } else if (group === 'right') {
+      const offset = (((this.columnWidths.total - this.options.internal.innerWidth) -
         this.options.internal.offsetX) + this.options.internal.scrollBarWidth) * -1;
       TranslateXY(styles, offset, 0);
     }
@@ -48,10 +48,10 @@ export class RowController {
   /**
    * Invoked when the cell directive's checkbox changed state
    */
-  onCheckboxChanged(ev){
+  onCheckboxChanged(ev) {
     this.onCheckboxChange({
       $event: ev,
-      row: this.row
+      row: this.row,
     });
   }
 

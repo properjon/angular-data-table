@@ -66,11 +66,10 @@
 
     <script>
 
-      System.import('dataTable').then(function(dt){
+      System.import('dataTable').then(function(dt) {
         var module = angular.module('app', [ dt.default.name ]);
 
-        module.controller('HomeController', function($scope, $http){
-          window.scope = $scope;
+        module.controller('HomeController', function($scope, $http) {
           $scope.hasPaging = false;
           $scope.hasScrollbarV = false;
           $scope.showTable = true;

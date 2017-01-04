@@ -1,9 +1,9 @@
-import { DataTableController } from './DataTableController';
+import DataTableController from './DataTableController';
 import { ScrollbarWidth, ObjectId } from '../utils/utils';
 import { throttle } from '../utils/throttle';
-import { DataTableService } from './DataTableService';
+import DataTableService from './DataTableService';
 
-export default function DataTableDirective($window, $timeout, $parse){
+export default function DataTableDirective($window, $timeout, $parse) {
   return {
     restrict: 'E',
     replace: true,
@@ -20,14 +20,14 @@ export default function DataTableDirective($window, $timeout, $parse){
       onPage: '&',
       onRowClick: '&',
       onRowDblClick: '&',
-      onColumnResize: '&'
+      onColumnResize: '&',
     },
     controllerAs: 'dt',
-    template: function(element){
+    template(element) {
       // Gets the column nodes to transposes to column objects
       // http://stackoverflow.com/questions/30845397/angular-expressive-directive-design/30847609#30847609
-      var columns = element[0].getElementsByTagName('column'),
-          id = ObjectId();
+      const columns = element[0].getElementsByTagName('column');
+      const id = ObjectId();
       DataTableService.saveColumns(id, columns);
 
       return `<div class="dt" ng-class="dt.tableCss()" data-column-id="${id}">
@@ -57,17 +57,19 @@ export default function DataTableDirective($window, $timeout, $parse){
                      on-page="dt.onFooterPage(offset, size)"
                      paging="dt.options.paging">
            </dt-footer>
-        </div>`
+        </div>`;
     },
-    compile: function(tElem, tAttrs){
+    compile() {
       return {
-        pre: function($scope, $elm, $attrs, ctrl){
+        /* eslint-disable no-param-reassign */
+        pre($scope, $elm, $attrs, ctrl) {
           DataTableService.buildColumns($scope, $parse);
 
           // Check and see if we had expressive columns
           // and if so, lets use those
-          var id = $elm.attr('data-column-id'),
-              columns = DataTableService.columns[id];
+          const id = $elm.attr('data-column-id');
+          const columns = DataTableService.columns[id];
+
           if (columns) {
             ctrl.options.columns = columns;
           }
@@ -79,19 +81,19 @@ export default function DataTableDirective($window, $timeout, $parse){
            * Invoked on init of control or when the window is resized;
            */
           function resize() {
-            var rect = $elm[0].getBoundingClientRect();
+            const rect = $elm[0].getBoundingClientRect();
 
             ctrl.options.internal.innerWidth = Math.floor(rect.width);
 
             if (ctrl.options.scrollbarV) {
-              var height = rect.height;
+              let height = rect.height;
 
               if (ctrl.options.headerHeight) {
-                height = height - ctrl.options.headerHeight;
+                height -= ctrl.options.headerHeight;
               }
 
               if (ctrl.options.footerHeight) {
-                height = height - ctrl.options.footerHeight;
+                height -= ctrl.options.footerHeight;
               }
 
               ctrl.options.internal.bodyHeight = height;
@@ -99,26 +101,28 @@ export default function DataTableDirective($window, $timeout, $parse){
             }
 
             ctrl.adjustColumns();
-          };
+          }
 
-          function _calculateResize() {
+          function calculateResize() {
             throttle(() => {
               $timeout(resize);
             });
           }
 
-          $window.addEventListener('resize', _calculateResize);
+          $window.addEventListener('resize', calculateResize);
 
           // When an item is hidden for example
           // in a tab with display none, the height
           // is not calculated correrctly.  We need to watch
           // the visible attribute and resize if this occurs
-          var checkVisibility = function() {
-          var bounds = $elm[0].getBoundingClientRect(),
-              visible = bounds.width && bounds.height;
+          const checkVisibility = () => {
+            const bounds = $elm[0].getBoundingClientRect();
+            const visible = bounds.width && bounds.height;
+
             if (visible) resize();
             else $timeout(checkVisibility, 100);
           };
+
           checkVisibility();
 
           // add a loaded class to avoid flickering
@@ -128,8 +132,8 @@ export default function DataTableDirective($window, $timeout, $parse){
           $scope.$on('$destroy', () => {
             angular.element($window).off('resize');
           });
-        }
+        },
       };
-    }
+    },
   };
-};
+}

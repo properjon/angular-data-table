@@ -1,15 +1,15 @@
 import { isOldAngular } from '../../utils/utils';
 
-export class PagerController {
+export default class PagerController {
   /**
    * Creates an instance of the Pager Controller
    * @param  {object} $scope
    */
 
-  /*@ngInject*/
+  /* @ngInject*/
   constructor($scope) {
     Object.assign(this, {
-      $scope
+      $scope,
     });
 
     if (isOldAngular()) {
@@ -63,7 +63,7 @@ export class PagerController {
     if (num > 0 && num <= this.totalPages) {
       this.page = num;
       this.onPage({
-        page: num
+        page: num,
       });
     }
   }
@@ -107,22 +107,22 @@ export class PagerController {
    * @param  {int} page
    */
   getPages(page) {
-    var pages = [],
-        startPage = 1,
-        endPage = this.totalPages,
-        maxSize = 5,
-        isMaxSized = maxSize < this.totalPages;
+    let pages = [],
+      startPage = 1,
+      endPage = this.totalPages,
+      maxSize = 5,
+      isMaxSized = maxSize < this.totalPages;
 
     if (isMaxSized) {
       startPage = ((Math.ceil(page / maxSize) - 1) * maxSize) + 1;
       endPage = Math.min(startPage + maxSize - 1, this.totalPages);
     }
 
-    for (var number = startPage; number <= endPage; number++) {
+    for (let number = startPage; number <= endPage; number++) {
       pages.push({
-        number: number,
+        number,
         text: number,
-        active: number === page
+        active: number === page,
       });
     }
 
@@ -147,4 +147,4 @@ export class PagerController {
     this.pages = pages;
   }
 
-};
+}

@@ -1,11 +1,8 @@
-/*
-  globals beforeEach
-*/
-
 const mainModule = 'data-table';
 
 angular.module(`${mainModule}.mocks`, ['ngMock']);
 
+// eslint-disable-next-line jasmine/no-global-setup
 beforeEach(() => {
   // angular.module(mainModule, [])
   //   .controller('BodyController', BodyController);

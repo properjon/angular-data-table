@@ -1,8 +1,8 @@
 import { TableDefaults, ColumnDefaults } from '../defaults';
 import { AdjustColumnWidths, ForceFillColumnWidths } from '../utils/math';
-import { isOldAngular, ColumnsByPin, ColumnGroupWidths, CamelCase, ObjectId, ScrollbarWidth } from '../utils/utils';
+import { isOldAngular, ColumnsByPin, ColumnGroupWidths, CamelCase, ObjectId } from '../utils/utils';
 
-export class DataTableController {
+export default class DataTableController {
   /**
    * Creates an instance of the DataTable Controller
    * @param  {scope}

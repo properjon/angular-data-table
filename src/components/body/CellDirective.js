@@ -1,6 +1,6 @@
-import { CellController } from './CellController';
+import CellController from './CellController';
 
-export default function CellDirective($rootScope, $compile, $log, $timeout){
+export default function CellDirective($rootScope, $compile, $log, $timeout) {
   return {
     restrict: 'E',
     controller: CellController,
@@ -15,7 +15,7 @@ export default function CellDirective($rootScope, $compile, $log, $timeout){
       expanded: '=',
       hasChildren: '=',
       onTreeToggle: '&',
-      onCheckboxChange: '&'
+      onCheckboxChange: '&',
     },
     template:
       `<div class="dt-cell"
@@ -33,18 +33,24 @@ export default function CellDirective($rootScope, $compile, $log, $timeout){
         <span class="dt-cell-content"></span>
       </div>`,
     replace: true,
-    compile: function() {
+    compile() {
       return {
-        pre: function($scope, $elm, $attrs, ctrl) {
-          var content = angular.element($elm[0].querySelector('.dt-cell-content')), cellScope;
+        pre($scope, $elm, $attrs, ctrl) {
+          const content = angular.element($elm[0].querySelector('.dt-cell-content'));
+          let cellScope;
+
+          function createCellScope() {
+            cellScope = ctrl.options.$outer.$new(false);
+            cellScope.getValue = ctrl.getValue;
+          }
 
           // extend the outer scope onto our new cell scope
-          if(ctrl.column.template || ctrl.column.cellRenderer){
+          if (ctrl.column.template || ctrl.column.cellRenderer) {
             createCellScope();
           }
 
           $scope.$watch('cell.row', () => {
-            if(cellScope){
+            if (cellScope) {
               cellScope.$destroy();
 
               createCellScope();
@@ -55,26 +61,20 @@ export default function CellDirective($rootScope, $compile, $log, $timeout){
               cellScope.$$watchers = null;
             }
 
-            if(ctrl.column.template){
+            if (ctrl.column.template) {
               content.empty();
-              var elm = angular.element(`<span>${ctrl.column.template.trim()}</span>`);
+              const elm = angular.element(`<span>${ctrl.column.template.trim()}</span>`);
               content.append($compile(elm)(cellScope));
-            } else if(ctrl.column.cellRenderer){
+            } else if (ctrl.column.cellRenderer) {
               content.empty();
-              var elm = angular.element(ctrl.column.cellRenderer(cellScope, content));
+              const elm = angular.element(ctrl.column.cellRenderer(cellScope, content));
               content.append($compile(elm)(cellScope));
             } else {
               content[0].innerHTML = ctrl.getValue();
             }
-
           }, true);
-
-          function createCellScope(){
-            cellScope = ctrl.options.$outer.$new(false);
-            cellScope.getValue = ctrl.getValue;
-          }
-        }
-      }
-    }
+        },
+      };
+    },
   };
-};
+}

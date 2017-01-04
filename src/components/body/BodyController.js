@@ -63,31 +63,29 @@ export default class BodyController {
     this.setTreeAndGroupColumns();
     this.setConditionalWatches();
 
-    if (this.isOldAngular) {
-      this.$scope.$watch('body.options.columns', (newVal) => {
-        if (newVal) {
-          const origTreeColumn = this.treeColumn;
-          const origGroupColumn = this.groupColumn;
+    this.$scope.$watch('body.options.columns', (newVal) => {
+      if (newVal) {
+        const origTreeColumn = this.treeColumn;
+        const origGroupColumn = this.groupColumn;
 
-          this.setTreeAndGroupColumns();
+        this.setTreeAndGroupColumns();
 
-          this.setConditionalWatches();
+        this.setConditionalWatches();
 
-          if ((this.treeColumn && origTreeColumn !== this.treeColumn) ||
-            (this.groupColumn && origGroupColumn !== this.groupColumn)) {
-            this.rowsUpdated(this.rows);
+        if ((this.treeColumn && origTreeColumn !== this.treeColumn) ||
+          (this.groupColumn && origGroupColumn !== this.groupColumn)) {
+          this.rowsUpdated(this.rows);
 
-            if (this.treeColumn) {
-              this.refreshTree();
-            } else if (this.groupColumn) {
-              this.refreshGroups();
-            }
+          if (this.treeColumn) {
+            this.refreshTree();
+          } else if (this.groupColumn) {
+            this.refreshGroups();
           }
         }
-      }, true);
+      }
+    }, true);
 
-      this.$scope.$watchCollection('body.rows', this.rowsUpdated.bind(this));
-    }
+    this.$scope.$watchCollection('body.rows', this.rowsUpdated.bind(this));
   }
 
   setTreeAndGroupColumns() {

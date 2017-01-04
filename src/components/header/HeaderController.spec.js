@@ -1,5 +1,5 @@
-import { HeaderController } from './HeaderController';
+import HeaderController from './HeaderController';
 
-describe('HeaderController', function () {
+describe('HeaderController', () => {
   //
 });

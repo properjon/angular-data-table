@@ -29,6 +29,7 @@
     "start": "node ./node_modules/gulp/bin/gulp.js watch serve",
     "release": "node ./node_modules/gulp/bin/gulp.js release",
     "test": "node ./node_modules/gulp/bin/gulp.js test",
+    "protractor": "protractor test/protractor.conf.js",
     "report-coverage": "codecov"
   },
   "peerDependencies": {
@@ -53,10 +54,13 @@
     "browser-sync": "^2.7.2",
     "browserify": "^13.1.1",
     "browserify-istanbul": "^2.0.0",
+    "chai": "^3.5.0",
     "del": "^2.2.0",
     "eslint": "^3.12.2",
     "eslint-config-airbnb-base": "^11.0.0",
+    "eslint-plugin-angular": "^1.6.1",
     "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jasmine": "^2.2.0",
     "gulp": "^3.8.11",
     "gulp-angular-protractor": "^0.3.0",
     "gulp-babel": "6.1.2",

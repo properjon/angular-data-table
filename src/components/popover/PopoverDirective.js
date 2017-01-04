@@ -1,4 +1,6 @@
-import { POSITION } from './Popover.constants';
+import POSITION from './Popover.constants';
+
+/* eslint-disable no-use-before-define */
 
 /**
  * Popover Directive
@@ -9,8 +11,10 @@ import { POSITION } from './Popover.constants';
  * @param {function} PopoverRegistry
  * @param {function} $animate
  */
-export function PopoverDirective($q, $timeout, $templateCache, $compile, PopoverRegistry, PositionHelper, $animate){
 
+/* @ngInject */
+export default function PopoverDirective($q, $http, $timeout, $templateCache,
+  $compile, PopoverRegistry, PositionHelper, $animate) {
   /**
    * Loads a template from the template cache
    * @param  {string} template
@@ -26,7 +30,7 @@ export function PopoverDirective($q, $timeout, $templateCache, $compile, Popover
       return template;
     }
 
-    return $templateCache.get(template) || $http.get(template, { cache : true });
+    return $templateCache.get(template) || $http.get(template, { cache: true });
   }
 
   /**
@@ -35,20 +39,23 @@ export function PopoverDirective($q, $timeout, $templateCache, $compile, Popover
    * @return {boolean}
    */
   function toBoolean(value) {
+    let localValue;
+
     if (value && value.length !== 0) {
-      var v = value.toString().toLowerCase();
-      value = (v == 'true');
+      const v = value.toString().toLowerCase();
+      localValue = !!v;
     } else {
-      value = false;
+      localValue = false;
     }
-    return value;
+    return localValue;
   }
 
   return {
     restrict: 'A',
     scope: true,
     replace: false,
-    link: function ($scope, $element, $attributes) {
+    /* eslint-disable no-param-reassign */
+    link($scope, $element, $attributes) {
       $scope.popover = null;
       $scope.popoverId = Date.now();
 
@@ -57,50 +64,49 @@ export function PopoverDirective($q, $timeout, $templateCache, $compile, Popover
         template: $attributes.popoverTemplate,
         plain: toBoolean($attributes.popoverPlain || false),
         placement: $attributes.popoverPlacement || 'right',
-        alignment: $attributes.popoverAlignment  || 'center',
+        alignment: $attributes.popoverAlignment || 'center',
         group: $attributes.popoverGroup,
-        spacing: parseInt($attributes.popoverSpacing) || 0,
-        showCaret: toBoolean($attributes.popoverPlain || false)
+        spacing: parseInt($attributes.popoverSpacing, 10) || 0,
+        showCaret: toBoolean($attributes.popoverPlain || false),
       };
 
-      // attach exit and enter events to element
-      $element.off('mouseenter', display);
-      $element.on('mouseenter', display);
-      $element.off('mouseleave', mouseOut);
-      $element.on('mouseleave', mouseOut);
-
-      function mouseOut(){
+      function mouseOut() {
         $scope.exitTimeout = $timeout(remove, 500);
-      };
+      }
 
       /**
        * Displays the popover on the page
        */
-      function display(){
+      function display() {
         // Cancel exit timeout
         $timeout.cancel($scope.exitTimeout);
 
-        var elm = document.getElementById(`#${$scope.popoverId}`);
+        const elm = document.getElementById(`#${$scope.popoverId}`);
         if ($scope.popover && elm) return;
 
         // remove other popovers from the same group
-        if ($scope.options.group){
+        if ($scope.options.group) {
           PopoverRegistry.removeGroup($scope.options.group, $scope.popoverId);
         }
 
-        if ($scope.options.text && !$scope.options.template){
+        if ($scope.options.text && !$scope.options.template) {
           $scope.popover = angular.element(`<div class="dt-popover popover-text
             popover${$scope.options.placement}" id="${$scope.popoverId}"></div>`);
 
           $scope.popover.html($scope.options.text);
           angular.element(document.body).append($scope.popover);
           positionPopover($element, $scope.popover, $scope.options);
-          PopoverRegistry.add($scope.popoverId, {element: $element, popover: $scope.popover, group: $scope.options.group});
-
+          PopoverRegistry.add($scope.popoverId,
+            {
+              element: $element,
+              popover: $scope.popover,
+              group: $scope.options.group,
+            },
+          );
         } else {
-          $q.when(loadTemplate($scope.options.template, $scope.options.plain)).then(function(template) {
+          $q.when(loadTemplate($scope.options.template, $scope.options.plain)).then((template) => {
             if (!angular.isString(template)) {
-              if (template.data && angular.isString(template.data)){
+              if (template.data && angular.isString(template.data)) {
                 template = template.data;
               } else {
                 template = '';
@@ -118,30 +124,36 @@ export function PopoverDirective($q, $timeout, $templateCache, $compile, Popover
             // attach exit and enter events to popover
             $scope.popover.off('mouseleave', mouseOut);
             $scope.popover.on('mouseleave', mouseOut);
-            $scope.popover.on('mouseenter', function(){
+            $scope.popover.on('mouseenter', () => {
               $timeout.cancel($scope.exitTimeout);
             });
 
             PopoverRegistry.add($scope.popoverId, {
               element: $element,
               popover: $scope.popover,
-              group: $scope.options.group
+              group: $scope.options.group,
             });
           });
         }
-      };
+      }
 
       /**
        * Removes the template from the registry and page
        */
-      function remove(){
-        if ($scope.popover){
+      function remove() {
+        if ($scope.popover) {
           $scope.popover.remove();
         }
 
         $scope.popover = undefined;
         PopoverRegistry.remove($scope.popoverId);
-      };
+      }
+
+      // attach exit and enter events to element
+      $element.off('mouseenter', display);
+      $element.on('mouseenter', display);
+      $element.off('mouseleave', mouseOut);
+      $element.on('mouseleave', mouseOut);
 
       /**
        * Positions the popover
@@ -149,51 +161,52 @@ export function PopoverDirective($q, $timeout, $templateCache, $compile, Popover
        * @param  {object} popover
        * @param  {object} options
        */
-      function positionPopover(triggerElement, popover, options){
-        $timeout(function(){
-          var elDimensions = triggerElement[0].getBoundingClientRect(),
-              popoverDimensions = popover[0].getBoundingClientRect(),
-              top, left;
+      function positionPopover(triggerElement, popover, options) {
+        $timeout(() => {
+          const elDimensions = triggerElement[0].getBoundingClientRect();
+          const popoverDimensions = popover[0].getBoundingClientRect();
+          let top;
+          let left;
 
-          if (options.placement === POSITION.RIGHT){
-            left = elDimensions.left + elDimensions.width + options.spacing;
-            top = _calculateVerticalAlignment();
-          }
-          if (options.placement === POSITION.LEFT){
-            left = elDimensions.left - popoverDimensions.width - options.spacing;
-            top = _calculateVerticalAlignment();
-          }
-          if (options.placement === POSITION.TOP){
-            top = elDimensions.top - popoverDimensions.height - options.spacing;
-            left = _calculateHorizontalAlignment();
-          }
-          if (options.placement === POSITION.BOTTOM){
-            top = elDimensions.top + elDimensions.height + options.spacing;
-            left = _calculateHorizontalAlignment();
-          }
-
-          function _calculateVerticalAlignment() {
+          function calculateVerticalAlignment() {
             return PositionHelper.calculateVerticalAlignment(elDimensions,
-              popoverDimensions, options.alignment);
+                popoverDimensions, options.alignment);
           }
 
-          function _calculateHorizontalAlignment() {
+          function calculateHorizontalAlignment() {
             return PositionHelper.calculateHorizontalAlignment(elDimensions,
-              popoverDimensions, options.alignment);
+                popoverDimensions, options.alignment);
+          }
+
+          if (options.placement === POSITION.RIGHT) {
+            left = elDimensions.left + elDimensions.width + options.spacing;
+            top = calculateVerticalAlignment();
+          }
+          if (options.placement === POSITION.LEFT) {
+            left = elDimensions.left - popoverDimensions.width - options.spacing;
+            top = calculateVerticalAlignment();
+          }
+          if (options.placement === POSITION.TOP) {
+            top = elDimensions.top - popoverDimensions.height - options.spacing;
+            left = calculateHorizontalAlignment();
+          }
+          if (options.placement === POSITION.BOTTOM) {
+            top = elDimensions.top + elDimensions.height + options.spacing;
+            left = calculateHorizontalAlignment();
           }
 
           popover.css({
-            top: top + 'px',
-            left: left + 'px'
+            top: `${top}px`,
+            left: `${left}px`,
           });
 
-          if($scope.options.showCaret){
+          if ($scope.options.showCaret) {
             addCaret($scope.popover, elDimensions, popoverDimensions);
           }
 
           $animate.addClass($scope.popover, 'popover-animation');
         }, 50);
-      };
+      }
 
       /**
        * Adds a caret and positions it relatively to the popover
@@ -201,42 +214,43 @@ export function PopoverDirective($q, $timeout, $templateCache, $compile, Popover
        * @param {object} elDimensions
        * @param {object} popoverDimensions
        */
-      function addCaret(popoverEl, elDimensions, popoverDimensions){
-        var caret = angular.element(`<span class="popover-caret caret-${$scope.options.placement}"></span>`);
+      function addCaret(popoverEl, elDimensions, popoverDimensions) {
+        const caret = angular.element(`<span class="popover-caret caret-${$scope.options.placement}"></span>`);
         popoverEl.append(caret);
-        var caretDimensions = caret[0].getBoundingClientRect();
+        const caretDimensions = caret[0].getBoundingClientRect();
 
-        var left, top;
-        if ($scope.options.placement === POSITION.RIGHT){
+        let left;
+        let top;
+
+        if ($scope.options.placement === POSITION.RIGHT) {
           left = -6;
-          top = _calculateVerticalCaret();
-        } else if ($scope.options.placement === POSITION.LEFT){
+          top = calculateVerticalCaret();
+        } else if ($scope.options.placement === POSITION.LEFT) {
           left = popoverDimensions.width - 2;
-          top = _calculateVerticalCaret();
-        } else if ($scope.options.placement === POSITION.TOP){
+          top = calculateVerticalCaret();
+        } else if ($scope.options.placement === POSITION.TOP) {
           top = popoverDimensions.height - 5;
-          left = _calculateHorizontalCaret();
-        } else if ($scope.options.placement === POSITION.BOTTOM){
+          left = calculateHorizontalCaret();
+        } else if ($scope.options.placement === POSITION.BOTTOM) {
           top = -8;
-          left = _calculateHorizontalCaret();
+          left = calculateHorizontalCaret();
         }
 
-        function _calculateVerticalCaret() {
+        function calculateVerticalCaret() {
           return PositionHelper.calculateVerticalCaret(elDimensions,
             popoverDimensions, caretDimensions, $scope.options.alignment);
         }
 
-        function _calculateHorizontalCaret() {
+        function calculateHorizontalCaret() {
           return PositionHelper.calculateHorizontalCaret(elDimensions,
             popoverDimensions, caretDimensions, $scope.options.alignment);
         }
 
         caret.css({
-          top: top + 'px',
-          left: left + 'px'
+          top: `${top}px`,
+          left: `${left}px`,
         });
-      };
-
-    }
-  }
-};
+      }
+    },
+  };
+}
