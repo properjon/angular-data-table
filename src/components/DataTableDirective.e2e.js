@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 describe('DataTable: Basic Demo', () => {
   browser.get('http://localhost:9000/demos/basic.html');
 

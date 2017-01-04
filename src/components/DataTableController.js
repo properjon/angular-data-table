@@ -67,7 +67,7 @@ export default class DataTableController {
     if (this.options.selectable && this.options.multiSelect) {
       this.selected = this.selected || [];
 
-      this.$scope.$watch('dt.selected', (newVal, oldVal) => {
+      this.$scope.$watch('dt.selected', () => {
         angular.forEach(this.options.columns, (column) => {
           if (column.headerCheckbox && angular.isFunction(column.headerCheckboxCallback)) {
             column.headerCheckboxCallback(this);
@@ -83,12 +83,12 @@ export default class DataTableController {
    * defaults applied.
    */
   transposeColumnDefaults() {
-    for (let i = 0, len = this.options.columns.length; i < len; i++) {
+    for (let i = 0, len = this.options.columns.length; i < len; i += 1) {
       const column = this.options.columns[i];
       column.$id = ObjectId();
 
       angular.forEach(ColumnDefaults, (v, k) => {
-        if (!column.hasOwnProperty(k)) {
+        if (!Object.prototype.hasOwnProperty.call(column, 'k')) {
           column[k] = v;
         }
       });
@@ -168,9 +168,12 @@ export default class DataTableController {
         return 0;
       })
       .map((c, i) => {
+        const newC = c;
+
         // update sortPriority
-        c.sortPriority = i + 1;
-        return c;
+        newC.sortPriority = i + 1;
+
+        return newC;
       });
 
     if (sorts.length) {
@@ -181,7 +184,7 @@ export default class DataTableController {
       }
 
       const clientSorts = [];
-      for (let i = 0, len = sorts.length; i < len; i++) {
+      for (let i = 0, len = sorts.length; i < len; i += 1) {
         const c = sorts[i];
         if (c.comparator !== false) {
           const dir = c.sort === 'asc' ? '' : '-';
@@ -235,8 +238,8 @@ export default class DataTableController {
    * @param  {size}
    */
   onFooterPage(offset, size) {
-    let pageBlockSize = this.options.rowHeight * size,
-      offsetY = pageBlockSize * offset;
+    const pageBlockSize = this.options.rowHeight * size;
+    const offsetY = pageBlockSize * offset;
 
     this.options.internal.setYOffset(offsetY);
   }
@@ -270,10 +273,13 @@ export default class DataTableController {
    */
   onResized(column, width) {
     const idx = this.options.columns.indexOf(column);
+
+    let newColumn = column;
+
     if (idx > -1) {
-      var column = this.options.columns[idx];
-      column.width = width;
-      column.canAutoResize = false;
+      newColumn = this.options.columns[idx];
+      newColumn.width = width;
+      newColumn.canAutoResize = false;
 
       this.adjustColumns(idx);
       this.calculateColumns();
@@ -281,7 +287,7 @@ export default class DataTableController {
 
     if (this.onColumnResize) {
       this.onColumnResize({
-        column,
+        newColumn,
         width,
       });
     }

@@ -61,6 +61,7 @@
     "eslint-plugin-angular": "^1.6.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jasmine": "^2.2.0",
+    "eslint-plugin-protractor": "^1.32.0",
     "gulp": "^3.8.11",
     "gulp-angular-protractor": "^0.3.0",
     "gulp-babel": "6.1.2",
