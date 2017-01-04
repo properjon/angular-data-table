@@ -1,7 +1,7 @@
 {
   "parser": "babel-eslint",
   "extends": ["airbnb-base", "plugin:jasmine/recommended"],
-  "plugins": ["jasmine", "angular", "protractor"],
+  "plugins": ["jasmine", "angular"],
   "env": {
     "browser": true,
     "jasmine": true
