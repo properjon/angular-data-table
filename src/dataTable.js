@@ -6,7 +6,6 @@ import ResizableDirective from './components/header/ResizableDirective';
 import SortableDirective from './components/header/SortableDirective';
 import DataTableDirective from './components/DataTableDirective';
 import HeaderDirective from './components/header/HeaderDirective';
-import HeaderCellController from './components/header/HeaderCellController';
 import HeaderCellDirective from './components/header/HeaderCellDirective';
 import BodyDirective from './components/body/BodyDirective';
 import ScrollerDirective from './components/body/ScrollerDirective';
