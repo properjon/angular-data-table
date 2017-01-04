@@ -1,5 +1,5 @@
 import { TableDefaults, ColumnDefaults } from '../defaults';
-import { AdjustColumnWidths, ForceFillColumnWidths } from '../utils/math';
+import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
 import { isOldAngular, columnsByPin, columnGroupWidths, camelCase, objectId } from '../utils/utils';
 
 export default class DataTableController {
@@ -130,9 +130,9 @@ export default class DataTableController {
     const width = this.options.internal.innerWidth - this.options.internal.scrollBarWidth;
 
     if (this.options.columnMode === 'force') {
-      ForceFillColumnWidths(this.options.columns, width, forceIdx);
+      forceFillColumnWidths(this.options.columns, width, forceIdx);
     } else if (this.options.columnMode === 'flex') {
-      AdjustColumnWidths(this.options.columns, width);
+      adjustColumnWidths(this.options.columns, width);
     }
   }
 

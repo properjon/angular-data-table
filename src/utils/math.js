@@ -1,4 +1,4 @@
-import { ColumnsByPin } from './utils';
+import { columnsByPin } from './utils';
 
 /* eslint-disable no-param-reassign */
 
@@ -8,7 +8,7 @@ import { ColumnsByPin } from './utils';
  * @param {string} property width to get
  */
 
-export function ColumnTotalWidth(columns, prop) {
+export function columnTotalWidth(columns, prop) {
   let totalWidth = 0;
 
   columns.forEach((c) => {
@@ -23,7 +23,7 @@ export function ColumnTotalWidth(columns, prop) {
  * Calculates the Total Flex Grow
  * @param {array}
  */
-export function GetTotalFlexGrow(columns) {
+export function getTotalFlexGrow(columns) {
   let totalFlexGrow = 0;
 
   angular.forEach(columns, (column) => {
@@ -39,7 +39,7 @@ export function GetTotalFlexGrow(columns) {
  * @param {int} maxWidth
  * @param {int} totalFlexGrow
  */
-function ScaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
+function scaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
   // calculate total width and flexgrow points for coulumns that can be resized
   angular.forEach(colsByGroup, (cols) => {
     cols.forEach((column) => {
@@ -89,13 +89,13 @@ function ScaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
  * @param {array} all columns
  * @param {int} width
  */
-export function AdjustColumnWidths(allColumns, expectedWidth) {
-  const columnsWidth = ColumnTotalWidth(allColumns);
-  const totalFlexGrow = GetTotalFlexGrow(allColumns);
-  const colsByGroup = ColumnsByPin(allColumns);
+export function adjustColumnWidths(allColumns, expectedWidth) {
+  const columnsWidth = columnTotalWidth(allColumns);
+  const totalFlexGrow = getTotalFlexGrow(allColumns);
+  const colsByGroup = columnsByPin(allColumns);
 
   if (columnsWidth !== expectedWidth) {
-    ScaleColumns(colsByGroup, expectedWidth, totalFlexGrow);
+    scaleColumns(colsByGroup, expectedWidth, totalFlexGrow);
   }
 }
 
@@ -121,7 +121,7 @@ export function AdjustColumnWidths(allColumns, expectedWidth) {
  * @param {array} allColumns
  * @param {int} expectedWidth
  */
-export function ForceFillColumnWidths(allColumns, expectedWidth, startIdx) {
+export function forceFillColumnWidths(allColumns, expectedWidth, startIdx) {
   const columnsToResize = startIdx > -1 ?
       allColumns.slice(startIdx, allColumns.length).filter(c => c.canAutoResize) :
       allColumns.filter(c => c.canAutoResize);

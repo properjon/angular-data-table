@@ -1,25 +1,24 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
+import nPath from 'path';
+import gulp from 'gulp';
 import protractorAngular from 'gulp-angular-protractor';
+import plumber from 'gulp-plumber';
+import babel from 'gulp-babel';
+import less from 'gulp-less';
+import changed from 'gulp-changed';
+import ngAnnotate from 'gulp-ng-annotate';
+import rename from 'gulp-rename';
+import uglify from 'gulp-uglify';
+import header from 'gulp-header';
+import gutil from 'gulp-util';
+import browserSync from 'browser-sync';
+import runSequence from 'run-sequence';
+import vinylPaths from 'vinyl-paths';
+import del from 'del';
+import { Server as KarmaServer } from 'karma';
 
-const nPath = require('path');
-const gulp = require('gulp');
-const plumber = require('gulp-plumber');
-const babel = require('gulp-babel');
-const browserSync = require('browser-sync');
-const runSequence = require('run-sequence');
-const less = require('gulp-less');
-const changed = require('gulp-changed');
-const vinylPaths = require('vinyl-paths');
-const del = require('del');
-const ngAnnotate = require('gulp-ng-annotate');
 const rollup = require('rollup');
-const rename = require('gulp-rename');
-const uglify = require('gulp-uglify');
-const header = require('gulp-header');
-const gutils = require('gulp-util');
-
-const KarmaServer = require('karma').Server;
 
 const path = {
   source: 'src/**/*.js',
@@ -87,7 +86,7 @@ gulp.task('serve', ['compile'], (callback) => {
 gulp.task('watch', ['serve'], () => {
   const watcher = gulp.watch([path.source, path.less, '*.html'], ['compile']);
   watcher.on('change', (event) => {
-    gutils.log(`File ${event.path} was ${event.type}, running tasks...`);
+    gutil.log(`File ${event.path} was ${event.type}, running tasks...`);
   });
 });
 
@@ -164,7 +163,7 @@ function startKarma(callback, singleRun) {
     if (errors === 0) {
       callback();
     } else {
-      callback(new gutils.PluginError('karma', {
+      callback(new gutil.PluginError('karma', {
         message: 'Unit test(s) failed.',
       }));
     }
@@ -187,7 +186,7 @@ gulp.task('e2e', ['serve'], (callback) => {
       autoStartStopServer: true,
     }))
     .on('error', (e) => {
-      callback(new gutils.PluginError('protractor', {
+      callback(new gutil.PluginError('protractor', {
         message: e,
       }));
     })
