@@ -85,7 +85,6 @@ const karmaBaseConfig = {
       },
       {
         type: 'lcovonly',
-        file: 'lcov.info',
       },
       {
         type: 'json',
