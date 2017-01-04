@@ -32,23 +32,11 @@ export default class BodyController {
     const origTreeColumn = this.treeColumn;
     const origGroupColumn = this.groupColumn;
 
-    console.log(changeObject); // eslint-disable-line
-
     if (changeObject.body && changeObject.body.columns) {
       this.setTreeAndGroupColumns();
-
       this.setConditionalWatches();
 
-      if ((this.treeColumn && origTreeColumn !== this.treeColumn) ||
-          (this.groupColumn && origGroupColumn !== this.groupColumn)) {
-        this.rowsUpdated(this.rows);
-
-        if (this.treeColumn) {
-          this.refreshTree();
-        } else if (this.groupColumn) {
-          this.refreshGroups();
-        }
-      }
+      this.updateTreeAndGroupColumns(origTreeColumn, origGroupColumn);
     }
 
     if (changeObject.rows) {
@@ -69,23 +57,26 @@ export default class BodyController {
         const origGroupColumn = this.groupColumn;
 
         this.setTreeAndGroupColumns();
-
         this.setConditionalWatches();
 
-        if ((this.treeColumn && origTreeColumn !== this.treeColumn) ||
-          (this.groupColumn && origGroupColumn !== this.groupColumn)) {
-          this.rowsUpdated(this.rows);
-
-          if (this.treeColumn) {
-            this.refreshTree();
-          } else if (this.groupColumn) {
-            this.refreshGroups();
-          }
-        }
+        this.updateTreeAndGroupColumns(origTreeColumn, origGroupColumn);
       }
     }, true);
 
     this.$scope.$watchCollection('body.rows', this.rowsUpdated.bind(this));
+  }
+
+  updateTreeAndGroupColumns(origTreeColumn, origGroupColumn) {
+    if ((this.treeColumn && origTreeColumn !== this.treeColumn) ||
+      (this.groupColumn && origGroupColumn !== this.groupColumn)) {
+      this.rowsUpdated(this.rows);
+
+      if (this.treeColumn) {
+        this.refreshTree();
+      } else if (this.groupColumn) {
+        this.refreshGroups();
+      }
+    }
   }
 
   setTreeAndGroupColumns() {
