@@ -18,11 +18,12 @@ before_script:
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 - test $TRAVIS_TEST_RESULT = 0
+- codeclimate-test-reporter < ./test/coverage/lcov.info
+- codecov
 
 script:
 - gulp unit
 - protractor test/protractor.conf.js
-- codecov
 - gulp release
 
 addons:
