@@ -1,6 +1,6 @@
 import { TableDefaults, ColumnDefaults } from '../defaults';
 import { AdjustColumnWidths, ForceFillColumnWidths } from '../utils/math';
-import { isOldAngular, ColumnsByPin, ColumnGroupWidths, CamelCase, ObjectId } from '../utils/utils';
+import { isOldAngular, columnsByPin, columnGroupWidths, camelCase, objectId } from '../utils/utils';
 
 export default class DataTableController {
   /**
@@ -85,7 +85,7 @@ export default class DataTableController {
   transposeColumnDefaults() {
     for (let i = 0, len = this.options.columns.length; i < len; i += 1) {
       const column = this.options.columns[i];
-      column.$id = ObjectId();
+      column.$id = objectId();
 
       angular.forEach(ColumnDefaults, (v, k) => {
         if (!Object.prototype.hasOwnProperty.call(column, 'k')) {
@@ -94,7 +94,7 @@ export default class DataTableController {
       });
 
       if (column.name && !column.prop) {
-        column.prop = CamelCase(column.name);
+        column.prop = camelCase(column.name);
       }
 
       this.options.columns[i] = column;
@@ -106,8 +106,8 @@ export default class DataTableController {
    */
   calculateColumns() {
     const columns = this.options.columns;
-    this.columnsByPin = ColumnsByPin(columns);
-    this.columnWidths = ColumnGroupWidths(this.columnsByPin, columns);
+    this.columnsByPin = columnsByPin(columns);
+    this.columnWidths = columnGroupWidths(this.columnsByPin, columns);
   }
 
   /**

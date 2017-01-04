@@ -1,4 +1,4 @@
-import { isOldAngular, NextSortDirection } from '../../utils/utils';
+import { isOldAngular, nextSortDirection } from '../../utils/utils';
 
 export default class HeaderCellController {
   /* @ngInject */
@@ -60,7 +60,7 @@ export default class HeaderCellController {
    */
   onSorted() {
     if (this.column.sortable) {
-      this.column.sort = NextSortDirection(this.sortType, this.column.sort);
+      this.column.sort = nextSortDirection(this.sortType, this.column.sort);
 
       if (this.column.sort === undefined) {
         this.column.sortPriority = undefined;

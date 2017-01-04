@@ -16,7 +16,7 @@ export function requestAnimFrame(callback) {
 /**
  * Creates a unique object id.
  */
-export function ObjectId() {
+export function objectId() {
   const timestamp = Math.floor(new Date().getTime() / 1000).toString(16);
 
   return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.floor(Math.random() * 16)).toString(16)).toLowerCase();
@@ -26,7 +26,7 @@ export function ObjectId() {
  * Returns the columns by pin.
  * @param {array} colsumns
  */
-export function ColumnsByPin(cols) {
+export function columnsByPin(cols) {
   const ret = {
     left: [],
     center: [],
@@ -52,7 +52,7 @@ export function ColumnsByPin(cols) {
  * @param {object} groups
  * @param {array} all
  */
-export function ColumnGroupWidths(groups, all) {
+export function columnGroupWidths(groups, all) {
   return {
     left: ColumnTotalWidth(groups.left),
     center: ColumnTotalWidth(groups.center),
@@ -66,7 +66,7 @@ export function ColumnGroupWidths(groups, all) {
  * @param {object} obj
  * @param {string} path
  */
-export function DeepValueGetter(obj, path) {
+export function deepValueGetter(obj, path) {
   if (!obj || !path) return obj;
 
   const split = path.split('.');
@@ -88,7 +88,7 @@ export function DeepValueGetter(obj, path) {
  * @param  {string} str
  * @return {string} camel case string
  */
-export function CamelCase(str) {
+export function camelCase(str) {
   // Replace special characters with a space
   return str.replace(/[^a-zA-Z0-9 ]/g, ' ')
     // put a space before an uppercase letter
@@ -106,7 +106,7 @@ export function CamelCase(str) {
  * http://stackoverflow.com/a/13382873/888165
  * @return {int} width
  */
-export function ScrollbarWidth() {
+export function scrollbarWidth() {
   const outer = document.createElement('div');
   outer.style.visibility = 'hidden';
   outer.style.width = '100px';
@@ -126,7 +126,7 @@ export function ScrollbarWidth() {
   return widthNoScroll - widthWithScroll;
 }
 
-export function NextSortDirection(sortType, currentSort) {
+export function nextSortDirection(sortType, currentSort) {
   if (sortType === 'single') {
     if (currentSort === 'asc') {
       return 'desc';

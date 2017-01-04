@@ -1,5 +1,5 @@
 import DataTableController from './DataTableController';
-import { ScrollbarWidth, ObjectId } from '../utils/utils';
+import { scrollbarWidth, objectId } from '../utils/utils';
 import { throttle } from '../utils/throttle';
 import DataTableService from './DataTableService';
 
@@ -27,7 +27,7 @@ export default function DataTableDirective($window, $timeout, $parse) {
       // Gets the column nodes to transposes to column objects
       // http://stackoverflow.com/questions/30845397/angular-expressive-directive-design/30847609#30847609
       const columns = element[0].getElementsByTagName('column');
-      const id = ObjectId();
+      const id = objectId();
       DataTableService.saveColumns(id, columns);
 
       return `<div class="dt" ng-class="dt.tableCss()" data-column-id="${id}">
@@ -75,7 +75,7 @@ export default function DataTableDirective($window, $timeout, $parse) {
           }
 
           ctrl.transposeColumnDefaults();
-          ctrl.options.internal.scrollBarWidth = ScrollbarWidth();
+          ctrl.options.internal.scrollBarWidth = scrollbarWidth();
 
           /**
            * Invoked on init of control or when the window is resized;

@@ -1,4 +1,4 @@
-import { DeepValueGetter } from '../../utils/utils';
+import { deepValueGetter } from '../../utils/utils';
 import TranslateXY from '../../utils/translate';
 
 export default class RowController {
@@ -10,7 +10,7 @@ export default class RowController {
    */
   getValue(col) {
     if (!col.prop) return '';
-    return DeepValueGetter(this.row, col.prop);
+    return deepValueGetter(this.row, col.prop);
   }
 
   /**

@@ -1,4 +1,4 @@
-import { CamelCase } from '../utils/utils';
+import { camelCase } from '../utils/utils';
 
 export default {
 
@@ -31,7 +31,7 @@ export default {
         let visible = true;
         // Iterate through each attribute
         angular.forEach(c.attributes, (attr) => {
-          const attrName = CamelCase(attr.name);
+          const attrName = camelCase(attr.name);
 
           // cuz putting className vs class on
           // a element feels weird

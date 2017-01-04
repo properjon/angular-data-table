@@ -1,4 +1,4 @@
-import { ObjectId } from '../utils/utils';
+import { objectId } from '../utils/utils';
 import dTableService from './DataTableService';
 
 describe('DataTableService', () => {
@@ -19,7 +19,7 @@ describe('DataTableService', () => {
   });
 
   it('should build and save columns', () => {
-    const id = ObjectId();
+    const id = objectId();
     const columnElements = [
       '<column name="Name" width="300" flex-grow="1"></column>',
       '<column name="Gender" flex-grow="1">{{monkey}} ---- {{$cell}}</column>',
