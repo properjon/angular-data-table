@@ -1,5 +1,6 @@
 {
   "parser": "babel-eslint",
+  "plugins": ["protractor"],
   "env": {
     "browser": true
   },

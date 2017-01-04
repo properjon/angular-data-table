@@ -56,6 +56,7 @@
     "browserify-istanbul": "^2.0.0",
     "codecov": "^1.0.1",
     "del": "^2.2.0",
+    "eslint-plugin-protractor": "^1.32.0",
     "gulp": "^3.8.11",
     "gulp-angular-protractor": "^0.3.0",
     "gulp-babel": "6.1.2",
