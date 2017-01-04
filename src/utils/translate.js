@@ -1,11 +1,11 @@
-import GetVendorPrefixedName from './vendorPrefixes';
-import { CamelCase } from './utils';
+import getVendorPrefixedName from './vendorPrefixes';
+import { camelCase } from './utils';
 
 // browser detection and prefixing tools
-const transform = GetVendorPrefixedName('transform');
-const backfaceVisibility = GetVendorPrefixedName('backfaceVisibility');
-const hasCSSTransforms = !!GetVendorPrefixedName('transform');
-const hasCSS3DTransforms = !!GetVendorPrefixedName('perspective');
+const transform = getVendorPrefixedName('transform');
+const backfaceVisibility = getVendorPrefixedName('backfaceVisibility');
+const hasCSSTransforms = !!getVendorPrefixedName('transform');
+const hasCSS3DTransforms = !!getVendorPrefixedName('perspective');
 const ua = window.navigator.userAgent;
 const isSafari = (/Safari\//).test(ua) && !(/Chrome\//).test(ua);
 
@@ -16,7 +16,7 @@ export default function TranslateXY(styles, x, y) {
       styles[transform] = `translate3d(${x}px, ${y}px, 0)`;
       styles[backfaceVisibility] = 'hidden';
     } else {
-      styles[CamelCase(transform)] = `translate(${x}px, ${y}px)`;
+      styles[camelCase(transform)] = `translate(${x}px, ${y}px)`;
     }
   } else {
     styles.top = `${y}px`;

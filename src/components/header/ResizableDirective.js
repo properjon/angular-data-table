@@ -31,8 +31,10 @@ export default function ResizableDirective($document, $timeout) {
         event.stopPropagation();
         event.preventDefault();
 
+        /* eslint-disable no-use-before-define */
         $document.on('mousemove', mousemove);
         $document.on('mouseup', mouseup);
+        /* esline-enable no-use-before-define */
       });
 
       function mousemove(event) {

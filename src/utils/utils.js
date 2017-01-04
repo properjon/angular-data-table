@@ -1,4 +1,4 @@
-import { ColumnTotalWidth } from './math';
+import { columnTotalWidth } from './math';
 
 /**
  * Shim layer with setTimeout fallback
@@ -54,10 +54,10 @@ export function columnsByPin(cols) {
  */
 export function columnGroupWidths(groups, all) {
   return {
-    left: ColumnTotalWidth(groups.left),
-    center: ColumnTotalWidth(groups.center),
-    right: ColumnTotalWidth(groups.right),
-    total: ColumnTotalWidth(all),
+    left: columnTotalWidth(groups.left),
+    center: columnTotalWidth(groups.center),
+    right: columnTotalWidth(groups.right),
+    total: columnTotalWidth(all),
   };
 }
 
@@ -140,6 +140,8 @@ export function nextSortDirection(sortType, currentSort) {
   } else if (currentSort === 'desc') {
     return undefined;
   }
+
+  return undefined;
 }
 
 // Old angular versions being where preAssignBindingsEnabled === true and no $onInit

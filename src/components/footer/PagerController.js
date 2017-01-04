@@ -51,8 +51,9 @@ export default class PagerController {
    * @return {int} page count
    */
   calcTotalPages(size, count) {
-    var count = size < 1 ? 1 : Math.ceil(count / size);
-    this.totalPages = Math.max(count || 0, 1);
+    const localCount = size < 1 ? 1 : Math.ceil(count / size);
+
+    this.totalPages = Math.max(localCount || 0, 1);
   }
 
   /**
@@ -73,7 +74,7 @@ export default class PagerController {
    */
   prevPage() {
     if (this.canPrevious()) {
-      this.selectPage(--this.page);
+      this.selectPage(this.page - 1);
     }
   }
 
@@ -82,7 +83,7 @@ export default class PagerController {
    */
   nextPage() {
     if (this.canNext()) {
-      this.selectPage(++this.page);
+      this.selectPage(this.page + 1);
     }
   }
 
@@ -107,18 +108,18 @@ export default class PagerController {
    * @param  {int} page
    */
   getPages(page) {
-    let pages = [],
-      startPage = 1,
-      endPage = this.totalPages,
-      maxSize = 5,
-      isMaxSized = maxSize < this.totalPages;
+    const pages = [];
+    let startPage = 1;
+    let endPage = this.totalPages;
+    const maxSize = 5;
+    const isMaxSized = maxSize < this.totalPages;
 
     if (isMaxSized) {
       startPage = ((Math.ceil(page / maxSize) - 1) * maxSize) + 1;
-      endPage = Math.min(startPage + maxSize - 1, this.totalPages);
+      endPage = Math.min(startPage + (maxSize - 1), this.totalPages);
     }
 
-    for (let number = startPage; number <= endPage; number++) {
+    for (let number = startPage; number <= endPage; number += 1) {
       pages.push({
         number,
         text: number,

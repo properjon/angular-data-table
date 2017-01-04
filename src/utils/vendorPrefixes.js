@@ -1,4 +1,4 @@
-import { CamelCase } from './utils';
+import { camelCase } from './utils';
 
 const cache = {};
 const testStyle = document.createElement('div').style;
@@ -29,8 +29,8 @@ const prefix = getPrefix();
  * @return {?string} property name supported in the browser, or null if not
  * supported.
  */
-export default function GetVendorPrefixedName(property) {
-  const name = CamelCase(property);
+export default function getVendorPrefixedName(property) {
+  const name = camelCase(property);
   if (!cache[name]) {
     if (testStyle[prefix.css + property] !== undefined) {
       cache[name] = prefix.css + property;

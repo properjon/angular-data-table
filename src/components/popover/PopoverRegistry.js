@@ -4,16 +4,18 @@
  */
 export default function PopoverRegistry($animate) {
   const popovers = {};
-  this.add = function (id, object) {
+  this.add = function add(id, object) {
     popovers[id] = object;
+
+    return true;
   };
-  this.find = function (id) {
-    popovers[id];
+  this.find = function find(id) {
+    return popovers[id];
   };
-  this.remove = function (id) {
+  this.remove = function remove(id) {
     delete popovers[id];
   };
-  this.removeGroup = function (group, currentId) {
+  this.removeGroup = function removeGroup(group, currentId) {
     angular.forEach(popovers, (popoverOb, id) => {
       if (id === currentId) return;
 
