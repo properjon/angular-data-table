@@ -1,5 +1,5 @@
 import GroupRowController from './GroupRowController';
-import TranslateXY from '../../utils/translate';
+import translateXY from '../../utils/translate';
 
 export default function GroupRowDirective() {
   return {
@@ -24,7 +24,7 @@ export default function GroupRowDirective() {
       </div>`,
     link($scope, $elm, $attrs, ctrl) {
       // inital render position
-      TranslateXY($elm[0].style, 0, ctrl.row.$$index * ctrl.options.rowHeight);
+      translateXY($elm[0].style, 0, ctrl.row.$$index * ctrl.options.rowHeight);
 
       // register w/ the style translator
       ctrl.options.internal.styleTranslator.register($scope.$index, $elm);

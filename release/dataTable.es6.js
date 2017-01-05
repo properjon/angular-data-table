@@ -1328,7 +1328,7 @@ const ua = window.navigator.userAgent;
 const isSafari = (/Safari\//).test(ua) && !(/Chrome\//).test(ua);
 
 /* eslint-disable no-param-reassign */
-function TranslateXY(styles, x, y) {
+function translateXY(styles, x, y) {
   if (hasCSSTransforms) {
     if (!isSafari && hasCSS3DTransforms) {
       styles[transform] = `translate3d(${x}px, ${y}px, 0)`;
@@ -1372,15 +1372,15 @@ class HeaderController {
    * @param  {object} column
    */
   onSorted(sortedColumn) {
-    if (this.options.sortType === 'single') {
-      // if sort type is single, then only one column can be sorted at once,
-      // so we set the sort to undefined for the other columns
-      function unsortColumn(column) {
-        if (column !== sortedColumn) {
-          column.sort = undefined;
-        }
+    // if sort type is single, then only one column can be sorted at once,
+    // so we set the sort to undefined for the other columns
+    function unsortColumn(column) {
+      if (column !== sortedColumn) {
+        column.sort = undefined; // eslint-disable-line no-param-reassign
       }
+    }
 
+    if (this.options.sortType === 'single') {
       this.columns.left.forEach(unsortColumn);
       this.columns.center.forEach(unsortColumn);
       this.columns.right.forEach(unsortColumn);
@@ -1403,10 +1403,10 @@ class HeaderController {
     };
 
     if (group === 'center') {
-      TranslateXY(styles, this.options.internal.offsetX * -1, 0);
+      translateXY(styles, this.options.internal.offsetX * -1, 0);
     } else if (group === 'right') {
       const offset = (this.columnWidths.total - this.options.internal.innerWidth) * -1;
-      TranslateXY(styles, offset, 0);
+      translateXY(styles, offset, 0);
     }
 
     return styles;
@@ -2418,7 +2418,7 @@ class StyleTranslator {
       const model = rows[n];
 
       if (dom && model) {
-        TranslateXY(dom[0].style, 0, model.$$index * this.height);
+        translateXY(dom[0].style, 0, model.$$index * this.height);
       }
 
       n += 1;
@@ -2734,11 +2734,11 @@ class RowController {
     };
 
     if (group === 'left') {
-      TranslateXY(styles, this.options.internal.offsetX, 0);
+      translateXY(styles, this.options.internal.offsetX, 0);
     } else if (group === 'right') {
       const offset = (((this.columnWidths.total - this.options.internal.innerWidth) -
         this.options.internal.offsetX) + this.options.internal.scrollBarWidth) * -1;
-      TranslateXY(styles, offset, 0);
+      translateXY(styles, offset, 0);
     }
 
     return styles;
@@ -2776,7 +2776,7 @@ function RowDirective() {
     link($scope, $elm, $attrs, ctrl) {
       if (ctrl.row) {
         // inital render position
-        TranslateXY($elm[0].style, 0, ctrl.row.$$index * ctrl.options.rowHeight);
+        translateXY($elm[0].style, 0, ctrl.row.$$index * ctrl.options.rowHeight);
       }
 
       // register w/ the style translator
@@ -2875,7 +2875,7 @@ function GroupRowDirective() {
       </div>`,
     link($scope, $elm, $attrs, ctrl) {
       // inital render position
-      TranslateXY($elm[0].style, 0, ctrl.row.$$index * ctrl.options.rowHeight);
+      translateXY($elm[0].style, 0, ctrl.row.$$index * ctrl.options.rowHeight);
 
       // register w/ the style translator
       ctrl.options.internal.styleTranslator.register($scope.$index, $elm);
@@ -2964,7 +2964,7 @@ class CellController {
 
 }
 
-function CellDirective($rootScope, $compile, $log, $timeout) {
+function CellDirective($rootScope, $compile) {
   return {
     restrict: 'E',
     controller: CellController,

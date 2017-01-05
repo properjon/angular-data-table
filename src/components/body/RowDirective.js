@@ -1,5 +1,5 @@
 import RowController from './RowController';
-import TranslateXY from '../../utils/translate';
+import translateXY from '../../utils/translate';
 
 export default function RowDirective() {
   return {
@@ -21,7 +21,7 @@ export default function RowDirective() {
     link($scope, $elm, $attrs, ctrl) {
       if (ctrl.row) {
         // inital render position
-        TranslateXY($elm[0].style, 0, ctrl.row.$$index * ctrl.options.rowHeight);
+        translateXY($elm[0].style, 0, ctrl.row.$$index * ctrl.options.rowHeight);
       }
 
       // register w/ the style translator

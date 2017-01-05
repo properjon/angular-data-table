@@ -1,5 +1,5 @@
 import { deepValueGetter } from '../../utils/utils';
-import TranslateXY from '../../utils/translate';
+import translateXY from '../../utils/translate';
 
 export default class RowController {
 
@@ -35,11 +35,11 @@ export default class RowController {
     };
 
     if (group === 'left') {
-      TranslateXY(styles, this.options.internal.offsetX, 0);
+      translateXY(styles, this.options.internal.offsetX, 0);
     } else if (group === 'right') {
       const offset = (((this.columnWidths.total - this.options.internal.innerWidth) -
         this.options.internal.offsetX) + this.options.internal.scrollBarWidth) * -1;
-      TranslateXY(styles, offset, 0);
+      translateXY(styles, offset, 0);
     }
 
     return styles;

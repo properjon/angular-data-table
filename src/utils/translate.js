@@ -10,7 +10,7 @@ const ua = window.navigator.userAgent;
 const isSafari = (/Safari\//).test(ua) && !(/Chrome\//).test(ua);
 
 /* eslint-disable no-param-reassign */
-export default function TranslateXY(styles, x, y) {
+export default function translateXY(styles, x, y) {
   if (hasCSSTransforms) {
     if (!isSafari && hasCSS3DTransforms) {
       styles[transform] = `translate3d(${x}px, ${y}px, 0)`;

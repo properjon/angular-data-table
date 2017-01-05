@@ -1,4 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/no-extraneous-dependencies import/no-unresolved */
 
 import nPath from 'path';
 import gulp from 'gulp';

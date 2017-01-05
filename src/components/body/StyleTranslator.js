@@ -1,4 +1,4 @@
-import TranslateXY from '../../utils/translate';
+import translateXY from '../../utils/translate';
 
 /**
  * This translates the dom position based on the model row index.
@@ -22,7 +22,7 @@ export default class StyleTranslator {
       const model = rows[n];
 
       if (dom && model) {
-        TranslateXY(dom[0].style, 0, model.$$index * this.height);
+        translateXY(dom[0].style, 0, model.$$index * this.height);
       }
 
       n += 1;
