@@ -4,7 +4,7 @@ describe('When Sorting:', function () {
         return classes.split(' ').indexOf(cls) !== -1;
       });
     }
-    
+
       var colHeaderList,
           colHeader1,
           colHeader1Icon,
@@ -13,7 +13,7 @@ describe('When Sorting:', function () {
           row1Column1;
 
       beforeEach(function () {
-           browser.get('http://localhost:9000/demos/sort.html');
+           browser.get('/demos/sort.html');
 
            colHeaderList = by.repeater('column in header.columns[\'center\'] track by column.$id');
            colHeader1 = element(colHeaderList.row(0));
