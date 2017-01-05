@@ -5,3 +5,4 @@ jspm_packages
 bower_components
 release
 dist
+test/coverage
