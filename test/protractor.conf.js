@@ -1,6 +1,6 @@
 const config = {
   framework: 'jasmine',
-  specs: ['../src/**/*.e2e.js']
+  specs: ['./protractor/*.e2e.js']
 };
 
 if (process.env.TRAVIS) {

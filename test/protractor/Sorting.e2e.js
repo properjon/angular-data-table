@@ -1,5 +1,10 @@
-describe('DataTable: Sorting Demo', function () {
-  describe('sorting', function () {
+describe('When Sorting:', function () {
+    var hasClass = function (element, cls) {
+      return element.getAttribute('class').then(function (classes) {
+        return classes.split(' ').indexOf(cls) !== -1;
+      });
+    }
+    
       var colHeaderList,
           colHeader1,
           colHeader1Icon,
@@ -47,28 +52,4 @@ describe('DataTable: Sorting Demo', function () {
               }, 10);
           });
       });
-  });
 });
-
-
-describe('DataTable: Basic Demo', function () {
-  browser.get('http://localhost:9000/demos/basic.html');
-
-  it('should display table body', () => {
-    element.all(by.css('.dt-body')).then((items) => {
-      expect(items.length).toBe(1);
-    });
-  });
-
-  it('should display 10 rows', () => {
-    element.all(by.css('.dt-row')).then((items) => {
-      expect(items.length).toBe(10);
-    });
-  });
-});
-
-var hasClass = function (element, cls) {
-  return element.getAttribute('class').then(function (classes) {
-    return classes.split(' ').indexOf(cls) !== -1;
-  });
-}

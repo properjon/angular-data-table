@@ -1,4 +1,4 @@
-describe('PagerDirective', function () {
+describe('When Paging:', function () {
   browser.get('http://localhost:9000/demos/paging.html');
 
   it('should have active class on first pager', () => {
