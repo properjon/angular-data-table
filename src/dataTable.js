@@ -18,8 +18,9 @@ import PagerDirective from './components/footer/PagerDirective';
 
 import dtPopover from './components/popover/popover';
 import dtMenu from './components/menu/menu';
+import dtDropdown from './components/menu/dropdown/dropdown';
 
-export { dtPopover, dtMenu };
+export { dtPopover, dtMenu, dtDropdown };
 
 export default angular
   .module('data-table', [])

@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import DropdownController from './DropdownController';
 import DropdownDirective from './DropdownDirective';
 import DropdownToggleDirective from './DropdownToggleDirective';
