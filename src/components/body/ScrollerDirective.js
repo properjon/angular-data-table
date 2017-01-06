@@ -29,7 +29,7 @@ export default function ScrollerDirective() {
         ctrl.updatePage();
 
         if (ctrl.options.scrollbarV) {
-          ctrl.getRows();
+          ctrl.getRows(true);
         }
 
         // https://github.com/Swimlane/angular-data-table/pull/74
