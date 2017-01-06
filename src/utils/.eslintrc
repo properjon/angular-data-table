@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "angular/definedundefined": "off",
+    "angular/no-private-call": "off",
+    "angular/window-service": "off",
+    "angular/document-service": "off",
+    "angular/timeout-service": "off",
+    "angular/typecheck-function": "off"
+  }
+}

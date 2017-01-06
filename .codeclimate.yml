@@ -1,7 +1,8 @@
 ---
 engines:
-  csslint:
+  stylelint:
     enabled: true
+    channel: "beta"
   duplication:
     enabled: true
     config:
@@ -9,11 +10,13 @@ engines:
       - javascript
   eslint:
     enabled: true
+    channel: "eslint-3"
   fixme:
     enabled: true
 ratings:
   paths:
   - "**.css"
+  - "**.less"
   - "**.inc"
   - "**.js"
   - "**.jsx"

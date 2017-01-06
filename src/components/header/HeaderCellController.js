@@ -4,7 +4,7 @@ export default class HeaderCellController {
   /* @ngInject */
   constructor($scope) {
     Object.assign(this, {
-      $scope
+      $scope,
     });
 
     if (isOldAngular()) {
@@ -29,25 +29,25 @@ export default class HeaderCellController {
    * Calculates the styles for the header cell directive
    * @return {styles}
    */
-  styles(){
+  styles() {
     return {
-      width: this.column.width  + 'px',
-      minWidth: this.column.minWidth  + 'px',
-      maxWidth: this.column.maxWidth  + 'px',
-      height: this.column.height  + 'px'
+      width: `${this.column.width}px`,
+      minWidth: `${this.column.minWidth}px`,
+      maxWidth: `${this.column.maxWidth}px`,
+      height: `${this.column.height}px`,
     };
   }
 
   /**
    * Calculates the css classes for the header cell directive
    */
-  cellClass(){
-    var cls = {
-      'sortable': this.column.sortable,
-      'resizable': this.column.resizable
+  cellClass() {
+    const cls = {
+      sortable: this.column.sortable,
+      resizable: this.column.resizable,
     };
 
-    if(this.column.headerClassName){
+    if (this.column.headerClassName) {
       cls[this.column.headerClassName] = true;
     }
 
@@ -57,16 +57,16 @@ export default class HeaderCellController {
   /**
    * Toggles the sorting on the column
    */
-  onSorted(){
-    if(this.column.sortable){
+  onSorted() {
+    if (this.column.sortable) {
       this.column.sort = NextSortDirection(this.sortType, this.column.sort);
 
-      if (this.column.sort === undefined){
+      if (angular.isUndefined(this.column.sort)) {
         this.column.sortPriority = undefined;
       }
 
       this.onSort({
-        column: this.column
+        column: this.column,
       });
     }
   }
@@ -74,11 +74,11 @@ export default class HeaderCellController {
   /**
    * Toggles the css class for the sort button
    */
-  sortClass(){
+  sortClass() {
     return {
       'sort-btn': true,
       'sort-asc icon-down': this.column.sort === 'asc',
-      'sort-desc icon-up': this.column.sort === 'desc'
+      'sort-desc icon-up': this.column.sort === 'desc',
     };
   }
 
@@ -87,22 +87,22 @@ export default class HeaderCellController {
    * @param  {width}
    * @param  {column}
    */
-  onResized(width, column){
+  onResized(width, column) {
     this.onResize({
-      column: column,
-      width: width
+      column,
+      width,
     });
   }
 
-  rowSelected(dt){
+  rowSelected(dt) {
     this.allRowsSelected = (dt.selected) && (dt.rows.length === dt.selected.length);
   }
 
   /**
    * Invoked when the header cell directive checkbox is changed
    */
-  checkboxChangeCallback(){
-    return this.isAllRowsSelected = this.column.allRowsSelected ?
+  checkboxChangeCallback() {
+    return this.isAllRowsSelected === this.column.allRowsSelected ?
       this.dt.selectAllRows() :
       this.dt.deselectAllRows();
   }

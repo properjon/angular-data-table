@@ -1,8 +1,8 @@
-import { PagerController } from './PagerController';
+import PagerController from './PagerController';
 
 import { TableDefaults } from '../../defaults';
 
-describe('PagerController', function () {
+describe('PagerController', () => {
   let ctrl = null,
     scope = null,
     setController = null;
@@ -52,7 +52,7 @@ describe('PagerController', function () {
     beforeEach(() => {
       setController({
         size: 5,
-        count: 50
+        count: 50,
       });
 
       ctrl.$onInit();
@@ -76,7 +76,7 @@ describe('PagerController', function () {
     beforeEach(() => {
       setController({
         size: 5,
-        count: 50
+        count: 50,
       });
 
       ctrl.$onInit();
@@ -123,7 +123,7 @@ describe('PagerController', function () {
     beforeEach(() => {
       setController({
         size: 5,
-        count: 50
+        count: 50,
       });
 
       ctrl.$onInit();
@@ -154,7 +154,7 @@ describe('PagerController', function () {
     beforeEach(() => {
       setController({
         size: 5,
-        count: 50
+        count: 50,
       });
 
       ctrl.$onInit();

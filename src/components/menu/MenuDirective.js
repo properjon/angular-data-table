@@ -1,13 +1,13 @@
-export function MenuDirective(){
+export function MenuDirective() {
   return {
     restrict: 'E',
     controller: 'MenuController',
     controllerAs: 'dtm',
     scope: {
       current: '=',
-      available: '='
+      available: '=',
     },
-    template: 
+    template:
       `<div class="dt-menu dropdown" close-on-click="false">
         <a href="#" class="dropdown-toggle icon-add">
           Configure Columns
@@ -31,6 +31,6 @@ export function MenuDirective(){
             </li>
           </ul>
         </div>
-      </div>`
+      </div>`,
   };
-};
+}
