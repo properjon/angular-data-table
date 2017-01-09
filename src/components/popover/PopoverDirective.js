@@ -38,10 +38,11 @@ export default function PopoverDirective($q, $timeout, $templateCache,
   function toBoolean(value) {
     if (value && value.length !== 0) {
       const v = value.toString().toLowerCase();
-      value = (v == 'true');
+      value = (v === 'true');
     } else {
       value = false;
     }
+
     return value;
   }
 
@@ -81,7 +82,7 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         // Cancel exit timeout
         $timeout.cancel($scope.exitTimeout);
 
-        const elm = $document.getElementById(`#${$scope.popoverId}`);
+        const elm = $document[0].getElementById(`#${$scope.popoverId}`);
         if ($scope.popover && elm) return;
 
         // remove other popovers from the same group
@@ -94,7 +95,7 @@ export default function PopoverDirective($q, $timeout, $templateCache,
             popover${$scope.options.placement}" id="${$scope.popoverId}"></div>`);
 
           $scope.popover.html($scope.options.text);
-          angular.element($document.body).append($scope.popover);
+          angular.element($document[0].body).append($scope.popover);
           positionPopover($element, $scope.popover, $scope.options);
           PopoverRegistry.add($scope.popoverId, {
             element: $element,

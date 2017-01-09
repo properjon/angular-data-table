@@ -12,7 +12,7 @@
 
 It was engineered from its conception to handle thousands of rows without sacrificing performance.  It was built for modern browsers using _ES6, CSS3 and HTML5_ and **only supports [Evergreen Browsers](http://eisenbergeffect.bluespire.com/evergreen-browsers/) and Angular >= 1.4.x and < 2.0.0**.
 
-Sadly, this project is **not Angular2 upgrade compatible**. Swimlane has authored an Angular 2 compatible table here: [angular2-data-table](https://github.com/swimlane/angular2-data-table) which is the successor to this project. ~~**We are going to slowly be transitioning this project maintenance mode**. We will continue to provide feedback to the community and accept PRs but we won't be doing any major new development.~~ Major new development is happening on this fork and there will be breaking changes, appropriately noted with [semvar](http://semver.org/) versioning.
+Sadly, this project is **not Angular2 upgrade compatible**. Swimlane has authored an Angular 2 compatible table here: [angular2-data-table](https://github.com/swimlane/angular2-data-table) which is the successor to this project. ~~**We are going to slowly be transitioning this project maintenance mode**. We will continue to provide feedback to the community and accept PR's but we won't be doing any major new development.~~ Major new development is happening on this fork and there will be breaking changes, appropriately noted with [semver](http://semver.org/) versioning.
 
 See live demos [here]( http://jonshaffer.github.io/angular-data-table/).
 
@@ -155,9 +155,8 @@ The data table can be created with the following `options`:
 
 Ensure you have the latest NPM and JSPM installed globally.  If you don't already have JSPM installed run: `npm install jspm -g`.
 
-- `npm install`
-- `jspm install`
-- `gulp watch serve`
+- `npm install && jspm install`
+- `gulp serve watch`
 - Open your browser to `http://localhost:9000`
 
 #### Build

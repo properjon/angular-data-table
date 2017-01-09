@@ -1,10 +1,14 @@
 export default class DropdownController {
   /* @ngInject*/
   constructor($scope) {
+    Object.assign(this, {
+      $scope,
+    });
+
     $scope.open = false;
   }
 
-  toggle(scope) {
-    scope.open = !scope.open;
+  toggle() {
+    this.$scope.open = !this.$scope.open;
   }
 }

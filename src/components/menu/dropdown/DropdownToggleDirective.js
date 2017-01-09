@@ -7,7 +7,7 @@ export default function DropdownToggleDirective($timeout) {
       function toggleClick(event) {
         event.preventDefault();
         $timeout(() => {
-          ctrl.toggle($scope);
+          ctrl.toggle();
         });
       }
 
