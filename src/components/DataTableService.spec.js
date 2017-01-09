@@ -2,6 +2,9 @@ import { ObjectId } from '../utils/utils';
 import dataTableService from './DataTableService';
 
 describe('DataTableService', () => {
+  let service;
+  let parse;
+
   beforeEach(() => {
     angular.mock.module('data-table.mocks');
 
@@ -10,8 +13,8 @@ describe('DataTableService', () => {
     });
 
     angular.mock.inject((DataTableService, $parse) => {
-      this.DataTableService = DataTableService;
-      this.$parse = $parse;
+      service = DataTableService;
+      parse = $parse;
     });
   });
 
@@ -22,10 +25,10 @@ describe('DataTableService', () => {
       '<column name="Gender" flex-grow="1">{{monkey}} ---- {{$cell}}</column>',
     ].map(el => angular.element(el)[0]);
 
-    this.DataTableService.saveColumns(id, columnElements);
-    this.DataTableService.buildColumns({}, this.$parse);
+    service.saveColumns(id, columnElements);
+    service.buildColumns({}, parse);
 
-    expect(this.DataTableService.columns[id]).toBeDefined();
-    expect(this.DataTableService.columns[id].length).toBe(2);
+    expect(service.columns[id]).toBeDefined();
+    expect(service.columns[id].length).toBe(2);
   });
 });
