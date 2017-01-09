@@ -30,9 +30,9 @@ const prefix = (function getPrefix() {
 export default function GetVendorPrefixedName(property) {
   const name = CamelCase(property);
   if (!cache[name]) {
-    if (testStyle[prefix.css + property] !== undefined) {
+    if (angular.isDefined(testStyle[prefix.css + property])) {
       cache[name] = prefix.css + property;
-    } else if (testStyle[property] !== undefined) {
+    } else if (angular.isDefined(testStyle[property])) {
       cache[name] = property;
     }
   }

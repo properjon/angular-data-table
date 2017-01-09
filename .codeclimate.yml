@@ -11,8 +11,18 @@ engines:
   eslint:
     enabled: true
     channel: "eslint-3"
-    config:
-      config: .eslintrc
+    checks:
+      import/no-unresolved:
+        enabled: false
+      new-cap:
+        enabled: false
+    exclude_fingerprints:
+    # Exclude $document service preference in vendorPrefixes.js
+    - d05c060d75d5a94d266f0f7398093e1a
+    # Exclude $window service preference in vendorPrefixes.js
+    - 7029050c6569c51f4384a6b33c5846f1
+    # Exclude $window service preference in utils/
+    - 7029050c6569c51f4384a6b33c5846f1
   fixme:
     enabled: true
 ratings:

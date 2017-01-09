@@ -73,7 +73,7 @@ function ScaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
       // if the column can be resize and it hasn't reached its minimum width yet
       if (column.canAutoResize && !hasMinWidth[i]) {
         const newWidth = column.width + (column.flexGrow * widthPerFlexPoint);
-        if (column.minWidth !== undefined && newWidth < column.minWidth) {
+        if (angular.isDefined(column.minWidth) && newWidth < column.minWidth) {
           remainingWidth += newWidth - column.minWidth;
           column.width = column.minWidth;
           hasMinWidth[i] = true;

@@ -12,7 +12,7 @@
           throw new TypeError('Array.prototype.find called on null or undefined');
         }
 
-        if (typeof predicate !== 'function') {
+        if (angular.isFunction(predicate)) {
           throw new TypeError('predicate must be a function');
         }
 
@@ -44,7 +44,7 @@
           throw new TypeError('Array.prototype.findIndex called on null or undefined');
         }
 
-        if (typeof predicate !== 'function') {
+        if (angular.isFunction(predicate)) {
           throw new TypeError('predicate must be a function');
         }
 
