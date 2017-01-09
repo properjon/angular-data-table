@@ -2437,10 +2437,9 @@ function ScrollerDirective() {
         ctrl.updatePage();
 
         if (ctrl.options.scrollbarV) {
-          ctrl.getRows();
+          ctrl.getRows(true);
         }
 
-        // https://github.com/Swimlane/angular-data-table/pull/74
         ctrl.options.$outer.$digest();
 
         ticking = false;
@@ -2464,7 +2463,7 @@ function ScrollerDirective() {
         parent.off('scroll');
       });
 
-      $scope.scrollerStyles = function scrollerStyles() {
+      $scope.scrollerStyles = () => {
         if (ctrl.options.scrollbarV) {
           return {
             height: `${ctrl.count * ctrl.options.rowHeight}px`,
@@ -3832,7 +3831,7 @@ var dropdown = angular
   .directive('dropdownToggle', DropdownToggleDirective)
   .directive('dropdownMenu', DropdownMenuDirective);
 
-var menu = angular
+var menu = angular$1
   .module('dt.menu', [dropdown.name])
   .controller('MenuController', MenuController)
   .directive('dtm', MenuDirective);

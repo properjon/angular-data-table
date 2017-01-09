@@ -28,10 +28,9 @@ export default function ScrollerDirective() {
         ctrl.updatePage();
 
         if (ctrl.options.scrollbarV) {
-          ctrl.getRows();
+          ctrl.getRows(true);
         }
 
-        // https://github.com/Swimlane/angular-data-table/pull/74
         ctrl.options.$outer.$digest();
 
         ticking = false;
@@ -55,7 +54,7 @@ export default function ScrollerDirective() {
         parent.off('scroll');
       });
 
-      $scope.scrollerStyles = function scrollerStyles() {
+      $scope.scrollerStyles = () => {
         if (ctrl.options.scrollbarV) {
           return {
             height: `${ctrl.count * ctrl.options.rowHeight}px`,
