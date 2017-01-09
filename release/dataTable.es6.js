@@ -3570,7 +3570,7 @@ function PositionHelper() {
   }
 }
 
-var popover = angular
+var popover = angular$1
   .module('dt.popover', [])
   .service('PopoverRegistry', PopoverRegistry)
   .factory('PositionHelper', PositionHelper)
@@ -3737,7 +3737,7 @@ var dropdown = angular
   .directive('dropdownToggle', DropdownToggleDirective)
   .directive('dropdownMenu', DropdownMenuDirective);
 
-var menu = angular
+var menu = angular$1
   .module('dt.menu', [ dropdown.name ])
   .controller('MenuController', MenuController)
   .directive('dtm', MenuDirective);
