@@ -4,23 +4,24 @@ import { ColumnTotalWidth } from './math';
  * Shim layer with setTimeout fallback
  * http://www.html5rocks.com/en/tutorials/speed/animations/
  */
-export const requestAnimFrame = (function () {
+export const requestAnimFrame = (function getRequestAnimFrame() {
   return window.requestAnimationFrame ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame ||
-          window.oRequestAnimationFrame ||
-          window.msRequestAnimationFrame ||
-          function (callback) {
-            window.setTimeout(callback, 1000 / 60);
-          };
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    function callCallback(callback) {
+      window.setTimeout(callback, 1000 / 60);
+    };
 }());
 
 /**
  * Creates a unique object id.
  */
 export function ObjectId() {
-  const timestamp = (new Date().getTime() / 1000 | 0).toString(16);
-  return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16)).toLowerCase();
+  const timestamp = Math.floor(new Date().getTime() / 1000).toString(16);
+
+  return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.floor(Math.random() * 16)).toString(16)).toLowerCase();
 }
 
 /**
@@ -34,7 +35,7 @@ export function ColumnsByPin(cols) {
     right: [],
   };
 
-  for (let i = 0, len = cols.length; i < len; i++) {
+  for (let i = 0, len = cols.length; i < len; i += 1) {
     const c = cols[i];
     if (c.frozenLeft) {
       ret.left.push(c);
@@ -70,11 +71,12 @@ export function ColumnGroupWidths(groups, all) {
 export function DeepValueGetter(obj, path) {
   if (!obj || !path) return obj;
 
-  let current = obj,
-    split = path.split('.');
+  const split = path.split('.');
+
+  let current = obj;
 
   if (split.length) {
-    for (let i = 0, len = split.length; i < len; i++) {
+    for (let i = 0, len = split.length; i < len; i += 1) {
       current = current[split[i]];
     }
   }
@@ -130,9 +132,9 @@ export function NextSortDirection(sortType, currentSort) {
   if (sortType === 'single') {
     if (currentSort === 'asc') {
       return 'desc';
-    } else {
-      return 'asc';
     }
+
+    return 'asc';
   } else if (!currentSort) {
     return 'asc';
   } else if (currentSort === 'asc') {

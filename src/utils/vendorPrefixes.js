@@ -3,26 +3,17 @@ import { CamelCase } from './utils';
 const cache = {};
 const testStyle = document.createElement('div').style;
 
-function getWithPrefix(name) {
-  for (let i = 0; i < prefixes.length; i++) {
-    const prefixedName = prefixes[i] + name;
-    if (prefixedName in testStyle) {
-      return prefixedName;
-    }
-  }
-  return null;
-}
-
 // Get Prefix
 // http://davidwalsh.name/vendor-prefix
-const prefix = (function () {
-  let styles = window.getComputedStyle(document.documentElement, ''),
-    pre = (Array.prototype.slice
+const prefix = (function getPrefix() {
+  const styles = window.getComputedStyle(document.documentElement, '');
+  const pre = (Array.prototype.slice
       .call(styles)
       .join('')
       .match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
-    )[1],
-    dom = ('WebKit|Moz|MS|O').match(new RegExp(`(${pre})`, 'i'))[1];
+    )[1];
+  const dom = ('WebKit|Moz|MS|O').match(new RegExp(`(${pre})`, 'i'))[1];
+
   return {
     dom,
     lowercase: pre,
@@ -36,7 +27,7 @@ const prefix = (function () {
  * @return {?string} property name supported in the browser, or null if not
  * supported.
  */
-export function GetVendorPrefixedName(property) {
+export default function GetVendorPrefixedName(property) {
   const name = CamelCase(property);
   if (!cache[name]) {
     if (testStyle[prefix.css + property] !== undefined) {

@@ -1,12 +1,12 @@
 import { ObjectId } from '../utils/utils';
-import DataTableService from './DataTableService';
+import dataTableService from './DataTableService';
 
-describe('DataTableService', function () {
+describe('DataTableService', () => {
   beforeEach(() => {
     angular.mock.module('data-table.mocks');
 
     angular.mock.module(($provide) => {
-      $provide.constant('DataTableService', DataTableService);
+      $provide.constant('DataTableService', dataTableService);
     });
 
     angular.mock.inject((DataTableService, $parse) => {
@@ -16,11 +16,11 @@ describe('DataTableService', function () {
   });
 
   it('should build and save columns', () => {
-    let id = ObjectId(),
-      columnElements = [
-        '<column name="Name" width="300" flex-grow="1"></column>',
-        '<column name="Gender" flex-grow="1">{{monkey}} ---- {{$cell}}</column>',
-      ].map(el => angular.element(el)[0]);
+    const id = ObjectId();
+    const columnElements = [
+      '<column name="Name" width="300" flex-grow="1"></column>',
+      '<column name="Gender" flex-grow="1">{{monkey}} ---- {{$cell}}</column>',
+    ].map(el => angular.element(el)[0]);
 
     this.DataTableService.saveColumns(id, columnElements);
     this.DataTableService.buildColumns({}, this.$parse);

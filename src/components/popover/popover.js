@@ -6,6 +6,6 @@ import PositionHelper from './PositionHelper';
 
 export default angular
   .module('dt.popover', [])
-  .service('PopoverRegistry', PopoverRegistry)
+  .factory('PopoverRegistry', PopoverRegistry)
   .factory('PositionHelper', PositionHelper)
   .directive('popover', PopoverDirective);

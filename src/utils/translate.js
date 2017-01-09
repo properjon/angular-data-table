@@ -1,4 +1,4 @@
-import { GetVendorPrefixedName } from './vendorPrefixes';
+import GetVendorPrefixedName from './vendorPrefixes';
 import { CamelCase } from './utils';
 
 // browser detection and prefixing tools

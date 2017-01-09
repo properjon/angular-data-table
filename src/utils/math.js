@@ -1,4 +1,4 @@
-import { ColumnsByPin, ColumnGroupWidths } from './utils';
+import { ColumnsByPin } from './utils';
 
 /**
  * Calculates the total width of all columns and their groups
@@ -23,9 +23,9 @@ export function ColumnTotalWidth(columns, prop) {
 export function GetTotalFlexGrow(columns) {
   let totalFlexGrow = 0;
 
-  for (const c of columns) {
+  columns.forEach((c) => {
     totalFlexGrow += c.flexGrow || 0;
-  }
+  });
 
   return totalFlexGrow;
 }
@@ -37,9 +37,9 @@ export function GetTotalFlexGrow(columns) {
  * @param {int} width
  */
 export function AdjustColumnWidths(allColumns, expectedWidth) {
-  let columnsWidth = ColumnTotalWidth(allColumns),
-    totalFlexGrow = GetTotalFlexGrow(allColumns),
-    colsByGroup = ColumnsByPin(allColumns);
+  const columnsWidth = ColumnTotalWidth(allColumns);
+  const totalFlexGrow = GetTotalFlexGrow(allColumns);
+  const colsByGroup = ColumnsByPin(allColumns);
 
   if (columnsWidth !== expectedWidth) {
     ScaleColumns(colsByGroup, expectedWidth, totalFlexGrow);
@@ -68,24 +68,29 @@ function ScaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
   const hasMinWidth = {};
   let remainingWidth = maxWidth;
 
+  function colsForEach(cols, widthPerFlexPoint) {
+    cols.forEach((column, i) => {
+      // if the column can be resize and it hasn't reached its minimum width yet
+      if (column.canAutoResize && !hasMinWidth[i]) {
+        const newWidth = column.width + (column.flexGrow * widthPerFlexPoint);
+        if (column.minWidth !== undefined && newWidth < column.minWidth) {
+          remainingWidth += newWidth - column.minWidth;
+          column.width = column.minWidth;
+          hasMinWidth[i] = true;
+        } else {
+          column.width = newWidth;
+        }
+      }
+    });
+  }
+
   // resize columns until no width is left to be distributed
   do {
     const widthPerFlexPoint = remainingWidth / totalFlexGrow;
     remainingWidth = 0;
+
     angular.forEach(colsByGroup, (cols) => {
-      cols.forEach((column, i) => {
-        // if the column can be resize and it hasn't reached its minimum width yet
-        if (column.canAutoResize && !hasMinWidth[i]) {
-          const newWidth = column.width + column.flexGrow * widthPerFlexPoint;
-          if (column.minWidth !== undefined && newWidth < column.minWidth) {
-            remainingWidth += newWidth - column.minWidth;
-            column.width = column.minWidth;
-            hasMinWidth[i] = true;
-          } else {
-            column.width = newWidth;
-          }
-        }
-      });
+      colsForEach(cols, widthPerFlexPoint);
     });
   } while (remainingWidth !== 0);
 }
@@ -113,8 +118,8 @@ function ScaleColumns(colsByGroup, maxWidth, totalFlexGrow) {
  * @param {int} expectedWidth
  */
 export function ForceFillColumnWidths(allColumns, expectedWidth, startIdx) {
-  let contentWidth = 0,
-    columnsToResize = startIdx > -1 ?
+  let contentWidth = 0;
+  const columnsToResize = startIdx > -1 ?
         allColumns.slice(startIdx, allColumns.length).filter(c => c.canAutoResize) :
         allColumns.filter(c => c.canAutoResize);
 
@@ -126,9 +131,9 @@ export function ForceFillColumnWidths(allColumns, expectedWidth, startIdx) {
     }
   });
 
-  let remainingWidth = expectedWidth - contentWidth,
-    additionWidthPerColumn = remainingWidth / columnsToResize.length,
-    exceedsWindow = contentWidth > expectedWidth;
+  const remainingWidth = expectedWidth - contentWidth;
+  const additionWidthPerColumn = remainingWidth / columnsToResize.length;
+  const exceedsWindow = contentWidth > expectedWidth;
 
   columnsToResize.forEach((column) => {
     if (exceedsWindow) {

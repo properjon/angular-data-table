@@ -5,16 +5,14 @@
  * @param  {boolean}
  */
 export function debounce(func, wait, immediate) {
-  let timeout,
-    args,
-    context,
-    timestamp,
-    result;
-  return function () {
-    context = this;
-    args = arguments;
-    timestamp = new Date();
-    const later = function () {
+  return (...args) => {
+    let timeout;
+    let result;
+
+    const context = this;
+    const timestamp = new Date();
+
+    const later = function setLater() {
       const last = new Date() - timestamp;
       if (last < wait) {
         timeout = setTimeout(later, wait - last);
@@ -25,6 +23,7 @@ export function debounce(func, wait, immediate) {
         }
       }
     };
+
     const callNow = immediate && !timeout;
     if (!timeout) {
       timeout = setTimeout(later, wait);
@@ -43,31 +42,31 @@ export function debounce(func, wait, immediate) {
  * @param  {object}
  */
 export function throttle(func, wait, options) {
-  let context,
-    args,
-    result;
-  let timeout = null;
-  let previous = 0;
-  options || (options = {});
-  const later = function () {
-    previous = options.leading === false ? 0 : new Date();
-    timeout = null;
-    result = func.apply(context, args);
-  };
-  return function () {
+  return (...args) => {
+    const localOptions = options || (options = {});
+
+    let result;
+    let timeout = null;
+    let previous = 0;
+
+    const later = () => {
+      previous = localOptions.leading === false ? 0 : new Date();
+      timeout = null;
+      result = func.apply(this, args);
+    };
+
     const now = new Date();
-    if (!previous && options.leading === false) {
+    if (!previous && localOptions.leading === false) {
       previous = now;
     }
     const remaining = wait - (now - previous);
-    context = this;
-    args = arguments;
+
     if (remaining <= 0) {
       clearTimeout(timeout);
       timeout = null;
       previous = now;
-      result = func.apply(context, args);
-    } else if (!timeout && options.trailing !== false) {
+      result = func.apply(this, args);
+    } else if (!timeout && localOptions.trailing !== false) {
       timeout = setTimeout(later, remaining);
     }
     return result;
