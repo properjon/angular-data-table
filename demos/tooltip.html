@@ -7,8 +7,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
     <meta name="apple-mobile-web-app-title" content="Datagrid">
+
     <title>Datagrid - Tooltips</title>
+
     <base href="/">
+
     <style>
       *, *:after, *:before {
         -webkit-box-sizing: border-box;
@@ -39,8 +42,7 @@
     </style>
     <link href="../dist/dataTable.css" media="all" rel="stylesheet" />
     <link href="../dist/themes/material.css" media="all" rel="stylesheet" />
-    <link href="../dist/components/popover/popover.css" media="all" rel="stylesheet" />
-    <link href="http://fontastic.s3.amazonaws.com/Jnf54BZCm7mSjGCxNRbfp3/icons.css" rel="stylesheet">
+    <link href="../dist/themes/icons.css" rel="stylesheet">
   </head>
   <body ng-app="app" ng-controller="HomeController">
 
@@ -52,8 +54,7 @@
     <script>
 
       Promise.all([
-        System.import('dataTable'),
-        System.import('components/popover/popover')
+        System.import('dataTable')
       ]).then(function(modules) {
 
         var module = angular.module('app', [ 'data-table', 'dt.popover' ]);

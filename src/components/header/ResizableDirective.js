@@ -5,27 +5,28 @@
  * @param {function}
  * @param {function}
  */
-export default function ResizableDirective($document, $timeout){
+export default function ResizableDirective($document, $timeout) {
   return {
     restrict: 'A',
-    scope:{
+    scope: {
       isResizable: '=resizable',
       minWidth: '=',
       maxWidth: '=',
-      onResize: '&'
+      onResize: '&',
     },
-    link: function($scope, $element, $attrs){
-      if($scope.isResizable){
+    link($scope, $element) {
+      if ($scope.isResizable) {
         $element.addClass('resizable');
       }
 
-      var handle = angular.element('<span class="dt-resize-handle" title="Resize"></span>'),
-          parent = $element.parent(),
-          prevScreenX;
+      const handle = angular.element('<span class="dt-resize-handle" title="Resize"></span>');
+      const parent = $element.parent();
 
-      handle.on('mousedown', function(event) {
-        if(!$element[0].classList.contains('resizable')) {
-          return false;
+      let prevScreenX;
+
+      handle.on('mousedown', (event) => {
+        if (!$element[0].classList.contains('resizable')) {
+          return;
         }
 
         event.stopPropagation();
@@ -38,27 +39,28 @@ export default function ResizableDirective($document, $timeout){
       function mousemove(event) {
         event = event.originalEvent || event;
 
-        var width = parent[0].clientWidth,
-            movementX = event.movementX || event.mozMovementX || (event.screenX - prevScreenX),
-            newWidth = width + (movementX || 0);
+        const width = parent[0].clientWidth;
+        const movementX = event.movementX || event.mozMovementX || (event.screenX - prevScreenX);
+        const newWidth = width + (movementX || 0);
 
         prevScreenX = event.screenX;
 
-        if((!$scope.minWidth || newWidth >= $scope.minWidth) && (!$scope.maxWidth || newWidth <= $scope.maxWidth)){
+        if ((!$scope.minWidth || newWidth >= $scope.minWidth) &&
+          (!$scope.maxWidth || newWidth <= $scope.maxWidth)) {
           parent.css({
-            width: newWidth + 'px'
+            width: `${newWidth}px`,
           });
         }
       }
 
       function mouseup() {
         if ($scope.onResize) {
-          $timeout(function () {
+          $timeout(() => {
             let width = parent[0].clientWidth;
-            if (width < $scope.minWidth){
+            if (width < $scope.minWidth) {
               width = $scope.minWidth;
             }
-            $scope.onResize({ width: width });
+            $scope.onResize({ width });
           });
         }
 
@@ -67,6 +69,6 @@ export default function ResizableDirective($document, $timeout){
       }
 
       $element.append(handle);
-    }
+    },
   };
-};
+}
