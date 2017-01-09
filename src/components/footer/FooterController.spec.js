@@ -1,4 +1,4 @@
-import FooterController from './FooterController';
+// import FooterController from './FooterController';
 
 describe('FooterController', () => {
   //

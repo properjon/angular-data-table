@@ -1,12 +1,12 @@
-export class MenuController {
+export default class MenuController {
 
-  /* @ngInject*/
+  /* @ngInject */
   constructor($scope) {
     this.$scope = $scope;
   }
 
   getColumnIndex(model) {
-    return this.$scope.current.findIndex(col => model.name == col.name);
+    return this.$scope.current.findIndex(col => model.name === col.name);
   }
 
   isChecked(model) {

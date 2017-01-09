@@ -1,4 +1,4 @@
-import StyleTranslator from './StyleTranslator';
+// import StyleTranslator from './StyleTranslator';
 
 describe('StyleTranslator', () => {
   //

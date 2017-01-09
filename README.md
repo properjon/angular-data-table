@@ -156,7 +156,7 @@ The data table can be created with the following `options`:
 Ensure you have the latest NPM and JSPM installed globally.  If you don't already have JSPM installed run: `npm install jspm -g`.
 
 - `npm install && jspm install`
-- `gulp serve watch`
+- `npm start` or `gulp serve watch`
 - Open your browser to `http://localhost:9000`
 
 #### Build

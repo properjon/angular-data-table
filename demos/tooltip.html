@@ -42,7 +42,6 @@
     </style>
     <link href="../dist/dataTable.css" media="all" rel="stylesheet" />
     <link href="../dist/themes/material.css" media="all" rel="stylesheet" />
-    <link href="../dist/components/popover/popover.css" media="all" rel="stylesheet" />
     <link href="../dist/themes/icons.css" rel="stylesheet">
   </head>
   <body ng-app="app" ng-controller="HomeController">
@@ -55,8 +54,7 @@
     <script>
 
       Promise.all([
-        System.import('dataTable'),
-        System.import('components/popover/popover')
+        System.import('dataTable')
       ]).then(function(modules) {
 
         var module = angular.module('app', [ 'data-table', 'dt.popover' ]);

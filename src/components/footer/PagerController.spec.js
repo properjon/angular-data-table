@@ -1,11 +1,13 @@
+/* global inject */
+
 import PagerController from './PagerController';
 
 import { TableDefaults } from '../../defaults';
 
 describe('PagerController', () => {
-  let ctrl = null,
-    scope = null,
-    setController = null;
+  let ctrl = null;
+  let scope = null;
+  let setController = null;
 
   beforeEach(inject((_$rootScope_) => {
     setController = (bindings) => {
