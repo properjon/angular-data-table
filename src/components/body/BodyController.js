@@ -43,7 +43,7 @@ export default class BodyController {
 
         this.setConditionalWatches();
 
-        if ((this.treeColumn && origGroupColumn !== this.treeColumn) ||
+        if ((this.treeColumn && origTreeColumn !== this.treeColumn) ||
           (this.groupColumn && origGroupColumn !== this.groupColumn)) {
           this.rowsUpdated(this.rows);
 
@@ -355,8 +355,8 @@ export default class BodyController {
     var temp = [],
         self = this;
 
-    function addChildren(fromArray, toArray, level) {
-      fromArray.forEach(function (row) {
+    const addChildren = (fromArray, toArray, level) => {
+      fromArray.forEach((row) => {
         var relVal = row[self.treeColumn.relationProp],
             key = row[self.treeColumn.prop],
             groupRows = self.rowsByGroup[key],
