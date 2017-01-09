@@ -48,7 +48,7 @@ export const TableDefaults = {
     offset: 0,
 
     // Loading indicator
-    loadingIndicator: false
+    loadingIndicator: false,
   },
 
   // if users can select itmes
@@ -70,8 +70,8 @@ export const TableDefaults = {
     offsetX: 0,
     offsetY: 0,
     innerWidth: 0,
-    bodyHeight: 300
-  }
+    bodyHeight: 300,
+  },
 
 };
 
@@ -102,7 +102,7 @@ export const ColumnDefaults = {
   // Minimum width of the column.
   minWidth: 100,
 
-  //Maximum width of the column.
+  // Maximum width of the column.
   maxWidth: undefined,
 
   // The width of the column, by default (in pixels).
@@ -151,6 +151,6 @@ export const ColumnDefaults = {
   headerCheckbox: false,
 
   // Whether the column can automatically resize to fill space in the table.
-  canAutoResize: true
+  canAutoResize: true,
 
 };

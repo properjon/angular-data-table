@@ -1,11 +1,13 @@
-import { PagerController } from './PagerController';
+/* global inject */
+
+import PagerController from './PagerController';
 
 import { TableDefaults } from '../../defaults';
 
-describe('PagerController', function () {
-  let ctrl = null,
-    scope = null,
-    setController = null;
+describe('PagerController', () => {
+  let ctrl = null;
+  let scope = null;
+  let setController = null;
 
   beforeEach(inject((_$rootScope_) => {
     setController = (bindings) => {
@@ -52,7 +54,7 @@ describe('PagerController', function () {
     beforeEach(() => {
       setController({
         size: 5,
-        count: 50
+        count: 50,
       });
 
       ctrl.$onInit();
@@ -76,7 +78,7 @@ describe('PagerController', function () {
     beforeEach(() => {
       setController({
         size: 5,
-        count: 50
+        count: 50,
       });
 
       ctrl.$onInit();
@@ -123,7 +125,7 @@ describe('PagerController', function () {
     beforeEach(() => {
       setController({
         size: 5,
-        count: 50
+        count: 50,
       });
 
       ctrl.$onInit();
@@ -154,7 +156,7 @@ describe('PagerController', function () {
     beforeEach(() => {
       setController({
         size: 5,
-        count: 50
+        count: 50,
       });
 
       ctrl.$onInit();

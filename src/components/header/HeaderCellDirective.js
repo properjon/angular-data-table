@@ -1,6 +1,6 @@
 import HeaderCellController from './HeaderCellController';
 
-export default function HeaderCellDirective($compile){
+export default function HeaderCellDirective($compile) {
   return {
     restrict: 'E',
     controller: HeaderCellController,
@@ -12,7 +12,7 @@ export default function HeaderCellDirective($compile){
       onSort: '&',
       sortType: '=',
       onResize: '&',
-      selected: '='
+      selected: '=',
     },
     replace: true,
     template:
@@ -37,12 +37,14 @@ export default function HeaderCellDirective($compile){
           <span ng-class="hcell.sortClass()"></span>
         </div>
       </div>`,
-    compile: function() {
+    compile() {
       return {
-        pre: function($scope, $elm, $attrs, ctrl) {
-          let label = $elm[0].querySelector('.dt-header-cell-label'), cellScope;
+        pre($scope, $elm, $attrs, ctrl) {
+          const label = $elm[0].querySelector('.dt-header-cell-label');
 
-          if(ctrl.column.headerTemplate || ctrl.column.headerRenderer){
+          let cellScope;
+
+          if (ctrl.column.headerTemplate || ctrl.column.headerRenderer) {
             cellScope = ctrl.options.$outer.$new(false);
 
             // copy some props
@@ -50,19 +52,19 @@ export default function HeaderCellDirective($compile){
             cellScope.$index = $scope.$index;
           }
 
-          if(ctrl.column.headerTemplate){
-            let elm = angular.element(`<span>${ctrl.column.headerTemplate.trim()}</span>`);
+          if (ctrl.column.headerTemplate) {
+            const elm = angular.element(`<span>${ctrl.column.headerTemplate.trim()}</span>`);
             angular.element(label).append($compile(elm)(cellScope));
-          } else if(ctrl.column.headerRenderer){
-            let elm = angular.element(ctrl.column.headerRenderer($elm));
+          } else if (ctrl.column.headerRenderer) {
+            const elm = angular.element(ctrl.column.headerRenderer($elm));
             angular.element(label).append($compile(elm)(cellScope)[0]);
           } else {
             let val = ctrl.column.name;
-            if(val === undefined || val === null) val = '';
+            if (angular.isUndefined(val) || val === null) val = '';
             label.textContent = val;
           }
-        }
-      }
-    }
+        },
+      };
+    },
   };
-};
+}

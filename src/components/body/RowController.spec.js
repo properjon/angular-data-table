@@ -1,5 +1,5 @@
-import { RowController } from './RowController';
+// import RowController from './RowController';
 
-describe('RowController', function () {
+describe('RowController', () => {
   //
 });

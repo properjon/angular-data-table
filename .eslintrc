@@ -1,20 +1,33 @@
 {
   "parser": "babel-eslint",
+  "plugins": ["jasmine", "angular"],
+  "extends": ["airbnb-base", "plugin:jasmine/recommended", "angular"],
+  "root": true,
   "env": {
-    "browser": true
+    "browser": true,
+    "jasmine": true
   },
   "rules": {
-    "strict": 0,
-    "no-multi-spaces": 0,
     "quotes": [
       1,
       "single"
     ],
-    "no-shadow": 0,
-    "no-empty": 0,
-    "no-cond-assign": 0,
-    "no-loop-func": 0,
-    "no-underscore-dangle": 0,
-    "no-use-before-define": 0
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "gulpfile.babel.js",
+          "src/**/*.js",
+          "src/*.js",
+          "test/*.js"
+        ]
+      }
+    ],
+    "jasmine/no-global-setup": "off",
+    "no-param-reassign": "off",
+    "angular/no-private-call": "off"
+  },
+  "globals": {
+    "angular": true
   }
 }

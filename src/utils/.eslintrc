@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "angular/no-private-call": "off",
+    "angular/window-service": "off",
+    "angular/document-service": "off",
+    "angular/timeout-service": "off"
+  }
+}

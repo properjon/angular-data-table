@@ -4,35 +4,36 @@
  * https://jsfiddle.net/hrohxze0/6/
  * @param {function}
  */
-export default function SortableDirective($timeout) {
+export default function SortableDirective() {
   return {
     restrict: 'A',
     scope: {
       isSortable: '=sortable',
-      onSortableSort: '&'
+      onSortableSort: '&',
     },
-    link: function($scope, $element, $attrs){
-      var rootEl = $element[0], dragEl, nextEl, dropEl;
+    link($scope, $element) {
+      let dragEl;
+      let nextEl;
 
       function isbefore(a, b) {
-        if (a.parentNode == b.parentNode) {
-          for (var cur = a; cur; cur = cur.previousSibling) {
+        if (a.parentNode === b.parentNode) {
+          for (let cur = a; cur; cur = cur.previousSibling) {
             if (cur === b) {
               return true;
             }
           }
         }
         return false;
-      };
+      }
 
       function onDragEnter(e) {
-        var target = e.target;
+        const target = e.target;
         if (isbefore(dragEl, target)) {
           target.parentNode.insertBefore(dragEl, target);
-        } else if(target.nextSibling && target.hasAttribute('draggable')) {
+        } else if (target.nextSibling && target.hasAttribute('draggable')) {
           target.parentNode.insertBefore(dragEl, target.nextSibling.nextSibling);
         }
-      };
+      }
 
       function onDragEnd(evt) {
         evt.preventDefault();
@@ -45,13 +46,14 @@ export default function SortableDirective($timeout) {
         if (nextEl !== dragEl.nextSibling) {
           $scope.onSortableSort({
             event: evt,
-            columnId: angular.element(dragEl).attr('data-id')
+            columnId: angular.element(dragEl).attr('data-id'),
           });
         }
-      };
+      }
 
-      function onDragStart(evt){
-        if(!$scope.isSortable) return false;
+      function onDragStart(evt) {
+        if (!$scope.isSortable) return;
+
         evt = evt.originalEvent || evt;
 
         dragEl = evt.target;
@@ -63,13 +65,13 @@ export default function SortableDirective($timeout) {
 
         $element.on('dragenter', onDragEnter);
         $element.on('dragend', onDragEnd);
-      };
+      }
 
       $element.on('dragstart', onDragStart);
 
       $scope.$on('$destroy', () => {
         $element.off('dragstart', onDragStart);
       });
-    }
-  }
+    },
+  };
 }

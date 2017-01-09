@@ -1,47 +1,38 @@
 import { CamelCase } from './utils';
 
-var cache = {},
-    testStyle = document.createElement('div').style;
-
-function getWithPrefix(name) {
-  for (var i = 0; i < prefixes.length; i++) {
-    var prefixedName = prefixes[i] + name;
-    if (prefixedName in testStyle) {
-      return prefixedName;
-    }
-  }
-  return null;
-}
+const cache = {};
+const testStyle = document.createElement('div').style;
 
 // Get Prefix
 // http://davidwalsh.name/vendor-prefix
-var prefix = (function () {
-  var styles = window.getComputedStyle(document.documentElement, ''),
-    pre = (Array.prototype.slice
+const prefix = (function getPrefix() {
+  const styles = window.getComputedStyle(document.documentElement, '');
+  const pre = (Array.prototype.slice
       .call(styles)
       .join('')
       .match(/-(moz|webkit|ms)-/) || (styles.OLink === '' && ['', 'o'])
-    )[1],
-    dom = ('WebKit|Moz|MS|O').match(new RegExp('(' + pre + ')', 'i'))[1];
+    )[1];
+  const dom = ('WebKit|Moz|MS|O').match(new RegExp(`(${pre})`, 'i'))[1];
+
   return {
-    dom: dom,
+    dom,
     lowercase: pre,
-    css: '-' + pre + '-',
-    js: pre[0].toUpperCase() + pre.substr(1)
+    css: `-${pre}-`,
+    js: pre[0].toUpperCase() + pre.substr(1),
   };
-})();
+}());
 
 /**
  * @param {string} property Name of a css property to check for.
  * @return {?string} property name supported in the browser, or null if not
  * supported.
  */
-export function GetVendorPrefixedName(property) {
-  var name = CamelCase(property)
-  if(!cache[name]){
-    if(testStyle[prefix.css + property] !== undefined) {
+export default function GetVendorPrefixedName(property) {
+  const name = CamelCase(property);
+  if (!cache[name]) {
+    if (angular.isDefined(testStyle[prefix.css + property])) {
       cache[name] = prefix.css + property;
-    } else if(testStyle[property] !== undefined){
+    } else if (angular.isDefined(testStyle[property])) {
       cache[name] = property;
     }
   }
