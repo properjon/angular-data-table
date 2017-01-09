@@ -2396,17 +2396,16 @@ function ScrollerDirective($timeout, $rootScope){
         ctrl.updatePage();
 
         if(ctrl.options.scrollbarV){
-          ctrl.getRows();
+          ctrl.getRows(true);
         }
 
-        // https://github.com/Swimlane/angular-data-table/pull/74
         ctrl.options.$outer.$digest();
 
         ticking = false;
       }
 
       function requestTick() {
-        if(!ticking) {
+        if (!ticking) {
           requestAnimFrame(update);
           ticking = true;
         }
@@ -2415,6 +2414,7 @@ function ScrollerDirective($timeout, $rootScope){
       parent.on('scroll', function(ev) {
         lastScrollY = this.scrollTop;
         lastScrollX = this.scrollLeft;
+
         requestTick();
       });
 
@@ -2422,8 +2422,8 @@ function ScrollerDirective($timeout, $rootScope){
         parent.off('scroll');
       });
 
-      $scope.scrollerStyles = function(){
-        if(ctrl.options.scrollbarV){
+      $scope.scrollerStyles = () => {
+        if (ctrl.options.scrollbarV) {
           return {
             height: ctrl.count * ctrl.options.rowHeight + 'px'
           }
