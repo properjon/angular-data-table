@@ -11,6 +11,8 @@ engines:
   eslint:
     enabled: true
     channel: "eslint-3"
+    config:
+      config: .eslintrc
   fixme:
     enabled: true
 ratings:
