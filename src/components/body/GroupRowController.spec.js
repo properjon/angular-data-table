@@ -1,5 +1,5 @@
-import { GroupRowController } from './GroupRowController';
+import GroupRowController from './GroupRowController';
 
-describe('GroupRowController', function () {
+describe('GroupRowController', () => {
   //
 });

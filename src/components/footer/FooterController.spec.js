@@ -1,5 +1,5 @@
-import { FooterController } from './FooterController';
+import FooterController from './FooterController';
 
-describe('FooterController', function () {
+describe('FooterController', () => {
   //
 });

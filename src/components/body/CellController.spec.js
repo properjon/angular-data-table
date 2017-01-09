@@ -1,5 +1,5 @@
-import { CellController } from './CellController';
+import CellController from './CellController';
 
-describe('CellController', function () {
+describe('CellController', () => {
   //
 });

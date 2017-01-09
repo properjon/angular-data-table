@@ -6,7 +6,6 @@ import ResizableDirective from './components/header/ResizableDirective';
 import SortableDirective from './components/header/SortableDirective';
 import DataTableDirective from './components/DataTableDirective';
 import HeaderDirective from './components/header/HeaderDirective';
-import HeaderCellController from './components/header/HeaderCellController';
 import HeaderCellDirective from './components/header/HeaderCellDirective';
 import BodyDirective from './components/body/BodyDirective';
 import ScrollerDirective from './components/body/ScrollerDirective';
@@ -19,8 +18,9 @@ import PagerDirective from './components/footer/PagerDirective';
 
 import dtPopover from './components/popover/popover';
 import dtMenu from './components/menu/menu';
+import dtDropdown from './components/menu/dropdown/dropdown';
 
-export { dtPopover, dtMenu };
+export { dtPopover, dtMenu, dtDropdown };
 
 export default angular
   .module('data-table', [])

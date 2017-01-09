@@ -1,5 +1,5 @@
-import { PopoverRegistry } from './PopoverRegistry';
+import PopoverRegistry from './PopoverRegistry';
 
-describe('PopoverRegistry', function () {
+describe('PopoverRegistry', () => {
   //
 });

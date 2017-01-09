@@ -5,60 +5,64 @@
  * @param {function}
  * @param {function}
  */
-export default function ResizableDirective($document, $timeout){
+export default function ResizableDirective($document, $timeout) {
   return {
     restrict: 'A',
-    scope:{
+    scope: {
       isResizable: '=resizable',
       minWidth: '=',
       maxWidth: '=',
-      onResize: '&'
+      onResize: '&',
     },
-    link: function($scope, $element, $attrs){
-      if($scope.isResizable){
+    link($scope, $element) {
+      const handle = angular.element('<span class="dt-resize-handle" title="Resize"></span>');
+      const parent = $element.parent();
+      let prevScreenX;
+
+      if ($scope.isResizable) {
         $element.addClass('resizable');
       }
 
-      var handle = angular.element('<span class="dt-resize-handle" title="Resize"></span>'),
-          parent = $element.parent(),
-          prevScreenX;
-
-      handle.on('mousedown', function(event) {
-        if(!$element[0].classList.contains('resizable')) {
-          return false;
+      handle.on('mousedown', (event) => {
+        if (!$element[0].classList.contains('resizable')) {
+          return;
         }
 
         event.stopPropagation();
         event.preventDefault();
 
+        /* eslint-disable no-use-before-define */
         $document.on('mousemove', mousemove);
         $document.on('mouseup', mouseup);
+        /* esline-enable no-use-before-define */
       });
 
       function mousemove(event) {
-        event = event.originalEvent || event;
+        const localEvent = event.originalEvent || event;
+        const width = parent[0].clientWidth;
+        const movementX = localEvent.movementX ||
+          localEvent.mozMovementX ||
+          (localEvent.screenX - prevScreenX);
+        const newWidth = width + (movementX || 0);
 
-        var width = parent[0].clientWidth,
-            movementX = event.movementX || event.mozMovementX || (event.screenX - prevScreenX),
-            newWidth = width + (movementX || 0);
+        prevScreenX = localEvent.screenX;
 
-        prevScreenX = event.screenX;
-
-        if((!$scope.minWidth || newWidth >= $scope.minWidth) && (!$scope.maxWidth || newWidth <= $scope.maxWidth)){
+        if ((!$scope.minWidth || newWidth >= $scope.minWidth) &&
+          (!$scope.maxWidth || newWidth <= $scope.maxWidth)) {
           parent.css({
-            width: newWidth + 'px'
+            width: `${newWidth}px`,
           });
         }
       }
 
       function mouseup() {
         if ($scope.onResize) {
-          $timeout(function () {
+          $timeout(() => {
             let width = parent[0].clientWidth;
-            if (width < $scope.minWidth){
+            if (width < $scope.minWidth) {
               width = $scope.minWidth;
             }
-            $scope.onResize({ width: width });
+            $scope.onResize({ width });
           });
         }
 
@@ -67,6 +71,6 @@ export default function ResizableDirective($document, $timeout){
       }
 
       $element.append(handle);
-    }
+    },
   };
-};
+}

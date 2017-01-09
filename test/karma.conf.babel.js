@@ -1,137 +1,139 @@
-const istanbul = require('browserify-istanbul'),
-  isparta = require('isparta'),
+const istanbul = require('browserify-istanbul');
+const isparta = require('isparta');
 
   // Configure more at: https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
-  customLaunchers = {
-    sl_chrome: {
-      base: 'SauceLabs',
-      browserName: 'chrome',
-      platform: 'Windows 7',
-      version: '35'
+const customLaunchers = {
+  sl_chrome: {
+    base: 'SauceLabs',
+    browserName: 'chrome',
+    platform: 'Windows 7',
+    version: '35',
+  },
+  sl_ie_11: {
+    base: 'SauceLabs',
+    browserName: 'Internet Explorer',
+    platform: 'Windows 7',
+    version: '11.0',
+  },
+};
+
+const karmaBaseConfig = {
+  frameworks: ['browserify', 'jasmine'],
+
+  basePath: './',
+
+  files: [
+    {
+      pattern: '../src/**/*!(.spec || .e2e).js',
+      included: false,
     },
-    sl_ie_11: {
-      base: 'SauceLabs',
-      browserName: 'Internet Explorer',
-      platform: 'Windows 7',
-      version: '11.0'
-    }
+    'dataTable.mock.js',
+    {
+      pattern: '../node_modules/sinon/pkg/sinon.js',
+      watched: false,
+    },
+    {
+      pattern: '../node_modules/bardjs/dist/bard.js',
+      watched: false,
+    },
+    {
+      pattern: '../node_modules/angular-mocks/angular-mocks.js',
+      watched: false,
+    },
+    './karma.helper.js',
+    '../src/**/*.spec.js',
+  ],
+
+  preprocessors: {
+    './karma.helper.js': ['browserify'],
+    '../src/**/*!(.e2e).js': ['browserify'],
+    'dataTable.mock.js': ['browserify'],
   },
 
-  karmaBaseConfig = {
-    frameworks: ['browserify', 'jasmine'],
-
-    basePath: './',
-
-    files: [
-      {
-        pattern: '../src/**/*!(.spec || .e2e).js',
-        included: false
-      },
-      'dataTable.mock.js',
-      {
-        pattern: '../node_modules/sinon/pkg/sinon.js',
-        watched: false
-      },
-      {
-        pattern: '../node_modules/bardjs/dist/bard.js',
-        watched: false
-      },
-      {
-        pattern: '../node_modules/angular-mocks/angular-mocks.js',
-        watched: false
-      },
-      './karma.helper.js',
-      '../src/**/*.spec.js'
+  browserify: {
+    debug: true,
+    prodSourcemap: true,
+    extensions: ['.js'],
+    transform: [
+      istanbul({
+        instrumenter: isparta,
+        instrumenterConfig: { embedSource: true },
+        ignore: [
+          '**/*.spec.js',
+        ],
+      }),
+      'babelify', // Note: uses .babelrc
+      'brfs',
     ],
+  },
 
-    preprocessors: {
-      '../src/**/*!(.e2e).js': ['browserify'],
-      'dataTable.mock.js': ['browserify']
-    },
+  browsers: ['PhantomJS'],
+  phantomjsLauncher: {
+    exitOnResourceError: true,
+  },
+  reporters: ['progress', 'coverage'],
+  singleRun: true,
 
-    browserify: {
-      debug: true,
-      prodSourcemap: true,
-      extensions: ['.js'],
-      transform: [
-        istanbul({
-          instrumenter: isparta,
-          instrumenterConfig: { embedSource: true },
-          ignore: [
-            '**/*.spec.js'
-          ]
-        }),
-        'babelify', // Note: uses .babelrc
-        'brfs'
-      ]
-    },
+  coverageReporter: {
+    dir: './coverage',
+    reporters: [
+      {
+        type: 'html',
+      },
+      {
+        type: 'text-summary',
+      },
+      {
+        type: 'lcovonly',
+      },
+      {
+        type: 'json',
+      },
+    ],
+  },
 
-    browsers: ['PhantomJS'],
-    phantomjsLauncher: {
-      exitOnResourceError: true
-    },
-    reporters: ['progress', 'coverage'],
-    singleRun: true,
-
-    coverageReporter: {
-      dir: './coverage',
-      reporters: [
-        {
-          type: 'html'
-        },
-        {
-          type: 'text-summary'
-        },
-        {
-          type: 'lcovonly'
-        },
-        {
-          type: 'json'
-        }
-      ]
-    },
-
-    captureTimeout: 60000,
-    browserDisconnectTimeout: 20000,
-    browserNoActivityTimeout: 100000
-  };
+  captureTimeout: 60000,
+  browserDisconnectTimeout: 20000,
+  browserNoActivityTimeout: 100000,
+};
 
 export default (config) => {
-
   config.set(karmaBaseConfig);
 
   if (process.env.TRAVIS) {
     if (!process.env.SAUCE_USERNAME || !process.env.SAUCE_ACCESS_KEY) {
-      console.log('Make sure the SAUCE_USERNAME and SAUCE_ACCESS_KEY environment variables are set.')
-      process.exit(1)
+      // eslint-disable-next-line
+      console.log('Make sure the SAUCE_USERNAME and SAUCE_ACCESS_KEY environment variables are set.');
+
+      process.exit(1);
     }
 
-    config.sauceLabs = {
-      testName: 'angular-data-table unit tests',
-      recordScreenshots: false,
-      connectOptions: {
-        port: 5757,
-        logfile: 'sauce_connect.log'
+    Object.assign(config, {
+      sauceLabs: {
+        testName: 'angular-data-table unit tests',
+        recordScreenshots: false,
+        connectOptions: {
+          port: 5757,
+          logfile: 'sauce_connect.log',
+        },
+        public: 'public',
+        tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
+        startConnect: false,
       },
-      public: 'public',
-      tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER,
-      startConnect: false
-    };
-
-    config.customLaunchers = customLaunchers;
-
-    config.browsers = Object.keys(customLaunchers);
-
-    config.reporters = ['progress', 'dots', 'coverage', 'saucelabs'];
-    config.singleRun = true;
-
-    config.coverageReporter.reporters = [
-      {
-        type: 'lcovonly'
+      customLaunchers,
+      browsers: Object.keys(customLaunchers),
+      reporters: ['progress', 'dots', 'coverage', 'saucelabs'],
+      singleRun: true,
+      coverageReporter: {
+        reporters: [
+          {
+            type: 'lcovonly',
+          },
+          {
+            type: 'json',
+          },
+        ],
       },
-      {
-        type: 'json'
-      }
-    ];
+    });
   }
 };

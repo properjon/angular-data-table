@@ -1,15 +1,15 @@
 import { isOldAngular } from '../../utils/utils';
 
-export class PagerController {
+export default class PagerController {
   /**
    * Creates an instance of the Pager Controller
    * @param  {object} $scope
    */
 
-  /*@ngInject*/
+  /* @ngInject*/
   constructor($scope) {
     Object.assign(this, {
-      $scope
+      $scope,
     });
 
     if (isOldAngular()) {
@@ -51,8 +51,9 @@ export class PagerController {
    * @return {int} page count
    */
   calcTotalPages(size, count) {
-    var count = size < 1 ? 1 : Math.ceil(count / size);
-    this.totalPages = Math.max(count || 0, 1);
+    const localCount = size < 1 ? 1 : Math.ceil(count / size);
+
+    this.totalPages = Math.max(localCount || 0, 1);
   }
 
   /**
@@ -63,7 +64,7 @@ export class PagerController {
     if (num > 0 && num <= this.totalPages) {
       this.page = num;
       this.onPage({
-        page: num
+        page: num,
       });
     }
   }
@@ -73,7 +74,7 @@ export class PagerController {
    */
   prevPage() {
     if (this.canPrevious()) {
-      this.selectPage(--this.page);
+      this.selectPage(this.page - 1);
     }
   }
 
@@ -82,7 +83,7 @@ export class PagerController {
    */
   nextPage() {
     if (this.canNext()) {
-      this.selectPage(++this.page);
+      this.selectPage(this.page + 1);
     }
   }
 
@@ -107,22 +108,22 @@ export class PagerController {
    * @param  {int} page
    */
   getPages(page) {
-    var pages = [],
-        startPage = 1,
-        endPage = this.totalPages,
-        maxSize = 5,
-        isMaxSized = maxSize < this.totalPages;
+    const pages = [];
+    let startPage = 1;
+    let endPage = this.totalPages;
+    const maxSize = 5;
+    const isMaxSized = maxSize < this.totalPages;
 
     if (isMaxSized) {
       startPage = ((Math.ceil(page / maxSize) - 1) * maxSize) + 1;
-      endPage = Math.min(startPage + maxSize - 1, this.totalPages);
+      endPage = Math.min(startPage + (maxSize - 1), this.totalPages);
     }
 
-    for (var number = startPage; number <= endPage; number++) {
+    for (let number = startPage; number <= endPage; number += 1) {
       pages.push({
-        number: number,
+        number,
         text: number,
-        active: number === page
+        active: number === page,
       });
     }
 
@@ -147,4 +148,4 @@ export class PagerController {
     this.pages = pages;
   }
 
-};
+}

@@ -50,9 +50,14 @@
 
     <label><input type="checkbox" ng-change="addRemovePaging()" ng-model="hasPaging" />Has Paging</label>
     <label><input type="checkbox" ng-change="addRemoveScrollbarV()" ng-model="hasScrollbarV" />Has ScrollbarV</label>
-    <label><input type="checkbox" ng-model="showTable" />Show Table</label>
+    <label><input type="checkbox" ng-model="showTable" />ngShow Table</label>
+    <label><input type="checkbox" ng-model="ifTable" />ngIf Table</label>
 
-    <div ng-if="showTable">
+    <div ng-if="ifTable">
+      <dtable options="options" rows="data" class="material" on-row-dbl-click="onRowDblClick(row)"></dtable>
+    </div>
+
+    <div ng-show="showTable">
       <dtable options="options" rows="data" class="material" on-row-dbl-click="onRowDblClick(row)"></dtable>
     </div>
 
@@ -61,11 +66,10 @@
 
     <script>
 
-      System.import('dataTable').then(function(dt){
+      System.import('dataTable').then(function(dt) {
         var module = angular.module('app', [ dt.default.name ]);
 
-        module.controller('HomeController', function($scope, $http){
-          window.scope = $scope;
+        module.controller('HomeController', function($scope, $http) {
           $scope.hasPaging = false;
           $scope.hasScrollbarV = false;
           $scope.showTable = true;

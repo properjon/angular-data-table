@@ -1,19 +1,17 @@
-import { DataTableController } from './DataTableController';
+/* global inject */
 
-describe('DataTableController', function () {
-  let $controller = null;
+import DataTableController from './DataTableController';
 
-  beforeEach(
-    inject((_$controller_) => {
-      $controller = _$controller_;
-    })
-  );
+describe('DataTableController', () => {
+  // let $controller = null;
+  //
+  // beforeEach(
+  //   inject((_$controller_) => {
+  //     $controller = _$controller_;
+  //   }),
+  // );
 
   it('should export a function', () => {
     expect(DataTableController).toEqual(jasmine.any(Function));
-  });
-
-  describe('', function () {
-
   });
 });

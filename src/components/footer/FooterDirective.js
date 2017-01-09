@@ -1,6 +1,6 @@
-import { FooterController } from './FooterController';
+import FooterController from './FooterController';
 
-export default function FooterDirective(){
+export default function FooterDirective() {
   return {
     restrict: 'E',
     controller: FooterController,
@@ -8,7 +8,7 @@ export default function FooterDirective(){
     scope: true,
     bindToController: {
       paging: '=',
-      onPage: '&'
+      onPage: '&',
     },
     template:
       `<div class="dt-footer">
@@ -20,6 +20,6 @@ export default function FooterDirective(){
                ng-show="footer.paging.count / footer.paging.size > 1">
          </dt-pager>
       </div>`,
-    replace: true
+    replace: true,
   };
-};
+}

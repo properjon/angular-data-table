@@ -1,7 +1,6 @@
-import { ColumnDefaults } from '../defaults';
-import { CamelCase } from '../utils/utils';
+import { camelCase } from '../utils/utils';
 
-export let DataTableService = {
+export default {
 
   // id: [ column defs ]
   columns: {},
@@ -9,7 +8,7 @@ export let DataTableService = {
 
   saveColumns(id, columnElms) {
     if (columnElms && columnElms.length) {
-      let columnsArray = [].slice.call(columnElms);
+      const columnsArray = [].slice.call(columnElms);
       this.dTables[id] = columnsArray;
     }
   },
@@ -19,7 +18,7 @@ export let DataTableService = {
    * @param  {array} columnElms
    */
   buildColumns(scope, parse) {
-    //FIXME: Too many nested for loops.  O(n3)
+    // FIXME: Too many nested for loops.  O(n3)
 
     // Iterate through each dTable
     angular.forEach(this.dTables, (columnElms, id) => {
@@ -27,12 +26,12 @@ export let DataTableService = {
 
       // Iterate through each column
       angular.forEach(columnElms, (c) => {
-        let column = {};
+        const column = {};
 
-        var visible = true;
+        let visible = true;
         // Iterate through each attribute
         angular.forEach(c.attributes, (attr) => {
-          let attrName = CamelCase(attr.name);
+          const attrName = camelCase(attr.name);
 
           // cuz putting className vs class on
           // a element feels weird
@@ -58,11 +57,11 @@ export let DataTableService = {
           }
         });
 
-        let header = c.getElementsByTagName('column-header');
+        const header = c.getElementsByTagName('column-header');
 
         if (header.length) {
           column.headerTemplate = header[0].innerHTML;
-          c.removeChild(header[0])
+          c.removeChild(header[0]);
         }
 
         if (c.innerHTML !== '') {
@@ -76,5 +75,5 @@ export let DataTableService = {
     });
 
     this.dTables = {};
-  }
+  },
 };

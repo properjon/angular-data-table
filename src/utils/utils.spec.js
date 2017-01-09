@@ -1,10 +1,10 @@
-import { ObjectId } from './utils';
+import { objectId } from './utils';
 
-describe('utils', function() {
-	it('should generate unique ID', () => {
-		var id1 = ObjectId();
-		var id2 = ObjectId();
+describe('utils', () => {
+  it('should generate unique ID', () => {
+    const id1 = objectId();
+    const id2 = objectId();
 
-		expect(id1).not.toBe(id2);
-	});
+    expect(id1).not.toBe(id2);
+  });
 });

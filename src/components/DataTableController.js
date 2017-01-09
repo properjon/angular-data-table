@@ -1,8 +1,8 @@
 import { TableDefaults, ColumnDefaults } from '../defaults';
-import { AdjustColumnWidths, ForceFillColumnWidths } from '../utils/math';
-import { isOldAngular, ColumnsByPin, ColumnGroupWidths, CamelCase, ObjectId, ScrollbarWidth } from '../utils/utils';
+import { adjustColumnWidths, forceFillColumnWidths } from '../utils/math';
+import { isOldAngular, columnsByPin, columnGroupWidths, camelCase, objectId } from '../utils/utils';
 
-export class DataTableController {
+export default class DataTableController {
   /**
    * Creates an instance of the DataTable Controller
    * @param  {scope}
@@ -12,11 +12,12 @@ export class DataTableController {
   /* @ngInject */
   constructor($scope, $filter) {
     Object.assign(this, {
-      $scope: $scope,
-      $filter: $filter
+      $scope,
+      $filter,
+      isOldAngular: isOldAngular(),
     });
 
-    if (isOldAngular()) {
+    if (this.isOldAngular) {
       this.$onInit();
     }
   }
@@ -34,18 +35,16 @@ export class DataTableController {
     this.$scope.$watch('dt.options.columns', (newVal, oldVal) => {
       this.transposeColumnDefaults();
 
-      if(newVal.length !== oldVal.length){
+      if (newVal.length !== oldVal.length) {
         this.adjustColumns();
       }
 
       this.calculateColumns();
     }, true);
 
-    // default sort
-    var watch = this.$scope.$watch('dt.rows', (newVal) => {
+    // re-sort when adding rows
+    this.$scope.$watchCollection('dt.rows', (newVal) => {
       if (newVal) {
-        watch();
-
         this.onSorted();
       }
     });
@@ -59,16 +58,16 @@ export class DataTableController {
 
     this.options = Object.assign({}, TableDefaults, this.options);
 
-    angular.forEach(TableDefaults.paging, (v,k) => {
-      if(!this.options.paging[k]){
+    angular.forEach(TableDefaults.paging, (v, k) => {
+      if (!this.options.paging[k]) {
         this.options.paging[k] = v;
       }
     });
 
-    if(this.options.selectable && this.options.multiSelect){
+    if (this.options.selectable && this.options.multiSelect) {
       this.selected = this.selected || [];
 
-      this.$scope.$watch('dt.selected', (newVal, oldVal) => {
+      this.$scope.$watch('dt.selected', () => {
         angular.forEach(this.options.columns, (column) => {
           if (column.headerCheckbox && angular.isFunction(column.headerCheckboxCallback)) {
             column.headerCheckboxCallback(this);
@@ -83,19 +82,19 @@ export class DataTableController {
    * make sure all the columns added have the correct
    * defaults applied.
    */
-  transposeColumnDefaults(){
-    for(var i=0, len = this.options.columns.length; i < len; i++) {
-      var column = this.options.columns[i];
-      column.$id = ObjectId();
+  transposeColumnDefaults() {
+    for (let i = 0, len = this.options.columns.length; i < len; i += 1) {
+      const column = this.options.columns[i];
+      column.$id = objectId();
 
-      angular.forEach(ColumnDefaults, (v,k) => {
-        if(!column.hasOwnProperty(k)){
+      angular.forEach(ColumnDefaults, (v, k) => {
+        if (!Object.prototype.hasOwnProperty.call(column, 'k')) {
           column[k] = v;
         }
       });
 
-      if(column.name && !column.prop){
-        column.prop = CamelCase(column.name);
+      if (column.name && !column.prop) {
+        column.prop = camelCase(column.name);
       }
 
       this.options.columns[i] = column;
@@ -105,21 +104,21 @@ export class DataTableController {
   /**
    * Calculate column groups and widths
    */
-  calculateColumns(){
-    var columns = this.options.columns;
-    this.columnsByPin = ColumnsByPin(columns);
-    this.columnWidths = ColumnGroupWidths(this.columnsByPin, columns);
+  calculateColumns() {
+    const columns = this.options.columns;
+    this.columnsByPin = columnsByPin(columns);
+    this.columnWidths = columnGroupWidths(this.columnsByPin, columns);
   }
 
   /**
    * Returns the css classes for the data table.
    * @return {style object}
    */
-  tableCss(){
+  tableCss() {
     return {
-      'fixed': this.options.scrollbarV,
-      'selectable': this.options.selectable,
-      'checkboxable': this.options.checkboxSelection
+      fixed: this.options.scrollbarV,
+      selectable: this.options.selectable,
+      checkboxable: this.options.checkboxSelection,
     };
   }
 
@@ -127,13 +126,13 @@ export class DataTableController {
    * Adjusts the column widths to handle greed/etc.
    * @param  {int} forceIdx
    */
-  adjustColumns(forceIdx){
-    var width = this.options.internal.innerWidth - this.options.internal.scrollBarWidth;
+  adjustColumns(forceIdx) {
+    const width = this.options.internal.innerWidth - this.options.internal.scrollBarWidth;
 
-    if(this.options.columnMode === 'force'){
-      ForceFillColumnWidths(this.options.columns, width, forceIdx);
-    } else if(this.options.columnMode === 'flex') {
-      AdjustColumnWidths(this.options.columns, width);
+    if (this.options.columnMode === 'force') {
+      forceFillColumnWidths(this.options.columns, width, forceIdx);
+    } else if (this.options.columnMode === 'flex') {
+      adjustColumnWidths(this.options.columns, width);
     }
   }
 
@@ -141,7 +140,7 @@ export class DataTableController {
    * Calculates the page size given the height * row height.
    * @return {[type]}
    */
-  calculatePageSize(){
+  calculatePageSize() {
     this.options.paging.size = Math.ceil(
       this.options.internal.bodyHeight / this.options.rowHeight) + 1;
   }
@@ -149,45 +148,46 @@ export class DataTableController {
   /**
    * Sorts the values of the grid for client side sorting.
    */
-  onSorted(){
-    if(!this.rows) return;
+  onSorted() {
+    if (!this.rows) return;
 
     // return all sorted column, in the same order in which they were sorted
-    var sorts = this.options.columns
-      .filter((c) => {
-        return c.sort;
-      })
+    const sorts = this.options.columns
+      .filter(c => c.sort)
       .sort((a, b) => {
         // sort the columns with lower sortPriority order first
-        if (a.sortPriority && b.sortPriority){
+        if (a.sortPriority && b.sortPriority) {
           if (a.sortPriority > b.sortPriority) return 1;
           if (a.sortPriority < b.sortPriority) return -1;
-        } else if (a.sortPriority){
+        } else if (a.sortPriority) {
           return -1;
-        } else if (b.sortPriority){
+        } else if (b.sortPriority) {
           return 1;
         }
 
         return 0;
       })
       .map((c, i) => {
+        const newC = c;
+
         // update sortPriority
-        c.sortPriority = i + 1;
-        return c;
+        newC.sortPriority = i + 1;
+
+        return newC;
       });
 
-    if(sorts.length){
-      this.onSort({sorts: sorts});
+    if (sorts.length) {
+      this.onSort({ sorts });
 
-      if (this.options.onSort){
+      if (this.options.onSort) {
         this.options.onSort(sorts);
       }
 
-      var clientSorts = [];
-      for(var i=0, len=sorts.length; i < len; i++) {
-        var c = sorts[i];
-        if(c.comparator !== false){
-          var dir = c.sort === 'asc' ? '' : '-';
+      const clientSorts = [];
+      for (let i = 0, len = sorts.length; i < len; i += 1) {
+        const c = sorts[i];
+        if (c.comparator !== false) {
+          const dir = c.sort === 'asc' ? '' : '-';
           if (c.sortBy !== undefined) {
             clientSorts.push(dir + c.sortBy);
           } else {
@@ -196,10 +196,10 @@ export class DataTableController {
         }
       }
 
-      if(clientSorts.length){
+      if (clientSorts.length) {
         // todo: more ideal to just resort vs splice and repush
         // but wasn't responding to this change ...
-        var sortedValues = this.$filter('orderBy')(this.rows, clientSorts);
+        const sortedValues = this.$filter('orderBy')(this.rows, clientSorts);
         this.rows.splice(0, this.rows.length);
         this.rows.push(...sortedValues);
       }
@@ -213,10 +213,10 @@ export class DataTableController {
    * @param  {row model}
    * @param  {cell model}
    */
-  onTreeToggled(row, cell){
+  onTreeToggled(row, cell) {
     this.onTreeToggle({
-      row: row,
-      cell: cell
+      row,
+      cell,
     });
   }
 
@@ -225,10 +225,10 @@ export class DataTableController {
    * @param  {offset}
    * @param  {size}
    */
-  onBodyPage(offset, size){
+  onBodyPage(offset, size) {
     this.onPage({
-      offset: offset,
-      size: size
+      offset,
+      size,
     });
   }
 
@@ -237,14 +237,14 @@ export class DataTableController {
    * @param  {offset}
    * @param  {size}
    */
-  onFooterPage(offset, size){
-    var pageBlockSize = this.options.rowHeight * size,
-        offsetY = pageBlockSize * offset;
+  onFooterPage(offset, size) {
+    const pageBlockSize = this.options.rowHeight * size;
+    const offsetY = pageBlockSize * offset;
 
     this.options.internal.setYOffset(offsetY);
   }
 
-  selectAllRows(){
+  selectAllRows() {
     this.selected.splice(0, this.selected.length);
 
     this.selected.push(...this.rows);
@@ -252,7 +252,7 @@ export class DataTableController {
     return this.isAllRowsSelected();
   }
 
-  deselectAllRows(){
+  deselectAllRows() {
     this.selected.splice(0, this.selected.length);
 
     return this.isAllRowsSelected();
@@ -262,7 +262,7 @@ export class DataTableController {
    * Returns if all the rows are selected
    * @return {Boolean} if all selected
    */
-  isAllRowsSelected(){
+  isAllRowsSelected() {
     return (!this.rows || !this.selected) ? false : this.selected.length === this.rows.length;
   }
 
@@ -271,21 +271,24 @@ export class DataTableController {
    * @param  {object} column
    * @param  {int} width
    */
-  onResized(column, width){
-    var idx =this.options.columns.indexOf(column);
-    if(idx > -1){
-      var column = this.options.columns[idx];
-      column.width = width;
-      column.canAutoResize = false;
+  onResized(column, width) {
+    const idx = this.options.columns.indexOf(column);
+
+    let newColumn = column;
+
+    if (idx > -1) {
+      newColumn = this.options.columns[idx];
+      newColumn.width = width;
+      newColumn.canAutoResize = false;
 
       this.adjustColumns(idx);
       this.calculateColumns();
     }
 
-    if (this.onColumnResize){
+    if (this.onColumnResize) {
       this.onColumnResize({
-        column: column,
-        width: width
+        newColumn,
+        width,
       });
     }
   }
@@ -294,9 +297,9 @@ export class DataTableController {
    * Occurs when a row was selected
    * @param  {object} rows
    */
-  onSelected(rows){
+  onSelected(rows) {
     this.onSelect({
-      rows: rows
+      rows,
     });
   }
 
@@ -304,9 +307,9 @@ export class DataTableController {
    * Occurs when a row was click but may not be selected.
    * @param  {object} row
    */
-  onRowClicked(row){
+  onRowClicked(row) {
     this.onRowClick({
-      row: row
+      row,
     });
   }
 
@@ -314,9 +317,9 @@ export class DataTableController {
    * Occurs when a row was double click but may not be selected.
    * @param  {object} row
    */
-  onRowDblClicked(row){
+  onRowDblClicked(row) {
     this.onRowDblClick({
-      row: row
+      row,
     });
   }
 }

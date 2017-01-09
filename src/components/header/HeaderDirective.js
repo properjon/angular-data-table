@@ -1,6 +1,6 @@
-import { HeaderController } from './HeaderController';
+import HeaderController from './HeaderController';
 
-export default function HeaderDirective($timeout){
+export default function HeaderDirective($timeout) {
   return {
     restrict: 'E',
     controller: HeaderController,
@@ -13,7 +13,7 @@ export default function HeaderDirective($timeout){
       selectedRows: '=?',
       allRows: '=',
       onSort: '&',
-      onResize: '&'
+      onResize: '&',
     },
     template: `
       <div class="dt-header" ng-style="header.styles()">
@@ -66,13 +66,19 @@ export default function HeaderDirective($timeout){
           </div>
         </div>
       </div>`,
-    replace:true,
-    link: function($scope, $elm, $attrs, ctrl){
+    replace: true,
+    /* eslint-disable no-param-reassign */
+    link($scope, $elm, $attrs, ctrl) {
+      const findColumnById = (columnId) => {
+        const columns = ctrl.columns.left.concat(ctrl.columns.center).concat(ctrl.columns.right);
+        return columns.find(c => c.$id === columnId);
+      };
 
-      $scope.columnsResorted = function(event, columnId){
-        var col = findColumnById(columnId),
-            parent = angular.element(event.currentTarget),
-            newIdx = -1;
+      $scope.columnsResorted = (event, columnId) => {
+        const col = findColumnById(columnId);
+        const parent = angular.element(event.currentTarget);
+
+        let newIdx = -1;
 
         angular.forEach(parent.children(), (c, i) => {
           if (columnId === angular.element(c).attr('data-id')) {
@@ -82,31 +88,21 @@ export default function HeaderDirective($timeout){
 
         $timeout(() => {
           angular.forEach(ctrl.columns, (group) => {
-            var idx = group.indexOf(col);
-            if(idx > -1){
+            const idx = group.indexOf(col);
 
+            if (idx > -1) {
               // this is tricky because we want to update the index
               // in the orig columns array instead of the grouped one
-              var curColAtIdx = group[newIdx],
-                  siblingIdx = ctrl.options.columns.indexOf(curColAtIdx),
-                  curIdx = ctrl.options.columns.indexOf(col);
+              const curColAtIdx = group[newIdx];
+              const siblingIdx = ctrl.options.columns.indexOf(curColAtIdx);
+              const curIdx = ctrl.options.columns.indexOf(col);
 
               ctrl.options.columns.splice(curIdx, 1);
               ctrl.options.columns.splice(siblingIdx, 0, col);
-
-              return false;
             }
           });
-
         });
-      }
-
-      var findColumnById = function(columnId){
-        var columns = ctrl.columns.left.concat(ctrl.columns.center).concat(ctrl.columns.right)
-        return columns.find(function(c){
-          return c.$id === columnId;
-        })
-      }
-    }
+      };
+    },
   };
-};
+}
