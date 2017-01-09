@@ -1,3 +1,5 @@
+/* global inject */
+
 import SpecHelper from './BodyController.spechelper.json';
 import { TableDefaults } from '../../defaults';
 

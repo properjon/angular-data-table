@@ -1,4 +1,4 @@
-import { TranslateXY } from '../../utils/translate';
+import TranslateXY from '../../utils/translate';
 
 export default class HeaderController {
   /**

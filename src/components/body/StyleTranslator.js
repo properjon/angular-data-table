@@ -1,4 +1,4 @@
-import { TranslateXY } from '../../utils/translate';
+import TranslateXY from '../../utils/translate';
 
 /**
  * This translates the dom position based on the model row index.

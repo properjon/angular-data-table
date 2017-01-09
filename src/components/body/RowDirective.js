@@ -1,5 +1,5 @@
 import RowController from './RowController';
-import { TranslateXY } from '../../utils/translate';
+import TranslateXY from '../../utils/translate';
 
 export default function RowDirective() {
   return {

@@ -138,19 +138,18 @@ export default class SelectionController {
         // row is already selected, remove it from selected
         if (reverse && idx > -1) {
           this.selected.splice(idx, 1);
-          continue;
-        }
-        // if in the positive range to be added to `selected`, and
-        // not already in the selected array, add it
-        if (i >= range.start && i < range.end) {
-          if (idx === -1) {
-            this.selected.push(row);
-            selecteds.push(row);
-          }
+
+          // if in the positive range to be added to `selected`, and
+          // not already in the selected array, add it
+        } else if (i >= range.start &&
+            i < range.end &&
+            idx === -1) {
+          this.selected.push(row);
+          selecteds.push(row);
         }
       }
-    }
 
-    this.body.onSelect({ rows: selecteds });
+      this.body.onSelect({ rows: selecteds });
+    }
   }
 }

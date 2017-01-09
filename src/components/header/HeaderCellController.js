@@ -102,7 +102,9 @@ export default class HeaderCellController {
    * Invoked when the header cell directive checkbox is changed
    */
   checkboxChangeCallback() {
-    return this.isAllRowsSelected === this.column.allRowsSelected ?
+    this.isAllRowsSelected = this.column.allRowsSelected;
+
+    return this.isAllRowsSelected ?
       this.dt.selectAllRows() :
       this.dt.deselectAllRows();
   }

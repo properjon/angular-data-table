@@ -1,5 +1,5 @@
 import { DeepValueGetter } from '../../utils/utils';
-import { TranslateXY } from '../../utils/translate';
+import TranslateXY from '../../utils/translate';
 
 export default class RowController {
 

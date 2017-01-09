@@ -1,5 +1,5 @@
 import GroupRowController from './GroupRowController';
-import { TranslateXY } from '../../utils/translate';
+import TranslateXY from '../../utils/translate';
 
 export default function GroupRowDirective() {
   return {
