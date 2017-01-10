@@ -178,7 +178,7 @@ export default class DataTableController {
 
     if (sorts.length) {
       if (this.onSort) {
-        this.onSort({ sorts: sorts });
+        this.onSort({ sorts });
       }
 
       if (this.options.onSort) {
