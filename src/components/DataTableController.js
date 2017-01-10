@@ -150,7 +150,9 @@ export class DataTableController {
    * Sorts the values of the grid for client side sorting.
    */
   onSorted(){
-    if(!this.rows) return;
+    if (!this.rows) {
+      return;
+    }
 
     // return all sorted column, in the same order in which they were sorted
     var sorts = this.options.columns
@@ -175,16 +177,18 @@ export class DataTableController {
         c.sortPriority = i + 1;
         return c;
       });
-
-    if(sorts.length){
-      this.onSort({sorts: sorts});
+      
+    if (sorts.length) {
+      if (this.onSort) {
+        this.onSort({sorts: sorts});
+      }
 
       if (this.options.onSort){
         this.options.onSort(sorts);
       }
 
       var clientSorts = [];
-      for(var i=0, len=sorts.length; i < len; i++) {
+      for (var i=0, len=sorts.length; i < len; i++) {
         var c = sorts[i];
         if(c.comparator !== false){
           var dir = c.sort === 'asc' ? '' : '-';
@@ -195,8 +199,8 @@ export class DataTableController {
           }
         }
       }
-
-      if(clientSorts.length){
+      
+      if (clientSorts.length) {
         // todo: more ideal to just resort vs splice and repush
         // but wasn't responding to this change ...
         var sortedValues = this.$filter('orderBy')(this.rows, clientSorts);
@@ -205,7 +209,9 @@ export class DataTableController {
       }
     }
 
-    this.options.internal.setYOffset(0);
+    if (this.options.internal && this.options.internal.setYOffset) {
+      this.options.internal.setYOffset(0);
+    }
   }
 
   /**

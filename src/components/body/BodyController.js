@@ -117,10 +117,12 @@ export default class BodyController {
             this.buildInternalPage();
           }
 
-          this.onPage({
-            offset: newVal,
-            size: this.options.paging.size
-          });
+          if (this.onPage) {
+            this.onPage({
+              offset: newVal,
+              size: this.options.paging.size
+            });
+          }
         }
       }));
     }
@@ -167,6 +169,7 @@ export default class BodyController {
           // We're using internal paging
           this.buildInternalPage();
         } else {
+          // No paging
           this.tempRows.splice(0, this.tempRows.length);
           this.tempRows.push(...rows);
         }
@@ -390,7 +393,6 @@ export default class BodyController {
             addChildren(groupRows, toArray, level + 1);
           }
         }
-
       });
     }
 
@@ -452,7 +454,9 @@ export default class BodyController {
       rowIndex++;
     }
 
-    this.options.internal.styleTranslator.update(this.tempRows);
+    if (this.options.internal && this.options.internal.styleTranslator) {
+      this.options.internal.styleTranslator.update(this.tempRows);
+    }
 
     return this.tempRows;
   }
