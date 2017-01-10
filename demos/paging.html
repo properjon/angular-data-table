@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
   <head>
     <meta charset=" utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -38,65 +39,50 @@
       .dt-row-even{
         background:#f6f7f8;
       }
-
     </style>
     <link href="../dist/dataTable.css" media="all" rel="stylesheet" />
     <link href="../dist/themes/material.css" media="all" rel="stylesheet" />
     <link href="../dist/themes/icons.css" rel="stylesheet">
   </head>
+
   <body ng-app="app" ng-controller="HomeController">
 
-
-    <dtable options="optionz" rows="data" class="material" on-page="paging(offset, size)"></dtable>
+    <dtable options="options" rows="data" class="material"></dtable>
 
     <script src="../jspm_packages/system.js"></script>
     <script src="../config.js"></script>
 
     <script>
 
-      System.import('dataTable').then(function(dt){
-        var module = angular.module('app', [ dt.default.name ]);
+      System.import('dataTable').then(function (dt) {
+        var module = angular.module('app', [dt.default.name]);
 
-        module.controller('HomeController', function($scope, $http){
-          $scope.data = []
+        module.controller('HomeController', function ($scope, $http) {
+          $scope.data = [];
 
-          $scope.optionz = {
+          $scope.options = {
             rowHeight: 50,
             headerHeight: 50,
             footerHeight: 50,
             scrollbarV: false,
+            sortType: 'single',
             columns: [
-              { name: "Name", prop: "name" },
-              { name: "Gender", prop: "gender" },
-              { name: "Company", prop: "company" }
+              { name: 'Name', prop: 'name' },
+              { name: 'Gender', prop: 'gender' },
+              { name: 'Company', prop: 'company' }
             ],
             columnMode: 'force',
             paging: {
-              externalPaging: true,
               size: 10
             }
           };
 
-          $scope.paging = function(offset, size){
-            setTimeout(function(){
-            $http.get('/demos/data/100.json').success(function(d) {
-
-              $scope.optionz.paging.count = d.length;
-
-              var set = d.splice(offset, size);
-              // only insert items i don't already have
-              set.forEach(function(r, i){
-                var idx = i + (offset * size);
-                $scope.data[idx] = r;
-              });
-
-              console.log('paging!', offset, size)
-            });
-          }, 200)
-          };
+          $http.get('/demos/data/100.json').success(function (d) {
+            $scope.data = d;
+          });
         });
       });
     </script>
-
   </body>
+
 </html>

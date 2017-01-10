@@ -2,8 +2,8 @@
   "Olympics": {
     "Columns": [
       {
-        "name": "Athlete",
-        "prop": "athlete",
+        "name": "Name",
+        "prop": "name",
         "width": 300
       },
       {
@@ -22,7 +22,7 @@
     ],
     "Rows": [
       {
-        "athlete": "Michael Phelps",
+        "name": "Michael Phelps",
         "age": 19,
         "country": "United States",
         "year": 2004,
@@ -34,7 +34,7 @@
         "total": 8
       },
       {
-        "athlete": "Michael Phelps",
+        "name": "Michael Phelps",
         "age": 27,
         "country": "United States",
         "year": 2012,
@@ -46,7 +46,7 @@
         "total": 6
       },
       {
-        "athlete": "Natalie Coughlin",
+        "name": "Natalie Coughlin",
         "age": 25,
         "country": "United States",
         "year": 2008,
@@ -58,7 +58,7 @@
         "total": 6
       },
       {
-        "athlete": "Aleksey Nemov",
+        "name": "Aleksey Nemov",
         "age": 24,
         "country": "Russia",
         "year": 2000,
@@ -70,7 +70,7 @@
         "total": 6
       },
       {
-        "athlete": "Alicia Coutts",
+        "name": "Alicia Coutts",
         "age": 24,
         "country": "Australia",
         "year": 2012,
@@ -82,7 +82,7 @@
         "total": 5
       },
       {
-        "athlete": "Missy Franklin",
+        "name": "Missy Franklin",
         "age": 17,
         "country": "United States",
         "year": 2012,
