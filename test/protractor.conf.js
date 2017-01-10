@@ -3,7 +3,7 @@ const config = {
   specs: ['./protractor/*.e2e.js'],
   baseUrl: 'http://localhost:9000/',
   onPrepare() {
-    require('babel-register'); // eslint-disable-line
+    require('babel-core/register'); // eslint-disable-line
   },
 };
 
