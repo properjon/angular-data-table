@@ -14,7 +14,6 @@ System.config({
     'github:*': 'jspm_packages/github/*',
     'npm:*': 'jspm_packages/npm/*',
   },
-
   map: {
     angular: 'npm:angular@1.5.8',
     babel: 'npm:babel-core@5.8.38',

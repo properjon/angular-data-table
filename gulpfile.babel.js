@@ -83,6 +83,7 @@ gulp.task('serve', ['compile'], (callback) => {
 
 gulp.task('watch', ['serve'], () => {
   const watcher = gulp.watch([path.source, path.less, '*.html'], ['compile']);
+
   watcher.on('change', (event) => {
     gutils.log(`File ${event.path} was ${event.type}, running tasks...`);
   });
