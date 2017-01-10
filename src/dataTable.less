@@ -95,10 +95,17 @@
       .sort-btn {
         visibility: hidden;
         display: inline-block;
+        font-size:.7rem;
+        vertical-align: super;
 
         &.sort-desc,
         &.sort-asc {
           visibility: visible;
+        }
+
+        &::before {
+            font-size: 1.2rem;
+            vertical-align: bottom;
         }
       }
 
