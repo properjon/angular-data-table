@@ -75,12 +75,12 @@ export default class BodyController {
    * @description Constructs the rows for the page, assuming we're using internal paging.
    */
   buildInternalPage() {
-    var i;
+    let i;
 
     this.tempRows.splice(0, this.tempRows.length);
 
-    for (i = 0; i < this.options.paging.size; ++i) {
-      this.tempRows[i] = this.rows[this.options.paging.offset * this.options.paging.size + i];
+    for (i = 0; i < this.options.paging.size; i += 1) {
+      this.tempRows[i] = this.rows[(this.options.paging.offset * this.options.paging.size) + i];
     }
   }
 
@@ -91,10 +91,10 @@ export default class BodyController {
       this.watchListeners.splice(i, 1);
     }
 
-    if (this.options && 
-        (this.options.scrollbarV || 
-            (!this.options.scrollbarV && 
-              this.options.paging && 
+    if (this.options &&
+        (this.options.scrollbarV ||
+            (!this.options.scrollbarV &&
+              this.options.paging &&
               this.options.paging.size))) {
       let sized = false;
 
@@ -112,7 +112,6 @@ export default class BodyController {
 
       this.watchListeners.push(this.$scope.$watch('body.options.paging.offset', (newVal) => {
         if (this.options.paging.size) {
-
           if (!this.options.paging.externalPaging) {
             this.buildInternalPage();
           }
@@ -120,7 +119,7 @@ export default class BodyController {
           if (this.onPage) {
             this.onPage({
               offset: newVal,
-              size: this.options.paging.size
+              size: this.options.paging.size,
             });
           }
         }

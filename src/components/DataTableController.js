@@ -149,7 +149,7 @@ export default class DataTableController {
   /**
    * Sorts the values of the grid for client side sorting.
    */
-  onSorted(){
+  onSorted() {
     if (!this.rows) {
       return;
     }
@@ -175,10 +175,10 @@ export default class DataTableController {
         c.sortPriority = i + 1;
         return c;
       });
-      
+
     if (sorts.length) {
       if (this.onSort) {
-        this.onSort({sorts: sorts});
+        this.onSort({ sorts: sorts });
       }
 
       if (this.options.onSort) {
@@ -187,8 +187,8 @@ export default class DataTableController {
 
 
       const clientSorts = [];
-      
-      for (let i = 0, len = sorts.length; i < len; i++) {
+
+      for (let i = 0, len = sorts.length; i < len; i += 1) {
         const c = sorts[i];
         if (c.comparator !== false) {
           const dir = c.sort === 'asc' ? '' : '-';
