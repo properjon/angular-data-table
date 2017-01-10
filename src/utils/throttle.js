@@ -5,30 +5,35 @@
  * @param  {boolean}
  */
 export function debounce(func, wait, immediate) {
-  var timeout, args, context, timestamp, result;
-  return function() {
-    context = this;
-    args = arguments;
-    timestamp = new Date();
-    var later = function() {
-      var last = new Date() - timestamp;
+  return (...args) => {
+    let timeout;
+    let result;
+
+    const context = this;
+    const timestamp = new Date();
+
+    const later = function setLater() {
+      const last = new Date() - timestamp;
       if (last < wait) {
         timeout = setTimeout(later, wait - last);
       } else {
         timeout = null;
-        if (!immediate)
+        if (!immediate) {
           result = func.apply(context, args);
+        }
       }
     };
-    var callNow = immediate && !timeout;
+
+    const callNow = immediate && !timeout;
     if (!timeout) {
       timeout = setTimeout(later, wait);
     }
-    if (callNow)
+    if (callNow) {
       result = func.apply(context, args);
+    }
     return result;
   };
-};
+}
 
 /**
  * Throttle helper
@@ -37,30 +42,33 @@ export function debounce(func, wait, immediate) {
  * @param  {object}
  */
 export function throttle(func, wait, options) {
-  var context, args, result;
-  var timeout = null;
-  var previous = 0;
-  options || (options = {});
-  var later = function() {
-    previous = options.leading === false ? 0 : new Date();
-    timeout = null;
-    result = func.apply(context, args);
-  };
-  return function() {
-    var now = new Date();
-    if (!previous && options.leading === false)
+  return (...args) => {
+    const localOptions = options || (options = {});
+
+    let result;
+    let timeout = null;
+    let previous = 0;
+
+    const later = () => {
+      previous = localOptions.leading === false ? 0 : new Date();
+      timeout = null;
+      result = func.apply(this, args);
+    };
+
+    const now = new Date();
+    if (!previous && localOptions.leading === false) {
       previous = now;
-    var remaining = wait - (now - previous);
-    context = this;
-    args = arguments;
+    }
+    const remaining = wait - (now - previous);
+
     if (remaining <= 0) {
       clearTimeout(timeout);
       timeout = null;
       previous = now;
-      result = func.apply(context, args);
-    } else if (!timeout && options.trailing !== false) {
+      result = func.apply(this, args);
+    } else if (!timeout && localOptions.trailing !== false) {
       timeout = setTimeout(later, remaining);
     }
     return result;
   };
-};
+}

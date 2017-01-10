@@ -1,6 +1,6 @@
 import BodyController from './BodyController';
 
-export default function BodyDirective($timeout) {
+export default function BodyDirective() {
   return {
     restrict: 'E',
     controller: BodyController,
@@ -16,7 +16,7 @@ export default function BodyDirective($timeout) {
       onTreeToggle: '&',
       onSelect: '&',
       onRowClick: '&',
-      onRowDblClick: '&'
+      onRowDblClick: '&',
     },
     scope: true,
     template: `
@@ -67,6 +67,6 @@ export default function BodyDirective($timeout) {
              class="loading-row"
              ng-bind="::body.options.loadingMessage">
         </div>
-      </div>`
+      </div>`,
   };
-};
+}

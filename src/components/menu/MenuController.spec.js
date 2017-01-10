@@ -1,5 +1,5 @@
-import { MenuController } from './MenuController';
+// import MenuController from './MenuController';
 
-describe('MenuController', function () {
+describe('MenuController', () => {
   //
 });
