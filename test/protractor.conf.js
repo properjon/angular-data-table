@@ -2,6 +2,9 @@ const config = {
   framework: 'jasmine',
   specs: ['./protractor/*.e2e.js'],
   baseUrl: 'http://localhost:9000/',
+  onPrepare() {
+    require('babel-register'); // eslint-disable-line
+  },
 };
 
 if (process.env.TRAVIS) {
