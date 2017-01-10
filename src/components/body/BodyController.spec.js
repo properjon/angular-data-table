@@ -59,6 +59,56 @@ describe('BodyController', () => {
 
       expect(ctrl.data).not.toEqual(0);
     });
+
+    it('should have the correct number of rows', () => {
+      let options = {
+        columns: [
+          { name: 'Name', prop: 'name' },
+          { name: 'Company', prop: 'company' }
+        ],
+        paging: {
+          offset: 0,
+          size: 3
+        }
+      };
+
+      setController({
+        options: options,
+        rows: olympicRows
+      });
+
+      ctrl.$onInit();
+      scope.$digest();
+
+      expect(ctrl.tempRows.length).toBe(3);
+    });
+
+    it('should increment page', () => {
+      let options = {
+        columns: [
+          { name: 'Name', prop: 'name' },
+          { name: 'Company', prop: 'company' }
+        ],
+        paging: {
+          offset: 0,
+          size: 3
+        }
+      };
+
+      setController({
+        options: options,
+        rows: olympicRows
+      });
+
+      ctrl.$onInit();
+      scope.$digest();
+
+      let name = ctrl.tempRows[0].name;
+      ctrl.options.paging.offset = 1;
+      scope.$digest();
+
+      expect(ctrl.tempRows[0].name).not.toBe(name);
+    });
   });
 
   describe('when setting tree and group columns', () => {

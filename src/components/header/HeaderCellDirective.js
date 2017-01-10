@@ -34,7 +34,7 @@ export default function HeaderCellDirective($compile) {
           <span class="dt-header-cell-label"
                 ng-click="hcell.onSorted()">
           </span>
-          <span ng-class="hcell.sortClass()"></span>
+          <span ng-class="hcell.sortClass()">{{hcell.column.sortPriority}}</span>
         </div>
       </div>`,
     compile() {
