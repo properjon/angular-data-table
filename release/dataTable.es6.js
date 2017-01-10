@@ -832,7 +832,9 @@ class DataTableController {
    * Sorts the values of the grid for client side sorting.
    */
   onSorted() {
-    if (!this.rows) return;
+    if (!this.rows) {
+      return;
+    }
 
     // return all sorted column, in the same order in which they were sorted
     const sorts = this.options.columns
@@ -857,11 +859,14 @@ class DataTableController {
       });
 
     if (sorts.length) {
-      this.onSort({ sorts });
+      if (this.onSort) {
+        this.onSort({ sorts });
+      }
 
       if (this.options.onSort) {
         this.options.onSort(sorts);
       }
+
 
       const clientSorts = [];
 
@@ -886,7 +891,9 @@ class DataTableController {
       }
     }
 
-    this.options.internal.setYOffset(0);
+    if (this.options.internal && this.options.internal.setYOffset) {
+      this.options.internal.setYOffset(0);
+    }
   }
 
   /**
@@ -1771,6 +1778,19 @@ class BodyController {
     }
   }
 
+  /**
+   * @description Constructs the rows for the page, assuming we're using internal paging.
+   */
+  buildInternalPage() {
+    let i;
+
+    this.tempRows.splice(0, this.tempRows.length);
+
+    for (i = 0; i < this.options.paging.size; i += 1) {
+      this.tempRows[i] = this.rows[(this.options.paging.offset * this.options.paging.size) + i];
+    }
+  }
+
   setConditionalWatches() {
     for (let i = this.watchListeners.length - 1; i >= 0; i -= 1) {
       this.watchListeners[i]();
@@ -1782,7 +1802,7 @@ class BodyController {
         (this.options.scrollbarV ||
             (!this.options.scrollbarV &&
               this.options.paging &&
-              this.options.paging.externalPaging))) {
+              this.options.paging.size))) {
       let sized = false;
 
       this.watchListeners.push(this.$scope.$watch('body.options.paging.size', (newVal, oldVal) => {
@@ -1799,10 +1819,16 @@ class BodyController {
 
       this.watchListeners.push(this.$scope.$watch('body.options.paging.offset', (newVal) => {
         if (this.options.paging.size) {
-          this.onPage({
-            offset: newVal,
-            size: this.options.paging.size,
-          });
+          if (!this.options.paging.externalPaging) {
+            this.buildInternalPage();
+          }
+
+          if (this.onPage) {
+            this.onPage({
+              offset: newVal,
+              size: this.options.paging.size,
+            });
+          }
         }
       }));
     }
@@ -1837,6 +1863,7 @@ class BodyController {
         }
 
         if (this.options.paging.externalPaging) {
+          // We're using external paging
           const idxs = this.getFirstLastIndexes();
           let idx = idxs.first;
 
@@ -1844,7 +1871,11 @@ class BodyController {
           while (idx < idxs.last) {
             this.tempRows.push(rows[idx += 1]);
           }
+        } else if (this.options.paging.size) {
+          // We're using internal paging
+          this.buildInternalPage();
         } else {
+          // No paging
           this.tempRows.splice(0, this.tempRows.length);
           this.tempRows.push(...rows);
         }
@@ -2139,7 +2170,9 @@ class BodyController {
       rowIndex += 1;
     }
 
-    this.options.internal.styleTranslator.update(this.tempRows);
+    if (this.options.internal && this.options.internal.styleTranslator) {
+      this.options.internal.styleTranslator.update(this.tempRows);
+    }
 
     return this.tempRows;
   }
