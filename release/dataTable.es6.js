@@ -1,4 +1,4 @@
-import angular$1 from 'angular';
+import 'angular';
 
 /* eslint-disable no-extend-native, no-bitwise */
 
@@ -3698,7 +3698,7 @@ function PositionHelper($log) {
   };
 }
 
-var popover = angular$1
+var popover = angular
   .module('dt.popover', [])
   .factory('PopoverRegistry', PopoverRegistry)
   .factory('PositionHelper', PositionHelper)
@@ -3864,12 +3864,12 @@ var dropdown = angular
   .directive('dropdownToggle', DropdownToggleDirective)
   .directive('dropdownMenu', DropdownMenuDirective);
 
-var menu = angular$1
+var menu = angular
   .module('dt.menu', [dropdown.name])
   .controller('MenuController', MenuController)
   .directive('dtm', MenuDirective);
 
-var dataTable = angular$1
+var dataTable = angular
   .module('data-table', [])
   .directive('dtable', DataTableDirective)
   .directive('resizable', ResizableDirective)

@@ -1,5 +1,3 @@
-import angular from 'angular';
-
 import PopoverDirective from './PopoverDirective';
 import PopoverRegistry from './PopoverRegistry';
 import PositionHelper from './PositionHelper';
