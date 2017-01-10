@@ -1,11 +1,10 @@
-import { DataTableController } from './DataTableController';
-import { TableDefaults } from '../defaults';
+import DataTableController from './DataTableController';
+import TableDefaults from '../defaults';
 
-describe('DataTableController', function () {
-  let $controller = null,
-      ctrl = null,
-      scope = null,
-      setController = null;
+describe('DataTableController', () => {
+  let ctrl = null;
+  let scope = null;
+  let setController = null;
 
   beforeEach(inject(($rootScope, $filter) => {
     scope = $rootScope.$new();
