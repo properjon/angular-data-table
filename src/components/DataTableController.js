@@ -106,8 +106,9 @@ export default class DataTableController {
    * If undefined, set column sortable property to table sortable property value
    */
   inheritColumnSortableProps() {
-    angular.forEach(this.options.columns, function(column) {
-      column.sortable = angular.isDefined(column.sortable) ? column.sortable : this.options.sortable;
+    angular.forEach(this.options.columns, (column) => {
+      column.sortable = angular.isDefined(column.sortable) ?
+        column.sortable : this.options.sortable;
     });
   }
 
