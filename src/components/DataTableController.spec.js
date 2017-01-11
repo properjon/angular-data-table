@@ -163,5 +163,23 @@ describe('DataTableController', () => {
               ctrl.columnWidths = 'columnGroupWidthsResponse';
           });
       });
+
+      describe('setting css', () => {
+          beforeEach(() => {
+              ctrl.options.scrollbarV = 1;
+              ctrl.options.selectable = true;
+              ctrl.options.checkboxSelection = false;
+          });
+
+          it('should return the correct table css', () => {
+              expect(ctrl.tableCss()).toEqual({
+                fixed: 1,
+                selectable: true,
+                checkboxable: false,
+            });
+          });
+
+
+      });
   });
 });
