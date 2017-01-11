@@ -1,5 +1,6 @@
 import DataTableController from './DataTableController';
 import TableDefaults from '../defaults';
+import * as utils from '../utils/utils';
 
 describe('DataTableController', () => {
   let ctrl = null;
@@ -68,26 +69,28 @@ describe('DataTableController', () => {
   });
 
   describe('initializations', () => {
+      beforeEach(() => {
+          let options = {
+            columns: [
+              { prop: 'name', sort: 'asc' },
+              { prop: 'age'}
+            ]
+          };
+          let rows = [
+            { name: 'Walter', age: 49 },
+            { name: 'Dude', age: 45 },
+            { name: 'Donnie', age: 46 },
+            { name: 'Maude', age: 48 }
+          ];
+
+          setController({
+            options: options,
+            rows: rows
+          });
+      });
+
       describe('setting column defaults', function () {
           beforeEach(() => {
-              let options = {
-                columns: [
-                  { prop: 'name', sort: 'asc' },
-                  { prop: 'age'}
-                ]
-              };
-              let rows = [
-                { name: 'Walter', age: 49 },
-                { name: 'Dude', age: 45 },
-                { name: 'Donnie', age: 46 },
-                { name: 'Maude', age: 48 }
-              ];
-
-              setController({
-                options: options,
-                rows: rows
-              });
-
               ctrl.transposeColumnDefaults();
           });
 
@@ -144,6 +147,20 @@ describe('DataTableController', () => {
                  headerCheckbox: false,
                  canAutoResize: true
              });
+          });
+      });
+
+      describe('creating column groups', function () {
+          beforeEach(() => {
+            spyOn(utils, 'ColumnsByPin').and.returnValue('columnsByPinResponse');
+            spyOn(utils, 'ColumnGroupWidths').and.returnValue('columnGroupWidthsResponse');
+
+            ctrl.calculateColumns();
+          });
+
+          it('sets the column groups', () => {
+              ctrl.columnsByPin = 'columnsByPinResponse';
+              ctrl.columnWidths = 'columnGroupWidthsResponse';
           });
       });
   });
