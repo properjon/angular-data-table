@@ -1,6 +1,7 @@
 import DataTableController from './DataTableController';
 import TableDefaults from '../defaults';
 import * as utils from '../utils/utils';
+import * as math from '../utils/math';
 
 describe('DataTableController', () => {
   let ctrl = null;
@@ -74,7 +75,11 @@ describe('DataTableController', () => {
             columns: [
               { prop: 'name', sort: 'asc' },
               { prop: 'age'}
-            ]
+            ],
+            internal: {
+                innerWidth: 100,
+                scrollBarWidth: 10
+            }
           };
           let rows = [
             { name: 'Walter', age: 49 },
@@ -89,7 +94,7 @@ describe('DataTableController', () => {
           });
       });
 
-      describe('setting column defaults', function () {
+      describe('setting column defaults', () => {
           beforeEach(() => {
               ctrl.transposeColumnDefaults();
           });
@@ -150,7 +155,7 @@ describe('DataTableController', () => {
           });
       });
 
-      describe('creating column groups', function () {
+      describe('creating column groups', () => {
           beforeEach(() => {
             spyOn(utils, 'ColumnsByPin').and.returnValue('columnsByPinResponse');
             spyOn(utils, 'ColumnGroupWidths').and.returnValue('columnGroupWidthsResponse');
@@ -162,6 +167,35 @@ describe('DataTableController', () => {
               ctrl.columnsByPin = 'columnsByPinResponse';
               ctrl.columnWidths = 'columnGroupWidthsResponse';
           });
+      });
+
+      describe('adjusting column sizes', () => {
+        beforeEach(() => {
+            spyOn(math, 'ForceFillColumnWidths');
+            spyOn(math, 'AdjustColumnWidths');
+        });
+
+        describe('when columnMode is force', () => {
+            beforeEach(() => {
+                ctrl.options.columnMode = 'force';
+                ctrl.adjustColumns(2);
+            });
+
+            it('calls ForceFillColumnWidths', () => {
+                expect(math.ForceFillColumnWidths).toHaveBeenCalled();
+            });
+        });
+
+        describe('when columnMode is flex', () => {
+            beforeEach(() => {
+                ctrl.options.columnMode = 'flex';
+                ctrl.adjustColumns(2);
+            });
+
+            it('calls AdjustColumnWidths', () => {
+                expect(math.AdjustColumnWidths).toHaveBeenCalled();
+            });
+        });
       });
 
       describe('setting css', () => {
