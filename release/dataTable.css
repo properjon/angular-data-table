@@ -8,14 +8,14 @@
   visibility: visible !important;
 }
 .dt *,
-.dt *:before,
-.dt *:after {
+.dt *::before,
+.dt *::after {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 .dt .dt-clone {
-  opacity: .4;
+  opacity: 0.4;
 }
 .dt .dt-clone .dt-resize-handle {
   visibility: hidden;
@@ -27,7 +27,7 @@
   white-space: nowrap;
   line-height: 1.625;
   text-overflow: ellipsis;
-  touch-callout: none;
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -71,7 +71,7 @@
   display: inline-block;
 }
 .dt .dt-header .dt-header-cell.dt-drag-over {
-  background: #EEE;
+  background: #eee;
 }
 .dt .dt-header .dt-header-cell.sortable .dt-header-cell-label {
   cursor: pointer;

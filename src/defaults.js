@@ -48,7 +48,7 @@ export const TableDefaults = {
     offset: 0,
 
     // Loading indicator
-    loadingIndicator: false
+    loadingIndicator: false,
   },
 
   // if users can select itmes
@@ -63,12 +63,15 @@ export const TableDefaults = {
   // if you can reorder columns
   reorderable: true,
 
+  // sorting by single or multiple columns
+  sortType: 'multiple',
+
   internal: {
     offsetX: 0,
     offsetY: 0,
     innerWidth: 0,
-    bodyHeight: 300
-  }
+    bodyHeight: 300,
+  },
 
 };
 
@@ -99,7 +102,7 @@ export const ColumnDefaults = {
   // Minimum width of the column.
   minWidth: 100,
 
-  //Maximum width of the column.
+  // Maximum width of the column.
   maxWidth: undefined,
 
   // The width of the column, by default (in pixels).
@@ -132,7 +135,12 @@ export const ColumnDefaults = {
   // If not provided, the cell data will be collected from row data instead.
   cellDataGetter: undefined,
 
+  // Grows all rows by this column value
+  // Only one column can have this set, cannot be combined with isTreeColumn
+  group: false,
+
   // Adds +/- button and makes a secondary call to load nested data
+  // Only one column can have this set, cannot be combined with isGroupColumn
   isTreeColumn: false,
 
   // Adds the checkbox selection to the column
@@ -143,6 +151,6 @@ export const ColumnDefaults = {
   headerCheckbox: false,
 
   // Whether the column can automatically resize to fill space in the table.
-  canAutoResize: true
+  canAutoResize: true,
 
 };

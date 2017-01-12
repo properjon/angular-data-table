@@ -1,56 +1,95 @@
 /**
  * Position helper for the popover directive.
  */
-export function PositionHelper(){
-  return {
 
-    calculateVerticalAlignment: function(elDimensions, popoverDimensions, alignment){
-      if (alignment === 'top'){
-        return elDimensions.top;
-      }
-      if (alignment === 'bottom'){
-        return elDimensions.top + elDimensions.height - popoverDimensions.height;
-      }
-      if (alignment === 'center'){
-        return elDimensions.top + elDimensions.height/2 - popoverDimensions.height/2;
-      }
-    },
+/* eslint-disable angular/log */
 
-    calculateVerticalCaret: function(elDimensions, popoverDimensions, caretDimensions, alignment){
-      if (alignment === 'top'){
-        return elDimensions.height/2 - caretDimensions.height/2 - 1;
-      }
-      if (alignment === 'bottom'){
-        return popoverDimensions.height - elDimensions.height/2 - caretDimensions.height/2 - 1;
-      }
-      if (alignment === 'center'){
-        return popoverDimensions.height/2 - caretDimensions.height/2 - 1;
-      }
-    },
+import POSITION from './Popover.constants';
 
-    calculateHorizontalCaret: function(elDimensions, popoverDimensions, caretDimensions, alignment){
-      if (alignment === 'left'){
-        return elDimensions.width/2 - caretDimensions.height/2 - 1;
-      }
-      if (alignment === 'right'){
-        return popoverDimensions.width - elDimensions.width/2 - caretDimensions.height/2 - 1;
-      }
-      if (alignment === 'center'){
-        return popoverDimensions.width/2 - caretDimensions.height/2 - 1;
-      }
-    },
+/* @ngInject */
+export default function PositionHelper($log) {
+  function subtractAll(items) {
+    let total = 0;
 
-    calculateHorizontalAlignment: function(elDimensions, popoverDimensions, alignment){
-      if (alignment === 'left'){
-        return elDimensions.left;
-      }
-      if (alignment === 'right'){
-        return elDimensions.left + elDimensions.width - popoverDimensions.width;
-      }
-      if (alignment === 'center'){
-        return elDimensions.left + elDimensions.width/2 - popoverDimensions.width/2;
-      }
-    }
-
+    items.forEach((count, index) => {
+      total = (index === 0) ? total += count : total -= count;
+    });
   }
-};
+
+  return {
+    calculateHorizontalAlignment(elDimensions, popoverDimensions, alignment) {
+      switch (alignment) {
+        case POSITION.LEFT:
+          return elDimensions.left;
+        case POSITION.RIGHT:
+          return elDimensions.left + (elDimensions.width - popoverDimensions.width);
+        case POSITION.CENTER:
+          return elDimensions.left +
+            ((elDimensions.width / 2) - (popoverDimensions.width / 2));
+        default:
+          return $log.warn('calculateHorizontalAlignment issue', this);
+      }
+    },
+
+    calculateVerticalAlignment(elDimensions, popoverDimensions, alignment) {
+      switch (alignment) {
+        case POSITION.TOP:
+          return elDimensions.top;
+        case POSITION.BOTTOM:
+          return elDimensions.top + (elDimensions.height - popoverDimensions.height);
+        case POSITION.CENTER:
+          return elDimensions.top + ((elDimensions.height / 2) - (popoverDimensions.height / 2));
+        default:
+          return $log.warn('calculateVerticalAlignment issue', this);
+      }
+    },
+
+    calculateVerticalCaret(elDimensions, popoverDimensions, caretDimensions, alignment) {
+      switch (alignment) {
+        case POSITION.TOP:
+          return subtractAll([
+            elDimensions.height / 2,
+            caretDimensions.height / 2,
+            1,
+          ]);
+        case POSITION.BOTTOM:
+          return subtractAll([
+            popoverDimensions.height,
+            elDimensions.height / 2,
+            caretDimensions.height / 2,
+            1,
+          ]);
+        case POSITION.CENTER:
+          return subtractAll([
+            popoverDimensions.height / 2,
+            caretDimensions.height / 2,
+            1,
+          ]);
+        default:
+          return $log.warn('calculateVerticalCaret issue', this);
+      }
+    },
+
+    calculateHorizontalCaret(elDimensions, popoverDimensions, caretDimensions, alignment) {
+      switch (alignment) {
+        case POSITION.LEFT:
+          return subtractAll([
+            elDimensions.width / 2,
+            caretDimensions.height / 2,
+            1,
+          ]);
+        case POSITION.RIGHT:
+          return subtractAll([
+            popoverDimensions.width,
+            elDimensions.width / 2,
+            caretDimensions.height / 2,
+            1,
+          ]);
+        case POSITION.CENTER:
+          return subtractAll([(popoverDimensions.width / 2), (caretDimensions.height / 2), 1]);
+        default:
+          return $log.warn('calculateHorizontalCaret issue', this);
+      }
+    },
+  };
+}

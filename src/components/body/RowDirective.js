@@ -1,7 +1,7 @@
-import { RowController } from './RowController';
-import { TranslateXY } from '../../utils/translate';
+import RowController from './RowController';
+import TranslateXY from '../../utils/translate';
 
-export function RowDirective(){
+export default function RowDirective() {
   return {
     restrict: 'E',
     controller: RowController,
@@ -16,10 +16,10 @@ export function RowDirective(){
       hasChildren: '=',
       options: '=',
       onCheckboxChange: '&',
-      onTreeToggle: '&'
+      onTreeToggle: '&',
     },
-    link: function($scope, $elm, $attrs, ctrl){
-      if(ctrl.row){
+    link($scope, $elm, $attrs, ctrl) {
+      if (ctrl.row) {
         // inital render position
         TranslateXY($elm[0].style, 0, ctrl.row.$$index * ctrl.options.rowHeight);
       }
@@ -74,6 +74,6 @@ export function RowDirective(){
           </dt-cell>
         </div>
       </div>`,
-    replace:true
+    replace: true,
   };
-};
+}

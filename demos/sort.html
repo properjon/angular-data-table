@@ -38,10 +38,11 @@
     </style>
     <link href="../dist/dataTable.css" media="all" rel="stylesheet" />
     <link href="../dist/themes/material.css" media="all" rel="stylesheet" />
-    <link href="http://fontastic.s3.amazonaws.com/Jnf54BZCm7mSjGCxNRbfp3/icons.css" rel="stylesheet">
+    <link href="../dist/themes/icons.css" rel="stylesheet">
   </head>
   <body ng-app="app" ng-controller="HomeController">
 
+    <label><input type="checkbox" ng-model="multiple" ng-change="updateSortType()" /> Multi column sorting</label>
 
     <dtable options="options" rows="data" class="material" on-sort="onColumnSort(sorts)"></dtable>
 
@@ -62,12 +63,18 @@
             })
           }
 
+          $scope.updateSortType = () => {
+              $scope.options.sortType = $scope.multiple === true ? 'multiple' : 'single';
+          }
+
+          $scope.multiple = true;
+
           $scope.options = {
             rowHeight: 50,
             headerHeight: 50,
             footerHeight: false,
             scrollbarV: false,
-            sortType: 'multiple', // available options: ['single', 'multiple']
+            sortType: 'multiple',
             // onSort: $scope.onColumnSort,
             columns: [{
                 name: "Name",

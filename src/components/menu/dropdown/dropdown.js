@@ -1,8 +1,7 @@
-import angular from 'angular';
-import { DropdownController } from './DropdownController';
-import { DropdownDirective } from './DropdownDirective';
-import { DropdownToggleDirective } from './DropdownToggleDirective';
-import { DropdownMenuDirective } from './DropdownMenuDirective';
+import DropdownController from './DropdownController';
+import DropdownDirective from './DropdownDirective';
+import DropdownToggleDirective from './DropdownToggleDirective';
+import DropdownMenuDirective from './DropdownMenuDirective';
 
 export default angular
   .module('dt.dropdown', [])

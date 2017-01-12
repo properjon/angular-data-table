@@ -1,20 +1,21 @@
-import angular from 'angular';
+import POSITION from './Popover.constants';
 
 /**
  * Popover Directive
- * @param {object} $q              
- * @param {function} $timeout        
- * @param {function} $templateCache  
- * @param {function} $compile        
- * @param {function} PopoverRegistry 
- * @param {function} $animate        
+ * @param {object} $q
+ * @param {function} $timeout
+ * @param {function} $templateCache
+ * @param {function} $compile
+ * @param {function} PopoverRegistry
+ * @param {function} $animate
  */
-export function PopoverDirective($q, $timeout, $templateCache, $compile, PopoverRegistry, PositionHelper, $animate){
 
+export default function PopoverDirective($q, $timeout, $templateCache,
+  $compile, PopoverRegistry, PositionHelper, $animate, $document, $http) {
   /**
    * Loads a template from the template cache
-   * @param  {string} template 
-   * @param  {boolean} plain    
+   * @param  {string} template
+   * @param  {boolean} plain
    * @return {object}  html template
    */
   function loadTemplate(template, plain) {
@@ -26,21 +27,22 @@ export function PopoverDirective($q, $timeout, $templateCache, $compile, Popover
       return template;
     }
 
-    return $templateCache.get(template) || $http.get(template, { cache : true });
+    return $templateCache.get(template) || $http.get(template, { cache: true });
   }
 
   /**
    * Determines a boolean given a value
-   * @param  {object} value 
-   * @return {boolean}       
+   * @param  {object} value
+   * @return {boolean}
    */
   function toBoolean(value) {
     if (value && value.length !== 0) {
-      var v = ("" + value).toLowerCase();
-      value = (v == 'true');
+      const v = value.toString().toLowerCase();
+      value = (v === 'true');
     } else {
       value = false;
     }
+
     return value;
   }
 
@@ -48,7 +50,7 @@ export function PopoverDirective($q, $timeout, $templateCache, $compile, Popover
     restrict: 'A',
     scope: true,
     replace: false,
-    link: function ($scope, $element, $attributes) {
+    link($scope, $element, $attributes) {
       $scope.popover = null;
       $scope.popoverId = Date.now();
 
@@ -57,10 +59,10 @@ export function PopoverDirective($q, $timeout, $templateCache, $compile, Popover
         template: $attributes.popoverTemplate,
         plain: toBoolean($attributes.popoverPlain || false),
         placement: $attributes.popoverPlacement || 'right',
-        alignment: $attributes.popoverAlignment  || 'center',
+        alignment: $attributes.popoverAlignment || 'center',
         group: $attributes.popoverGroup,
-        spacing: parseInt($attributes.popoverSpacing) || 0,
-        showCaret: toBoolean($attributes.popoverPlain || false)
+        spacing: parseInt($attributes.popoverSpacing, 10) || 0,
+        showCaret: toBoolean($attributes.popoverPlain || false),
       };
 
       // attach exit and enter events to element
@@ -69,166 +71,180 @@ export function PopoverDirective($q, $timeout, $templateCache, $compile, Popover
       $element.off('mouseleave', mouseOut);
       $element.on('mouseleave', mouseOut);
 
-      function mouseOut(){
+      function mouseOut() {
         $scope.exitTimeout = $timeout(remove, 500);
-      };
+      }
 
       /**
        * Displays the popover on the page
        */
-      function display(){
+      function display() {
         // Cancel exit timeout
         $timeout.cancel($scope.exitTimeout);
 
-        var elm = document.getElementById(`#${$scope.popoverId}`);
-        if ($scope.popover && elm) return; 
+        const elm = $document[0].getElementById(`#${$scope.popoverId}`);
+        if ($scope.popover && elm) return;
 
         // remove other popovers from the same group
-        if ($scope.options.group){
+        if ($scope.options.group) {
           PopoverRegistry.removeGroup($scope.options.group, $scope.popoverId);
         }
 
-        if ($scope.options.text && !$scope.options.template){
-          $scope.popover = angular.element(`<div class="popover popover-text 
+        if ($scope.options.text && !$scope.options.template) {
+          $scope.popover = angular.element(`<div class="dt-popover popover-text
             popover${$scope.options.placement}" id="${$scope.popoverId}"></div>`);
 
           $scope.popover.html($scope.options.text);
-          angular.element(document.body).append($scope.popover);
+          angular.element($document[0].body).append($scope.popover);
           positionPopover($element, $scope.popover, $scope.options);
-          PopoverRegistry.add($scope.popoverId, {element: $element, popover: $scope.popover, group: $scope.options.group});
-
+          PopoverRegistry.add($scope.popoverId, {
+            element: $element,
+            popover: $scope.popover,
+            group: $scope.options.group,
+          });
         } else {
-          $q.when(loadTemplate($scope.options.template, $scope.options.plain)).then(function(template) {
+          $q.when(loadTemplate($scope.options.template, $scope.options.plain)).then((template) => {
             if (!angular.isString(template)) {
-              if (template.data && angular.isString(template.data)){
+              if (template.data && angular.isString(template.data)) {
                 template = template.data;
               } else {
                 template = '';
               }
             }
 
-            $scope.popover = angular.element(`<div class="popover 
+            $scope.popover = angular.element(`<div class="dt-popover
               popover-${$scope.options.placement}" id="${$scope.popoverId}"></div>`);
 
             $scope.popover.html(template);
             $compile($scope.popover)($scope);
-            angular.element(document.body).append($scope.popover);
+            angular.element($document.body).append($scope.popover);
             positionPopover($element, $scope.popover, $scope.options);
 
             // attach exit and enter events to popover
             $scope.popover.off('mouseleave', mouseOut);
             $scope.popover.on('mouseleave', mouseOut);
-            $scope.popover.on('mouseenter', function(){
+            $scope.popover.on('mouseenter', () => {
               $timeout.cancel($scope.exitTimeout);
             });
 
             PopoverRegistry.add($scope.popoverId, {
               element: $element,
               popover: $scope.popover,
-              group: $scope.options.group
+              group: $scope.options.group,
             });
           });
         }
-      };
+      }
 
       /**
        * Removes the template from the registry and page
        */
-      function remove(){
-        if ($scope.popover){
+      function remove() {
+        if ($scope.popover) {
           $scope.popover.remove();
         }
 
         $scope.popover = undefined;
         PopoverRegistry.remove($scope.popoverId);
-      };
+      }
 
       /**
        * Positions the popover
-       * @param  {object} triggerElement 
-       * @param  {object} popover        
-       * @param  {object} options        
+       * @param  {object} triggerElement
+       * @param  {object} popover
+       * @param  {object} options
        */
-      function positionPopover(triggerElement, popover, options){
-        $timeout(function(){
-          var elDimensions = triggerElement[0].getBoundingClientRect(),
-              popoverDimensions = popover[0].getBoundingClientRect(),
-              top, left;
+      function positionPopover(triggerElement, popover, options) {
+        $timeout(() => {
+          const elDimensions = triggerElement[0].getBoundingClientRect();
+          const popoverDimensions = popover[0].getBoundingClientRect();
 
-          if (options.placement === 'right'){
+          let top;
+          let left;
+
+          if (options.placement === POSITION.RIGHT) {
             left = elDimensions.left + elDimensions.width + options.spacing;
-            top = PositionHelper.calculateVerticalAlignment(elDimensions, 
-              popoverDimensions, options.alignment);
+            top = calculateVerticalAlignment();
           }
-          if (options.placement === 'left'){
+          if (options.placement === POSITION.LEFT) {
             left = elDimensions.left - popoverDimensions.width - options.spacing;
-            top = PositionHelper.calculateVerticalAlignment(elDimensions, 
-              popoverDimensions, options.alignment);
+            top = calculateVerticalAlignment();
           }
-          if (options.placement === 'top'){
+          if (options.placement === POSITION.TOP) {
             top = elDimensions.top - popoverDimensions.height - options.spacing;
-            left = PositionHelper.calculateHorizontalAlignment(elDimensions, 
+            left = calculateHorizontalAlignment();
+          }
+          if (options.placement === POSITION.BOTTOM) {
+            top = elDimensions.top + elDimensions.height + options.spacing;
+            left = calculateHorizontalAlignment();
+          }
+
+          function calculateVerticalAlignment() {
+            return PositionHelper.calculateVerticalAlignment(elDimensions,
               popoverDimensions, options.alignment);
           }
-          if (options.placement === 'bottom'){
-            top = elDimensions.top + elDimensions.height + options.spacing;
-            left = PositionHelper.calculateHorizontalAlignment(elDimensions, 
+
+          function calculateHorizontalAlignment() {
+            return PositionHelper.calculateHorizontalAlignment(elDimensions,
               popoverDimensions, options.alignment);
           }
 
           popover.css({
-            top: top + 'px', 
-            left: left + 'px'
+            top: `${top}px`,
+            left: `${left}px`,
           });
 
-          if($scope.options.showCaret){
+          if ($scope.options.showCaret) {
             addCaret($scope.popover, elDimensions, popoverDimensions);
           }
 
           $animate.addClass($scope.popover, 'popover-animation');
         }, 50);
-      };
+      }
 
       /**
        * Adds a caret and positions it relatively to the popover
-       * @param {object} popoverEl         
-       * @param {object} elDimensions      
-       * @param {object} popoverDimensions 
+       * @param {object} popoverEl
+       * @param {object} elDimensions
+       * @param {object} popoverDimensions
        */
-      function addCaret(popoverEl, elDimensions, popoverDimensions){
-        var caret = angular.element(`<span class="popover-caret caret-${$scope.options.placement}"></span>`);
+      function addCaret(popoverEl, elDimensions, popoverDimensions) {
+        const caret = angular.element(`<span class="popover-caret caret-${$scope.options.placement}"></span>`);
         popoverEl.append(caret);
-        var caretDimensions = caret[0].getBoundingClientRect();
+        const caretDimensions = caret[0].getBoundingClientRect();
 
-        var left, top;
-        if ($scope.options.placement === 'right'){
+        let left;
+        let top;
+
+        if ($scope.options.placement === POSITION.RIGHT) {
           left = -6;
-          top = PositionHelper.calculateVerticalCaret(elDimensions, 
-            popoverDimensions, caretDimensions, $scope.options.alignment);
-        }
-        if ($scope.options.placement === 'left'){
+          top = calculateVerticalCaret();
+        } else if ($scope.options.placement === POSITION.LEFT) {
           left = popoverDimensions.width - 2;
-          top = PositionHelper.calculateVerticalCaret(elDimensions, 
-            popoverDimensions, caretDimensions, $scope.options.alignment);
-        }
-        if ($scope.options.placement === 'top'){
+          top = calculateVerticalCaret();
+        } else if ($scope.options.placement === POSITION.TOP) {
           top = popoverDimensions.height - 5;
-          left = PositionHelper.calculateHorizontalCaret(elDimensions, 
+          left = calculateHorizontalCaret();
+        } else if ($scope.options.placement === POSITION.BOTTOM) {
+          top = -8;
+          left = calculateHorizontalCaret();
+        }
+
+        function calculateVerticalCaret() {
+          return PositionHelper.calculateVerticalCaret(elDimensions,
             popoverDimensions, caretDimensions, $scope.options.alignment);
         }
 
-        if ($scope.options.placement === 'bottom'){
-          top = -8;
-          left = PositionHelper.calculateHorizontalCaret(elDimensions, 
+        function calculateHorizontalCaret() {
+          return PositionHelper.calculateHorizontalCaret(elDimensions,
             popoverDimensions, caretDimensions, $scope.options.alignment);
         }
 
         caret.css({
-          top: top + 'px', 
-          left: left + 'px'
+          top: `${top}px`,
+          left: `${left}px`,
         });
-      };
-
-    }
-  }
-};
+      }
+    },
+  };
+}

@@ -42,9 +42,9 @@
       }
 
     </style>
-<link href="../dist/dataTable.css" media="all" rel="stylesheet" />
-<link href="../dist/themes/material.css" media="all" rel="stylesheet" />
-<link href="http://fontastic.s3.amazonaws.com/Jnf54BZCm7mSjGCxNRbfp3/icons.css" rel="stylesheet">
+    <link href="../dist/dataTable.css" media="all" rel="stylesheet" />
+    <link href="../dist/themes/material.css" media="all" rel="stylesheet" />
+    <link href="../dist/themes/icons.css" rel="stylesheet">
 </head>
 
 <body ng-app="app" ng-controller="HomeController">
@@ -67,9 +67,9 @@
             headerHeight: 50,
             footerHeight: 50,
             columns: [
-              { name: "Name", prop: "name" },
-              { name: "Gender", prop: "gender" },
-              { name: "Company", prop: "company" }
+              { name: "Name", prop: "name", sortable: false },
+              { name: "Gender", prop: "gender", sortable: false },
+              { name: "Company", prop: "company", sortable: false }
             ],
             columnMode: 'force'
           };

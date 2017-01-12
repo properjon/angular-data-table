@@ -1,35 +1,34 @@
-import '../tests/frameworks';
-import {ObjectId} from '../utils/utils';
-import {DataTableService} from './DataTableService';
+import { ObjectId } from '../utils/utils';
+import dataTableService from './DataTableService';
 
-var mock = angular.mock;
+describe('DataTableService', () => {
+  let service;
+  let parse;
 
-describe('DataTableService', function () {
-	before(() => {
-		angular.module('DataTables.Mock', []);
-	})
-	beforeEach(mock.module('DataTables.Mock'));
+  beforeEach(() => {
+    angular.mock.module('data-table.mocks');
 
-	beforeEach(mock.module(($provide) => {
-		$provide.constant('DataTableService', DataTableService);
-	}));
+    angular.mock.module(($provide) => {
+      $provide.constant('DataTableService', dataTableService);
+    });
 
-	beforeEach(mock.inject((DataTableService, $parse) => {
-		this.DataTableService = DataTableService;
-		this.$parse = $parse;
-	}));
+    angular.mock.inject((DataTableService, $parse) => {
+      service = DataTableService;
+      parse = $parse;
+    });
+  });
 
-	it('should build and save columns', () => {
-		let id = ObjectId();
-		let columnElements = [
-			`<column name="Name" width="300" flex-grow="1"></column>`,
-			`<column name="Gender" flex-grow="1">{{monkey}} ---- {{$cell}}</column>`
-		].map((el) => angular.element(el)[0]);
+  it('should build and save columns', () => {
+    const id = ObjectId();
+    const columnElements = [
+      '<column name="Name" width="300" flex-grow="1"></column>',
+      '<column name="Gender" flex-grow="1">{{monkey}} ---- {{$cell}}</column>',
+    ].map(el => angular.element(el)[0]);
 
-		this.DataTableService.saveColumns(id, columnElements);
-		this.DataTableService.buildColumns({}, this.$parse);
+    service.saveColumns(id, columnElements);
+    service.buildColumns({}, parse);
 
-		this.DataTableService.columns.should.have.property(id).and.have.length(2);
-	});
-
+    expect(service.columns[id]).toBeDefined();
+    expect(service.columns[id].length).toBe(2);
+  });
 });

@@ -1,0 +1,54 @@
+---
+engines:
+  stylelint:
+    enabled: true
+    channel: "beta"
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+  eslint:
+    enabled: true
+    channel: "eslint-3"
+    checks:
+      import/no-extraneous-dependencies:
+        enabled: false
+      import/no-unresolved:
+        enabled: false
+      new-cap:
+        enabled: false
+    exclude_fingerprints:
+    # Exclude $document service preference in vendorPrefixes.js
+    - d05c060d75d5a94d266f0f7398093e1a
+    # Exclude $window service preference in vendorPrefixes.js
+    - 7029050c6569c51f4384a6b33c5846f1
+    # Exclude $window service preference in utils.js
+    - a43ad3721244d16282dfb81081b3580c
+    # Exclude $timeout service preference in utils.js
+    - e9642a68023bd808916ab7879649e556
+    # Exclude $document service preference in utils.js
+    - 2fc6dfef9461ffc93af629c3e4acf704
+    # Exclude $timeout service preference in throttle.js
+    - 3b8179a73a079c5d6ec554e36fbd4bdf
+    # Exclude $window service preference in translate.js
+    - da547e16b5d64c90f3955fc93573ec1c
+  fixme:
+    enabled: true
+ratings:
+  paths:
+  - "**.css"
+  - "**.less"
+  - "**.inc"
+  - "**.js"
+  - "**.jsx"
+  - "**.module"
+  - "**.php"
+  - "**.py"
+  - "**.rb"
+exclude_paths:
+  - "release/"
+  - "demos/"
+  - "test/"
+  - "**/*.spec.js"
+  - "**/*.e2e.js"

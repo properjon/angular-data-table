@@ -1,10 +1,10 @@
-import { SelectionController } from './SelectionController';
+import SelectionController from './SelectionController';
 
-export function SelectionDirective(){
+export default function SelectionDirective() {
   return {
     controller: SelectionController,
     restrict: 'A',
-    require:'^dtBody',
-    controllerAs: 'selCtrl'
+    require: '^dtBody',
+    controllerAs: 'selCtrl',
   };
-};
+}
