@@ -284,7 +284,7 @@ export default class BodyController {
    *  }
    *
    */
-  buildRowsByGroup() { console.log(this); //eslint-disable-line
+  buildRowsByGroup() {
     this.index = {};
     this.rowsByGroup = {};
 
@@ -336,8 +336,6 @@ export default class BodyController {
         }
       }
     }
-
-    console.log(this); //eslint-disable-line
   }
 
   /**
@@ -585,8 +583,6 @@ export default class BodyController {
    */
   getRowHasChildren(row) {
     if (!this.treeColumn) return undefined;
-
-    console.log(this.rowsByGroup, row, this.treeColumn.prop); // eslint-disable-line
 
     const children = this.rowsByGroup[row[this.treeColumn.prop]];
 
