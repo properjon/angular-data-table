@@ -67,6 +67,7 @@ describe('BodyController', () => {
           { name: 'Company', prop: 'company' }
         ],
         paging: {
+          internal: true,
           offset: 0,
           size: 3
         }
@@ -90,6 +91,7 @@ describe('BodyController', () => {
           { name: 'Company', prop: 'company' }
         ],
         paging: {
+          internal: true,
           offset: 0,
           size: 3
         }

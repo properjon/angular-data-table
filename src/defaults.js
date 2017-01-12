@@ -38,6 +38,9 @@ export const TableDefaults = {
     // if external paging is turned on
     externalPaging: false,
 
+    // If internal paging is turned on
+    internal: false,
+
     // Page size
     size: undefined,
 

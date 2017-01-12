@@ -112,7 +112,7 @@ export default class BodyController {
 
       this.watchListeners.push(this.$scope.$watch('body.options.paging.offset', (newVal) => {
         if (this.options.paging.size) {
-          if (!this.options.paging.externalPaging) {
+          if (this.options.paging.internal) {
             this.buildInternalPage();
           }
 
@@ -164,7 +164,7 @@ export default class BodyController {
           while (idx < idxs.last) {
             this.tempRows.push(rows[idx += 1]);
           }
-        } else if (this.options.paging.size) {
+        } else if (this.options.paging.internal) {
           // We're using internal paging
           this.buildInternalPage();
         } else {

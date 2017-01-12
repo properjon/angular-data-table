@@ -76,6 +76,11 @@ export default class DataTableController {
         });
       }, true);
     }
+
+    if (this.options.paging && this.options.paging.internal && !this.options.paging.size) {
+      // Assign a default page size if internal paging is turned on and none was specified.
+      this.options.paging.size = 10;
+    }
   }
 
   /**
