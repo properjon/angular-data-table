@@ -15,6 +15,12 @@ const customLaunchers = {
     platform: 'Windows 7',
     version: '11.0',
   },
+  sl_safari: {
+    base: 'SauceLabs',
+    browserName: 'safari',
+    platform: 'macOS 10.12',
+    version: '10.0',
+  },
 };
 
 const karmaBaseConfig = {
