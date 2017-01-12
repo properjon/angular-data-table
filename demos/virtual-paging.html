@@ -1,15 +1,16 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset=" utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
-    <meta name="apple-mobile-web-app-title" content="Datagrid">
-    <title>Datagrid - Paging</title>
-    <base href="/">
-    <style>
+
+<head>
+  <meta charset=" utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
+  <meta name="apple-mobile-web-app-title" content="Datagrid">
+  <title>Datagrid - Paging</title>
+  <base href="/">
+  <style>
       *, *:after, *:before {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
@@ -41,28 +42,24 @@
       }
 
     </style>
-    <link href="../dist/dataTable.css" media="all" rel="stylesheet" />
-    <link href="../dist/themes/material.css" media="all" rel="stylesheet" />
-    <link href="http://fontastic.s3.amazonaws.com/Jnf54BZCm7mSjGCxNRbfp3/icons.css" rel="stylesheet">
-  </head>
-  <body ng-app="app" ng-controller="HomeController">
+<link href="../dist/dataTable.css" media="all" rel="stylesheet" />
+<link href="../dist/themes/material.css" media="all" rel="stylesheet" />
+<link href="http://fontastic.s3.amazonaws.com/Jnf54BZCm7mSjGCxNRbfp3/icons.css" rel="stylesheet">
+</head>
 
-    <dtable 
-      options="optionz"
-      rows="data" 
-      class="material" 
-      on-page="paging(offset, size)">
-    </dtable>
+<body ng-app="app" ng-controller="HomeController">
 
-    <script src="../jspm_packages/system.js"></script>
-    <script src="../config.js"></script>
+  <dtable options="optionz" rows="data" class="material"></dtable>
 
-    <script>
+  <script src="../jspm_packages/system.js"></script>
+  <script src="../config.js"></script>
 
-      System.import('dataTable').then(function(dt){
-        var module = angular.module('app', [ dt.default.name ]);
+  <script>
 
-        module.controller('HomeController', function($scope, $http){
+      System.import('dataTable').then(function (dt) {
+        var module = angular.module('app', [dt.default.name]);
+
+        module.controller('HomeController', function ($scope, $http) {
           $scope.data = []
 
           $scope.optionz = {
@@ -74,37 +71,16 @@
               { name: "Gender", prop: "gender" },
               { name: "Company", prop: "company" }
             ],
-            columnMode: 'force',
-            paging: {
-              externalPaging: true,
-              loadingIndicator: true
-            }
+            columnMode: 'force'
           };
 
-          $scope.paging = function(offset, size){
-            $scope.optionz.paging.loadingIndicator = true;
-
-            setTimeout(function(){
-            $http.get('/demos/data/100.json').success(function(d) {
-
-              $scope.optionz.paging.count = d.length;
-
-              var set = d.splice(offset, size);
-              // only insert items i don't already have
-              set.forEach(function(r, i){
-                var idx = i + (offset * size);
-                $scope.data[idx] = r;
-              });
-
-              console.log('paging!', offset, size)
-              $scope.optionz.paging.loadingIndicator = false;
-
-            });
-          }, 800)
-          };
+          $http.get('/demos/data/100.json').success(function (d) {
+            $scope.data = d;
+          });
         });
       });
     </script>
 
-  </body>
+</body>
+
 </html>
