@@ -29,7 +29,8 @@
     "start": "node ./node_modules/gulp/bin/gulp.js serve watch",
     "release": "node ./node_modules/gulp/bin/gulp.js release",
     "test": "node ./node_modules/gulp/bin/gulp.js test",
-    "e2e": "protractor test/protractor.conf.js",
+    "unit": "node ./node_modules/gulp/bin/gulp.js unit",
+    "e2e": "node ./node_modules/protractor/bin/protractor test/protractor.conf.js",
     "report-coverage": "codecov",
     "lint": "eslint src/**/*.js src/components/**/*.js src/components/menu/**/*.js src/*.js test/*.js config.js gulpfile.babel.js --fix",
     "stylelint": "stylelint src/dataTable.less src/themes/*.less src/components/menu/menu.less src/components/popover/popover.less"
