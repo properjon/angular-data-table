@@ -182,7 +182,7 @@ describe('DataTableController', () => {
             });
 
             it('calls ForceFillColumnWidths', () => {
-                expect(math.ForceFillColumnWidths).toHaveBeenCalled();
+                expect(math.ForceFillColumnWidths).toHaveBeenCalledWith(ctrl.options.columns, 90, 2);
             });
         });
 
@@ -193,7 +193,7 @@ describe('DataTableController', () => {
             });
 
             it('calls AdjustColumnWidths', () => {
-                expect(math.AdjustColumnWidths).toHaveBeenCalled();
+                expect(math.AdjustColumnWidths).toHaveBeenCalledWith(ctrl.options.columns, 90);
             });
         });
       });
