@@ -36,8 +36,8 @@ export default class BodyController {
 
     this.$scope.$watch('body.options.columns', (newVal) => {
       if (newVal) {
-        const origTreeColumn = this.treeColumn;
-        const origGroupColumn = this.groupColumn;
+        const origTreeColumn = angular.copy(this.treeColumn);
+        const origGroupColumn = angular.copy(this.groupColumn);
 
         this.setTreeAndGroupColumns();
 
@@ -284,7 +284,7 @@ export default class BodyController {
    *  }
    *
    */
-  buildRowsByGroup() {
+  buildRowsByGroup() { console.log(this); //eslint-disable-line
     this.index = {};
     this.rowsByGroup = {};
 
@@ -336,6 +336,8 @@ export default class BodyController {
         }
       }
     }
+
+    console.log(this); //eslint-disable-line
   }
 
   /**
@@ -583,6 +585,8 @@ export default class BodyController {
    */
   getRowHasChildren(row) {
     if (!this.treeColumn) return undefined;
+
+    console.log(this.rowsByGroup, row, this.treeColumn.prop); // eslint-disable-line
 
     const children = this.rowsByGroup[row[this.treeColumn.prop]];
 
