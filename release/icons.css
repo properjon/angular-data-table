@@ -1,5 +1,5 @@
-@charset "UTF-8";
-/* data-table */
+@charset "utf-8";
+/* data-table font */
 @font-face {
   font-family: "data-table";
   src: url("https://file.myfontastic.com/Jnf54BZCm7mSjGCxNRbfp3/fonts/1447204703.eot");
@@ -7,7 +7,7 @@
   font-weight: normal;
   font-style: normal;
 }
-[data-icon]:before {
+[data-icon]::before {
   font-family: "data-table" !important;
   content: attr(data-icon);
   font-style: normal !important;
@@ -19,8 +19,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-[class^="icon-"]:before,
-[class*=" icon-"]:before {
+[class^="icon-"]::before,
+[class*=" icon-"]::before {
   font-family: "data-table" !important;
   font-style: normal !important;
   font-weight: normal !important;
@@ -31,51 +31,51 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.icon-filter:before {
+.icon-filter::before {
   content: "b";
 }
-.icon-collapse:before {
+.icon-collapse::before {
   content: "a";
 }
-.icon-expand:before {
+.icon-expand::before {
   content: "c";
 }
-.icon-close:before {
+.icon-close::before {
   content: "d";
 }
-.icon-up:before {
+.icon-up::before {
   content: "e";
 }
-.icon-down:before {
+.icon-down::before {
   content: "f";
 }
-.icon-sort:before {
+.icon-sort::before {
   content: "g";
 }
-.icon-done:before {
+.icon-done::before {
   content: "h";
 }
-.icon-done-all:before {
+.icon-done-all::before {
   content: "i";
 }
-.icon-search:before {
+.icon-search::before {
   content: "j";
 }
-.icon-pin:before {
+.icon-pin::before {
   content: "k";
 }
-.icon-add:before {
+.icon-add::before {
   content: "m";
 }
-.icon-left:before {
+.icon-left::before {
   content: "o";
 }
-.icon-right:before {
+.icon-right::before {
   content: "p";
 }
-.icon-skip:before {
+.icon-skip::before {
   content: "q";
 }
-.icon-prev:before {
+.icon-prev::before {
   content: "r";
 }

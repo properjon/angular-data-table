@@ -1,5 +1,5 @@
-import { SelectionController } from './SelectionController';
+// import SelectionController from './SelectionController';
 
-describe('SelectionController', function () {
+describe('SelectionController', () => {
   //
 });

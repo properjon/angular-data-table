@@ -1,6 +1,6 @@
-import { TranslateXY } from '../../utils/translate';
+import TranslateXY from '../../utils/translate';
 
-export class HeaderController {
+export default class HeaderController {
   /**
    * Returns the styles for the header directive.
    * @param  {object} scope
@@ -8,9 +8,9 @@ export class HeaderController {
    */
   styles() {
     return {
-      width: this.options.internal.innerWidth + 'px',
-      height: this.options.headerHeight + 'px'
-    }
+      width: `${this.options.internal.innerWidth}px`,
+      height: `${this.options.headerHeight}px`,
+    };
   }
 
   /**
@@ -18,9 +18,9 @@ export class HeaderController {
    * @param  {object} scope
    * @return {object} styles
    */
-  innerStyles(){
+  innerStyles() {
     return {
-      width: this.columnWidths.total + 'px'
+      width: `${this.columnWidths.total}px`,
     };
   }
 
@@ -29,23 +29,23 @@ export class HeaderController {
    * @param  {object} scope
    * @param  {object} column
    */
-  onSorted(sortedColumn){
-    if (this.options.sortType === 'single') {
-      // if sort type is single, then only one column can be sorted at once,
-      // so we set the sort to undefined for the other columns
-      function unsortColumn(column) {
-        if (column !== sortedColumn) {
-          column.sort = undefined;
-        }
+  onSorted(sortedColumn) {
+    // if sort type is single, then only one column can be sorted at once,
+    // so we set the sort to undefined for the other columns
+    function unsortColumn(column) {
+      if (column !== sortedColumn) {
+        column.sort = undefined;
       }
+    }
 
+    if (this.options.sortType === 'single') {
       this.columns.left.forEach(unsortColumn);
       this.columns.center.forEach(unsortColumn);
       this.columns.right.forEach(unsortColumn);
     }
 
     this.onSort({
-      column: sortedColumn
+      column: sortedColumn,
     });
   }
 
@@ -55,15 +55,15 @@ export class HeaderController {
    * @param  {group}
    * @return {styles object}
    */
-  stylesByGroup(group){
-    var styles = {
-      width: this.columnWidths[group] + 'px'
+  stylesByGroup(group) {
+    const styles = {
+      width: `${this.columnWidths[group]}px`,
     };
 
-    if(group === 'center'){
+    if (group === 'center') {
       TranslateXY(styles, this.options.internal.offsetX * -1, 0);
-    } else if(group === 'right'){
-      var offset = (this.columnWidths.total - this.options.internal.innerWidth) *-1;
+    } else if (group === 'right') {
+      const offset = (this.columnWidths.total - this.options.internal.innerWidth) * -1;
       TranslateXY(styles, offset, 0);
     }
 
@@ -76,10 +76,10 @@ export class HeaderController {
    * @param  {object} column
    * @param  {int} width
    */
-  onResized(column, width){
+  onResized(column, width) {
     this.onResize({
-      column: column,
-      width: width
+      column,
+      width,
     });
   }
-};
+}

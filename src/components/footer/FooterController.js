@@ -1,16 +1,16 @@
 import { isOldAngular } from '../../utils/utils';
 
-export class FooterController {
+export default class FooterController {
   /**
    * Creates an instance of the Footer Controller
    * @param  {scope}
    * @return {[type]}
    */
 
-  /*@ngInject*/
+  /* @ngInject*/
   constructor($scope) {
     Object.assign(this, {
-      $scope
+      $scope,
     });
 
     if (isOldAngular()) {
@@ -26,7 +26,7 @@ export class FooterController {
     this.page = this.paging.offset + 1;
 
     this.$scope.$watch('footer.paging.offset', (newVal) => {
-      this.offsetChanged(newVal)
+      this.offsetChanged(newVal);
     });
   }
 
@@ -34,7 +34,7 @@ export class FooterController {
    * The offset ( page ) changed externally, update the page
    * @param  {new offset}
    */
-  offsetChanged(newVal){
+  offsetChanged(newVal) {
     this.page = newVal + 1;
   }
 
@@ -42,12 +42,12 @@ export class FooterController {
    * The pager was invoked
    * @param  {scope}
    */
-  onPaged(page){
+  onPaged(page) {
     this.paging.offset = page - 1;
     this.onPage({
       offset: this.paging.offset,
-      size: this.paging.size
+      size: this.paging.size,
     });
   }
 
-};
+}

@@ -1,5 +1,5 @@
-import { DropdownController } from './DropdownController';
+// import DropdownController from './DropdownController';
 
-describe('DropdownController', function () {
+describe('DropdownController', () => {
   //
 });

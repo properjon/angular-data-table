@@ -1,5 +1,5 @@
-import HeaderCellController from './HeaderCellController';
+// import HeaderCellController from './HeaderCellController';
 
-describe('HeaderCellController', function () {
+describe('HeaderCellController', () => {
   //
 });

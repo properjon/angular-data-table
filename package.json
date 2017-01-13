@@ -2,17 +2,17 @@
   "name": "angular-data-table",
   "title": "AngularJS Data-Table",
   "description": "A feature-rich but lightweight ES6 AngularJS Data Table crafted for large data sets!",
-  "version": "0.7.3",
+  "version": "0.8.0",
   "repository": {
     "type": "git",
-    "url": "git@github.com:Swimlane/angular-data-table.git",
-    "github": "http://github.com/swimlane/angular-data-table.git"
+    "url": "git@github.com:jonshaffer/angular-data-table.git",
+    "github": "https://github.com/jonshaffer/angular-data-table.git"
   },
   "main": "./release/dataTable.js",
   "files": [
     "release/"
   ],
-  "homepage": "http://swimlane.com/",
+  "homepage": "http://jonshaffer.github.io/angular-data-table/",
   "author": {
     "name": "Swimlane",
     "email": "austin@swimlane.com",
@@ -29,8 +29,11 @@
     "start": "node ./node_modules/gulp/bin/gulp.js serve watch",
     "release": "node ./node_modules/gulp/bin/gulp.js release",
     "test": "node ./node_modules/gulp/bin/gulp.js test",
-    "e2e": "protractor test/protractor.conf.js",
-    "report-coverage": "codecov"
+    "unit": "node ./node_modules/gulp/bin/gulp.js unit",
+    "e2e": "node ./node_modules/protractor/bin/protractor test/protractor.conf.js",
+    "report-coverage": "codecov",
+    "lint": "eslint src/**/*.js src/components/**/*.js src/components/menu/**/*.js src/*.js test/*.js config.js gulpfile.babel.js --fix",
+    "stylelint": "stylelint src/dataTable.less src/themes/*.less src/components/menu/menu.less src/components/popover/popover.less"
   },
   "peerDependencies": {
     "angular": ">=1.4.x <2.0.0"
@@ -56,6 +59,10 @@
     "browserify-istanbul": "^2.0.0",
     "codecov": "^1.0.1",
     "del": "^2.2.0",
+    "eslint-config-airbnb-base": "^11.0.0",
+    "eslint-config-angular": "^0.5.0",
+    "eslint-plugin-angular": "^1.6.1",
+    "eslint-plugin-jasmine": "^2.2.0",
     "eslint-plugin-protractor": "^1.32.0",
     "gulp": "^3.8.11",
     "gulp-angular-protractor": "^0.3.0",
@@ -69,6 +76,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.3",
     "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.8",
     "isparta": "^4.0.0",
     "istanbul": "^0.4.5",
     "jasmine-core": "^2.5.2",
@@ -83,9 +91,12 @@
     "karma-sauce-launcher": "^1.1.0",
     "karma-sinon": "^1.0.5",
     "phantomjs-prebuilt": "^2.1.7",
-    "rollup": "^0.38.0",
+    "rollup": "^0.41.1",
     "run-sequence": "^1.1.0",
     "sinon": "^1.17.6",
+    "stylefmt": "^5.0.3",
+    "stylelint": "^7.7.1",
+    "stylelint-config-standard": "^15.0.1",
     "vinyl-paths": "^2.1.0",
     "watchify": "^3.7.0"
   },

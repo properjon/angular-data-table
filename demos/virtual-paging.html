@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
     <meta name="apple-mobile-web-app-title" content="Datagrid">
-    <title>Datagrid - Paging</title>
+    <title>Datagrid - Virtual Paging</title>
     <base href="/">
     <style>
       *, *:after, *:before {
@@ -16,7 +16,7 @@
         box-sizing: border-box;
       }
 
-      body{
+      body {
         font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
         font-style: normal;
         font-weight: 300;
@@ -30,28 +30,24 @@
         text-rendering: optimizeLegibility;
       }
 
-      .dt{
+      .dt {
         width:75%;
         margin:50px auto;
         height:400px;
       }
 
-      .dt-row-even{
+      .dt-row-even {
         background:#f6f7f8;
       }
 
     </style>
     <link href="../dist/dataTable.css" media="all" rel="stylesheet" />
     <link href="../dist/themes/material.css" media="all" rel="stylesheet" />
-    <link href="http://fontastic.s3.amazonaws.com/Jnf54BZCm7mSjGCxNRbfp3/icons.css" rel="stylesheet">
+    <link href="../dist/themes/icons.css" rel="stylesheet">
   </head>
   <body ng-app="app" ng-controller="HomeController">
 
-    <dtable
-      options="optionz"
-      rows="data"
-      class="material"
-      on-page="paging(offset, size)">
+    <dtable options="optionz" rows="data" class="material">
     </dtable>
 
     <script src="../jspm_packages/system.js"></script>
@@ -74,34 +70,12 @@
               { name: "Gender", prop: "gender" },
               { name: "Company", prop: "company" }
             ],
-            columnMode: 'force',
-            paging: {
-              externalPaging: true,
-              loadingIndicator: true
-            }
+            columnMode: 'force'
           };
 
-          $scope.paging = function(offset, size){
-            $scope.optionz.paging.loadingIndicator = true;
-
-            setTimeout(function(){
-            $http.get('/demos/data/100.json').success(function(d) {
-
-              $scope.optionz.paging.count = d.length;
-
-              var set = d.splice(offset, size);
-              // only insert items i don't already have
-              set.forEach(function(r, i){
-                var idx = i + (offset * size);
-                $scope.data[idx] = r;
-              });
-
-              console.log('paging!', offset, size)
-              $scope.optionz.paging.loadingIndicator = false;
-
-            });
-          }, 800)
-          };
+          $http.get('/demos/data/100.json').success(function (d) {
+            $scope.data = d;
+          });
         });
       });
     </script>

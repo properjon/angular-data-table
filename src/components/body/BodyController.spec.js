@@ -1,26 +1,24 @@
+/* global inject */
+
 import SpecHelper from './BodyController.spechelper.json';
 import { TableDefaults } from '../../defaults';
 
-describe('BodyController', function () {
-  const defaultOptions = {
-      columns: [],
-      paging: {}
+describe('BodyController', () => {
+  const olympicOptions = {
+    columns: angular.copy(SpecHelper.Olympics.Columns),
+    paging: {
+      size: 0,
+      count: 0,
+      offset: 0,
     },
-    olympicOptions = {
-      columns: angular.copy(SpecHelper.Olympics.Columns),
-      paging: {
-        size: 0,
-        count: 0,
-        offset: 0
-      }
-    },
-    olympicRows = angular.copy(SpecHelper.Olympics.Rows);
+  };
+  const olympicRows = angular.copy(SpecHelper.Olympics.Rows);
 
-  let scope = null,
-    ctrl = null,
-    setController = null,
-    $controller = null,
-    $rootScope = null;
+  let scope = null;
+  let ctrl = null;
+  let setController = null;
+  let $controller = null;
+  let $rootScope = null;
 
   beforeEach(inject((_$rootScope_, _$controller_) => {
     $controller = _$controller_;
@@ -35,25 +33,23 @@ describe('BodyController', function () {
 
       scope.body = {
         options: bindings.options,
-        rows: bindings.rows
+        rows: bindings.rows,
       };
 
       ctrl = $controller('BodyController',
         {
-          $scope: scope
+          $scope: scope,
         },
-        bindings
+        bindings,
       );
     };
   });
 
   describe('when initializing', () => {
-    const angularVersion = angular.copy(angular.version);
-
     it('should set ctrl', () => {
       setController({
         options: olympicOptions,
-        rows: olympicRows
+        rows: olympicRows,
       });
 
       ctrl.$onInit();
@@ -63,20 +59,70 @@ describe('BodyController', function () {
 
       expect(ctrl.data).not.toEqual(0);
     });
+
+    it('should have the correct number of rows', () => {
+      let options = {
+        columns: [
+          { name: 'Name', prop: 'name' },
+          { name: 'Company', prop: 'company' }
+        ],
+        paging: {
+          offset: 0,
+          size: 3
+        }
+      };
+
+      setController({
+        options: options,
+        rows: olympicRows
+      });
+
+      ctrl.$onInit();
+      scope.$digest();
+
+      expect(ctrl.tempRows.length).toBe(3);
+    });
+
+    it('should increment page', () => {
+      let options = {
+        columns: [
+          { name: 'Name', prop: 'name' },
+          { name: 'Company', prop: 'company' }
+        ],
+        paging: {
+          offset: 0,
+          size: 3
+        }
+      };
+
+      setController({
+        options: options,
+        rows: olympicRows
+      });
+
+      ctrl.$onInit();
+      scope.$digest();
+
+      let name = ctrl.tempRows[0].name;
+      ctrl.options.paging.offset = 1;
+      scope.$digest();
+
+      expect(ctrl.tempRows[0].name).not.toBe(name);
+    });
   });
 
   describe('when setting tree and group columns', () => {
     beforeEach(() => {
       setController({
         options: olympicOptions,
-        rows: olympicRows
+        rows: olympicRows,
       });
 
       ctrl.$onInit();
     });
 
     it('should set the group column accurately', () => {
-      expect(ctrl.groupColumn).toEqual(olympicOptions.columns[1])
+      expect(ctrl.groupColumn).toEqual(olympicOptions.columns[1]);
     });
 
     it('should not set tree column', () => {
@@ -109,7 +155,7 @@ describe('BodyController', function () {
     beforeEach(() => {
       setController({
         options: olympicOptions,
-        rows: olympicRows
+        rows: olympicRows,
       });
 
       ctrl.$onInit();

@@ -1,6 +1,6 @@
-import { PagerController } from './PagerController';
+import PagerController from './PagerController';
 
-export default function PagerDirective(){
+export default function PagerDirective() {
   return {
     restrict: 'E',
     controller: PagerController,
@@ -10,7 +10,7 @@ export default function PagerDirective(){
       page: '=',
       size: '=',
       count: '=',
-      onPage: '&'
+      onPage: '&',
     },
     template:
       `<div class="dt-pager">
@@ -32,6 +32,6 @@ export default function PagerDirective(){
           </li>
         </ul>
       </div>`,
-    replace: true
+    replace: true,
   };
-};
+}
