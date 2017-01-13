@@ -23,7 +23,7 @@ export default function BodyDirective() {
       <div
         class="progress-linear"
         role="progressbar"
-        ng-show="body.options.paging.loadingIndicator">
+        ng-show="body.options.loadingIndicator">
         <div class="container">
           <div class="bar"></div>
         </div>

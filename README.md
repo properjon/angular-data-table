@@ -135,6 +135,7 @@ The data table can be created with the following `options`:
 - `emptyMessage`: Message to show when array is presented but contains no values (default: `'No data to display'`)
 - `footerHeight`: Footer height in pixels. Pass a  `falsey` value for no footer. (default: `0`)
 - `headerHeight`: Header height in pixels. Pass a  `falsey` value for no header (default: `30`)
+- `loadingIndicator`. (default: `false`)
 - `loadingMessage`: Loading message presented when the array is undefined (default: `'Loading...'`)
 - `multiSelect`: Whether users can select multiple items (default: `false`)
 - `paging`
@@ -143,7 +144,6 @@ The data table can be created with the following `options`:
   - `size`. (default: `undefined`)
   - `count`. (default: `0`)
   - `offset`. (default: `0`)
-  - `loadingIndicator`. (default: `false`)
 - `reorderable`: Whether you can reorder columns (default: `true`)
 - `rowHeight`: Row height in pixels, necessary if using lazy rendering (default: `30`)
 - `scrollbarV`: Enables vertical scrollbars (default: `true`)

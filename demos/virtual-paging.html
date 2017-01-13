@@ -75,14 +75,14 @@
               { name: "Company", prop: "company", sortable: false }
             ],
             columnMode: 'force',
+            loadingIndicator: true,
             paging: {
-              externalPaging: true,
-              loadingIndicator: true
+              externalPaging: true
             }
           };
 
           $scope.paging = function(offset, size){
-            $scope.optionz.paging.loadingIndicator = true;
+            $scope.optionz.loadingIndicator = true;
 
             setTimeout(function(){
             $http.get('/demos/data/100.json').success(function(d) {
@@ -97,7 +97,7 @@
               });
 
               console.log('paging!', offset, size)
-              $scope.optionz.paging.loadingIndicator = false;
+              $scope.optionz.loadingIndicator = false;
 
             });
           }, 800)
