@@ -16,6 +16,7 @@ before_script:
 - forever start node_modules/gulp/bin/gulp.js watch serve
 
 after_success:
+- protractor test/protractor.conf.js
 - bash <(curl -s https://codecov.io/bash)
 - test $TRAVIS_TEST_RESULT = 0
 - codeclimate-test-reporter < "/home/travis/build/jonshaffer/angular-data-table/test/coverage/Chrome 35.0.1916 (Windows 7 0.0.0)/lcov.info"
@@ -23,7 +24,6 @@ after_success:
 
 script:
 - gulp unit
-- protractor test/protractor.conf.js
 - gulp release
 
 addons:
