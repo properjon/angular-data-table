@@ -10,7 +10,7 @@ export const TableDefaults = {
    */
   checkboxSelection: false,
 
-  /** 
+  /**
    * Options: 'flex', 'force', 'standard'
    * @type {string}
    */
@@ -49,7 +49,7 @@ export const TableDefaults = {
   },
 
   /**
-   * Loading indicator 
+   * Loading indicator
    * @type {boolean}
    */
   loadingIndicator: false,
@@ -109,8 +109,8 @@ export const TableDefaults = {
    */
   rowHeight: 30,
 
-  /** 
-   * Enable vertical scrollbars 
+  /**
+   * Enable vertical scrollbars
    * @type {boolean}
    */
   scrollbarV: true,
