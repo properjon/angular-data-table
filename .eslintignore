@@ -5,3 +5,4 @@ bower_components
 release
 dist
 test/coverage
+config.js
