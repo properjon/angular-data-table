@@ -112,7 +112,7 @@ export default class BodyController {
 
       this.watchListeners.push(this.$scope.$watch('body.options.paging.offset', (newVal) => {
         if (this.options.paging.size) {
-          if (this.options.paging.internal) {
+          if (this.options.paging.mode === 'internal') {
             this.buildInternalPage();
           }
 
@@ -131,7 +131,7 @@ export default class BodyController {
     if (!newVal) {
       this.getRows(true);
     } else {
-      if (!this.options.paging.externalPaging) {
+      if (this.options.paging.mode !== 'external') {
         this.options.paging.count = newVal.length;
       }
 
@@ -155,7 +155,7 @@ export default class BodyController {
           rows = this.buildGroups();
         }
 
-        if (this.options.paging.externalPaging) {
+        if (this.options.paging.mode === 'external') {
           // We're using external paging
           const idxs = this.getFirstLastIndexes();
           let idx = idxs.first;
@@ -164,7 +164,7 @@ export default class BodyController {
           while (idx < idxs.last) {
             this.tempRows.push(rows[idx += 1]);
           }
-        } else if (this.options.paging.internal) {
+        } else if (this.options.paging.mode === 'internal') {
           // We're using internal paging
           this.buildInternalPage();
         } else {
@@ -187,7 +187,7 @@ export default class BodyController {
       firstRowIndex = Math.max(Math.floor((
           this.options.internal.offsetY || 0) / this.options.rowHeight, 0), 0);
       endIndex = Math.min(firstRowIndex + this.options.paging.size, this.count);
-    } else if (this.options.paging.externalPaging) {
+    } else if (this.options.paging.mode === 'external') {
       firstRowIndex = Math.max(this.options.paging.offset * this.options.paging.size, 0);
       endIndex = Math.min(firstRowIndex + this.options.paging.size, this.count);
     } else {

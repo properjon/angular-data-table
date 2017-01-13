@@ -78,28 +78,22 @@ export const TableDefaults = {
     count: 0,
 
     /**
-     * If external paging is turned on
-     * @type {boolean}
-     */
-    externalPaging: false,
-
-    /**
-     * If internal paging is turned on
-     * @type {boolean}
-     */
-    internal: false,
-
-    /**
      * Page offset
      * @type {number}
      */
     offset: 0,
 
     /**
+     * The paging mode to use: 'internal', 'external', null (none)
+     * @type: {string}
+     */
+    mode: null,
+
+    /**
      * Page size
      * @type {number}
      */
-    size: undefined,
+    size: 10,
   },
 
   /**

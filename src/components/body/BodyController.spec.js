@@ -59,7 +59,9 @@ describe('BodyController', () => {
 
       expect(ctrl.data).not.toEqual(0);
     });
+  });
 
+  describe('when internal paging is enabled', () => {
     it('should have the correct number of rows', () => {
       let options = {
         columns: [
@@ -67,7 +69,7 @@ describe('BodyController', () => {
           { name: 'Company', prop: 'company' }
         ],
         paging: {
-          internal: true,
+          mode: 'internal',
           offset: 0,
           size: 3
         }
@@ -91,7 +93,7 @@ describe('BodyController', () => {
           { name: 'Company', prop: 'company' }
         ],
         paging: {
-          internal: true,
+          mode: 'internal',
           offset: 0,
           size: 3
         }
@@ -165,7 +167,7 @@ describe('BodyController', () => {
 
     it('should not set watches when no vertical scrollbar or external paging', () => {
       ctrl.options.scrollbarV = false;
-      ctrl.options.paging.externalPaging = false;
+      ctrl.options.paging.mode = null;
 
       ctrl.setConditionalWatches();
 

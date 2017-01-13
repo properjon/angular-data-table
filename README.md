@@ -139,11 +139,10 @@ The data table can be created with the following `options`:
 - `loadingMessage`: Loading message presented when the array is undefined (default: `'Loading...'`)
 - `multiSelect`: Whether users can select multiple items (default: `false`)
 - `paging`
-  - `externalPaging`. (default: `false`)
-  - `internal`. (default `false`)
-  - `size`. (default: `undefined`)
   - `count`. (default: `0`)
+  - `mode`. (default `null`)
   - `offset`. (default: `0`)
+  - `size`. (default: `undefined`)
 - `reorderable`: Whether you can reorder columns (default: `true`)
 - `rowHeight`: Row height in pixels, necessary if using lazy rendering (default: `30`)
 - `scrollbarV`: Enables vertical scrollbars (default: `true`)
