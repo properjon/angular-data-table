@@ -27,16 +27,6 @@ if (process.env.TRAVIS) {
       'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
       build: process.env.TRAVIS_BUILD_NUMBER,
     },
-    {
-      username: process.env.SAUCE_USERNAME,
-      accessKey: process.env.SAUCE_ACCESS_KEY,
-      name: 'angular-data-table e2e tests: safari',
-      browserName: 'safari',
-      platform: 'macOS 10.12',
-      version: '10.0',
-      'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-      build: process.env.TRAVIS_BUILD_NUMBER,
-    },
   ];
 }
 
