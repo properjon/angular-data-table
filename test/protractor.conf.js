@@ -17,16 +17,6 @@ if (process.env.TRAVIS) {
       'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
       build: process.env.TRAVIS_BUILD_NUMBER,
     },
-    {
-      username: process.env.SAUCE_USERNAME,
-      accessKey: process.env.SAUCE_ACCESS_KEY,
-      name: 'angular-data-table e2e tests: ie11',
-      browserName: 'internet explorer',
-      platform: 'Windows 7',
-      version: '11.0',
-      'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-      build: process.env.TRAVIS_BUILD_NUMBER,
-    },
   ];
 }
 
