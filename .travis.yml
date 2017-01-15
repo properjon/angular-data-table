@@ -17,13 +17,13 @@ before_install:
 before_script:
 - jspm install
 - forever start node_modules/gulp/bin/gulp.js watch serve
+- protractor test/protractor.conf.js
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 - test $TRAVIS_TEST_RESULT = 0
 - codeclimate-test-reporter < "/home/travis/build/jonshaffer/angular-data-table/test/coverage/Chrome 35.0.1916 (Windows 7 0.0.0)/lcov.info"
 - codecov
-- protractor test/protractor.conf.js
 
 script:
 - gulp unit
