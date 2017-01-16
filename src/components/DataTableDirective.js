@@ -53,7 +53,7 @@ export default function DataTableDirective($window, $timeout, $parse) {
                    on-page="dt.onBodyPage(offset, size)"
                    on-tree-toggle="dt.onTreeToggled(row, cell)">
            </dt-body>
-          <dt-footer ng-if="dt.options.footerHeight"
+          <dt-footer ng-if="dt.options.footerHeight || dt.options.paging.mode"
                      ng-style="{ height: dt.options.footerHeight + 'px' }"
                      on-page="dt.onFooterPage(offset, size)"
                      paging="dt.options.paging">
