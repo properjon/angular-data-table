@@ -19,8 +19,43 @@ describe('DataTableController', () => {
     };
   }));
 
-  describe('sorting', () => {
+  describe('assigning defaults', () => {
+    beforeEach(() => {
+      let options = {
+        columns: [
+          { prop: 'name', sort: 'asc' },
+          { prop: 'age'}
+        ]
+      };
+      let rows = [
+        { name: 'Walter', age: 49 },
+        { name: 'Dude', age: 45 },
+        { name: 'Donnie', age: 46 },
+        { name: 'Maude', age: 48 }
+      ];
 
+      setController({ 
+        options: options,
+        rows: rows
+      });
+
+      ctrl.$onInit();
+    });
+
+    it('should have scrollbarV: true', () => {
+      expect(ctrl.options.scrollbarV).toBe(true);
+    });
+
+    it('should have paging.mode: null', () => {
+      expect(ctrl.options.paging.mode).toBeNull();
+    });
+
+    it('should have paging.size: 10', () => {
+      expect(ctrl.options.paging.size).toBe(10);
+    });
+  });
+
+  describe('sorting', () => {
     beforeEach(() => {
       let options = {
         columns: [
