@@ -121,6 +121,10 @@ export const TableDefaults = {
    */
   selectable: false,
 
+  // If yes then columns can be sorted.
+  sortable: true,
+
+  // sorting by single or multiple columns
   /**
    * Whether sorting can be done on single or multiple columns.
    * @type {string}

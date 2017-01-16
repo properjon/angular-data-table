@@ -99,6 +99,32 @@ describe('DataTableController', () => {
       sortedAscending = ctrl.rows[0].name < ctrl.rows[1].name;
 
       expect(sortedAscending).toBe(false);
-    });    
+    });
+  });
+
+  describe('table level sorting', () => {
+      beforeEach(() => {
+          let options = {
+            sortable: false,
+            columns: [
+              { prop: 'name', sort: 'asc', sortable: true },
+              { prop: 'age'},
+              { prop: 'occupation', sortable: false }
+            ]
+          };
+
+          setController({
+            options: options,
+            rows: []
+          });
+      });
+
+      it('should populate the sortable property in all appropriate columns', () => {
+          ctrl.inheritColumnSortableProps();
+
+          expect(ctrl.options.columns[0].sortable).toBe(true);
+          expect(ctrl.options.columns[1].sortable).toBe(false);
+          expect(ctrl.options.columns[2].sortable).toBe(false);
+      });
   });
 });
