@@ -75,8 +75,8 @@ export default class BodyController {
    * @description Constructs the rows for the page, assuming we're using internal paging.
    */
   buildInternalPage() {
-    let i,
-      rowsIndex;
+    let i;
+    let rowsIndex;
 
     this.tempRows.splice(0, this.tempRows.length);
 
