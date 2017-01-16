@@ -75,13 +75,16 @@ export default class BodyController {
    * @description Constructs the rows for the page, assuming we're using internal paging.
    */
   buildInternalPage() {
-    let i;
+    let i,
+      rowsIndex;
 
     this.tempRows.splice(0, this.tempRows.length);
 
     for (i = 0; i < this.options.paging.size; i += 1) {
-      if (typeof this.rows[(this.options.paging.offset * this.options.paging.size) + i] !== 'undefined') {
-        this.tempRows[i] = this.rows[(this.options.paging.offset * this.options.paging.size) + i];
+      rowsIndex = (this.options.paging.offset * this.options.paging.size) + i;
+
+      if (angular.isDefined(this.rows[rowsIndex])) {
+        this.tempRows[i] = this.rows[rowsIndex];
       }
     }
   }
