@@ -13,4 +13,15 @@ describe('When Paging:', function () {
       expect(items.length).toBe(12);
     });
   });
+
+  // 100 % 12 = 4
+  it('should have only 4 rows on the last page', () => {
+    let lastButton = $$('.icon-skip');
+
+    lastButton.click();
+
+    element.all(by.css('.dt-row')).then((items) => {
+      expect(items.length).toBe(4);
+    });
+  });
 });
