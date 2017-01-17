@@ -21,7 +21,6 @@ describe('When Paging:', function () {
       nextButton.click();
 
       $$('.dt-cell').first().getText().then(secondVal => {
-        console.log(firstVal, secondVal);
         expect(firstVal).not.toBe(secondVal);
       }); 
     });
