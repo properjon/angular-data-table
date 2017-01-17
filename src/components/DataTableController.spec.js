@@ -44,7 +44,7 @@ describe('DataTableController', () => {
       ctrl.$onInit();
     });
 
-    it('should have assign defaults', () => {
+    it('should use default options', () => {
       let expectedOptions = {
         checkboxSelection: false,
         columnMode: 'standard',
@@ -82,18 +82,6 @@ describe('DataTableController', () => {
       delete options.$outer;      
 
       expect(ctrl.options).toEqual(expectedOptions);
-    });
-
-    it('should have scrollbarV: true', () => {
-      expect(ctrl.options.scrollbarV).toBe(true);
-    });
-
-    it('should have paging.mode: null', () => {
-      expect(ctrl.options.paging.mode).toBeNull();
-    });
-
-    it('should have paging.size: 10', () => {
-      expect(ctrl.options.paging.size).toBe(10);
     });
   });
 
