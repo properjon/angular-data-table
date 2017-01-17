@@ -130,6 +130,12 @@ export const TableDefaults = {
    * @type {string}
    */
   sortType: 'multiple',
+
+  /**
+   * Whether sorting modifier key is active.
+   * @type {boolean}
+   */
+   modifierActive: true
 };
 
 /**
