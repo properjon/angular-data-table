@@ -14,6 +14,19 @@ describe('When Paging:', function () {
     });
   });
 
+  it('should advance to the second page', () => {
+    let nextButton = $$('.icon-right');
+
+    element.all(by.css('.dt-cell')).first().getText().then(firstVal => {
+      nextButton.click();
+
+      $$('.dt-cell').first().getText().then(secondVal => {
+        console.log(firstVal, secondVal);
+        expect(firstVal).not.toBe(secondVal);
+      }); 
+    });
+  });
+
   // 100 % 12 = 4
   it('should have only 4 rows on the last page', () => {
     let lastButton = $$('.icon-skip');
