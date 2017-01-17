@@ -26,8 +26,8 @@ export default class HeaderController {
 
   /**
    * Invoked when a column sort direction has changed
-   * @param  {object} scope
-   * @param  {object} column
+   * @param  {object} sortedColumn
+   * @param  {object} modifierPressed
    */
   onSorted(sortedColumn, modifierPressed) {
     // if sort type is single, then only one column can be sorted at once,
