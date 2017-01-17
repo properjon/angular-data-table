@@ -7,9 +7,9 @@ describe('When Basic:', function () {
     });
   });
 
-  it('should display 10 rows', () => {
+  it('should display 12 rows', () => {
     element.all(by.css('.dt-row')).then((items) => {
-      expect(items.length).toBe(10);
+      expect(items.length).toBe(12);
     });
   });
 });

@@ -76,11 +76,16 @@ export default class BodyController {
    */
   buildInternalPage() {
     let i;
+    let rowsIndex;
 
     this.tempRows.splice(0, this.tempRows.length);
 
     for (i = 0; i < this.options.paging.size; i += 1) {
-      this.tempRows[i] = this.rows[(this.options.paging.offset * this.options.paging.size) + i];
+      rowsIndex = (this.options.paging.offset * this.options.paging.size) + i;
+
+      if (angular.isDefined(this.rows[rowsIndex])) {
+        this.tempRows[i] = this.rows[rowsIndex];
+      }
     }
   }
 
@@ -92,10 +97,10 @@ export default class BodyController {
     }
 
     if (this.options &&
-        (this.options.scrollbarV ||
-            (!this.options.scrollbarV &&
-              this.options.paging &&
-              this.options.paging.size))) {
+      (this.options.scrollbarV ||
+        (!this.options.scrollbarV &&
+          this.options.paging &&
+          this.options.paging.size))) {
       let sized = false;
 
       this.watchListeners.push(this.$scope.$watch('body.options.paging.size', (newVal, oldVal) => {
@@ -185,7 +190,7 @@ export default class BodyController {
 
     if (this.options.scrollbarV) {
       firstRowIndex = Math.max(Math.floor((
-          this.options.internal.offsetY || 0) / this.options.rowHeight, 0), 0);
+        this.options.internal.offsetY || 0) / this.options.rowHeight, 0), 0);
       endIndex = Math.min(firstRowIndex + this.options.paging.size, this.count);
     } else if (this.options.paging.mode === 'external') {
       firstRowIndex = Math.max(this.options.paging.offset * this.options.paging.size, 0);

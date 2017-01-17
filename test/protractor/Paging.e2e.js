@@ -8,9 +8,32 @@ describe('When Paging:', function () {
     });
   });
 
-  it('should display 10 rows', () => {
+  it('should display 12 rows', () => {
     element.all(by.css('.dt-row')).then(function(items) {
-      expect(items.length).toBe(10);
+      expect(items.length).toBe(12);
+    });
+  });
+
+  it('should advance to the second page', () => {
+    let nextButton = $$('.icon-right');
+
+    element.all(by.css('.dt-cell')).first().getText().then(firstVal => {
+      nextButton.click();
+
+      $$('.dt-cell').first().getText().then(secondVal => {
+        expect(firstVal).not.toBe(secondVal);
+      }); 
+    });
+  });
+
+  // 100 % 12 = 4
+  it('should have only 4 rows on the last page', () => {
+    let lastButton = $$('.icon-skip');
+
+    lastButton.click();
+
+    element.all(by.css('.dt-row')).then((items) => {
+      expect(items.length).toBe(4);
     });
   });
 });
