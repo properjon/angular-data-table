@@ -16,7 +16,7 @@
         box-sizing: border-box;
       }
 
-      body{
+      body {
         font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
         font-style: normal;
         font-weight: 300;
@@ -30,29 +30,29 @@
         text-rendering: optimizeLegibility;
       }
 
-      .dt{
+      .dt {
         width:75%;
         margin:50px auto;
         height:400px;
       }
 
-      .dt-depth-0 > div > .dt-cell{
+      .dt-depth-0 > div > .dt-cell {
         font-weight:500;
       }
 
-      .dt-depth-1 > div > .dt-tree-col{
+      .dt-depth-1 > div > .dt-tree-col {
         text-indent: 25px;
       }
 
-      .dt-depth-2 > div > .dt-tree-col{
+      .dt-depth-2 > div > .dt-tree-col {
         text-indent: 55px;
       }
 
-      .dt-depth-3 > div > .dt-tree-col{
+      .dt-depth-3 > div > .dt-tree-col {
         text-indent: 85px;
       }
 
-      .dt-depth-4 > div > .dt-tree-col{
+      .dt-depth-4 > div > .dt-tree-col {
         text-indent: 115px;
       }
       /* here add more if the tree depth is bigger */
@@ -61,7 +61,7 @@
         padding-left:35px !important;
       }
 
-      .dt-tree-toggle{
+      .dt-tree-toggle {
         position:absolute;
         left:5px;
         line-height: 40px;
@@ -85,10 +85,10 @@
 
     <script>
 
-      System.import('dataTable').then(function(dt){
+      System.import('dataTable').then(function (dt) {
         var module = angular.module('app', [ dt.default.name ]);
 
-        module.controller('HomeController', function($scope, $http){
+        module.controller('HomeController', function ($scope, $http) {
           $scope.options = {
             rowHeight: 50,
             footerHeight: false,
@@ -120,7 +120,7 @@
             'Acme': true
           };
 
-          $scope.treeToggled = function(row, cell){
+          $scope.treeToggled = function (row, cell) {
             console.log('toggled!')
           };
 
