@@ -65,13 +65,16 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         showCaret: toBoolean($attributes.popoverPlain || false),
       };
 
-      // attach exit and enter events to element
-      $element.off('mouseenter', display);
+      // attach mouse events to element
       $element.on('mouseenter', display);
-      $element.off('mouseleave', mouseOut);
-      $element.on('mouseleave', mouseOut);
+      $element.on('mouseleave', beginTimeout);
+      $element.on('mousemove', cancelTimeout);
 
-      function mouseOut() {
+      function cancelTimeout(event) {
+        $timeout.cancel($scope.exitTimeout);
+      }
+
+      function beginTimeout(event) {
         $scope.exitTimeout = $timeout(remove, 500);
       }
 
@@ -80,7 +83,7 @@ export default function PopoverDirective($q, $timeout, $templateCache,
        */
       function display() {
         // Cancel exit timeout
-        $timeout.cancel($scope.exitTimeout);
+        cancelTimeout();
 
         const elm = $document[0].getElementById(`#${$scope.popoverId}`);
         if ($scope.popover && elm) return;
@@ -91,49 +94,56 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         }
 
         if ($scope.options.text && !$scope.options.template) {
-          $scope.popover = angular.element(`<div class="dt-popover popover-text
-            popover${$scope.options.placement}" id="${$scope.popoverId}"></div>`);
-
-          $scope.popover.html($scope.options.text);
-          angular.element($document[0].body).append($scope.popover);
-          positionPopover($element, $scope.popover, $scope.options);
-          PopoverRegistry.add($scope.popoverId, {
-            element: $element,
-            popover: $scope.popover,
-            group: $scope.options.group,
-          });
+          displayTextPopover();
         } else {
-          $q.when(loadTemplate($scope.options.template, $scope.options.plain)).then((template) => {
-            if (!angular.isString(template)) {
-              if (template.data && angular.isString(template.data)) {
-                template = template.data;
-              } else {
-                template = '';
-              }
-            }
+          displayTemplatePopover();
+        }
+      }
 
-            $scope.popover = angular.element(`<div class="dt-popover
+      function displayTemplatePopover() {
+        $q.when(loadTemplate($scope.options.template, $scope.options.plain)).then((template) => {
+          if (!angular.isString(template)) {
+            if (template.data && angular.isString(template.data)) {
+              template = template.data;
+            } else {
+              template = '';
+            }
+          }
+
+          $scope.popover = angular.element(`<div class="dt-popover
               popover-${$scope.options.placement}" id="${$scope.popoverId}"></div>`);
 
-            $scope.popover.html(template);
-            $compile($scope.popover)($scope);
-            angular.element($document.body).append($scope.popover);
-            positionPopover($element, $scope.popover, $scope.options);
+          $scope.popover.html(template);
+          $compile($scope.popover)($scope);
+          angular.element($document.body).append($scope.popover);
+          positionPopover($element, $scope.popover, $scope.options);
 
-            // attach exit and enter events to popover
-            $scope.popover.off('mouseleave', mouseOut);
-            $scope.popover.on('mouseleave', mouseOut);
-            $scope.popover.on('mouseenter', () => {
-              $timeout.cancel($scope.exitTimeout);
-            });
+          managePopover($element, $scope);
+        });
+      }
 
-            PopoverRegistry.add($scope.popoverId, {
-              element: $element,
-              popover: $scope.popover,
-              group: $scope.options.group,
-            });
-          });
-        }
+      function displayTextPopover() {
+        $scope.popover = angular.element(`<div class="dt-popover popover-text
+            popover${$scope.options.placement}" id="${$scope.popoverId}"></div>`);
+
+        $scope.popover.html($scope.options.text);
+        angular.element($document[0].body).append($scope.popover);
+
+        managePopover($element, $scope);
+      }
+
+      function managePopover($element, $scope) {
+        positionPopover($element, $scope.popover, $scope.options);
+
+        // attach mouse events to popover
+        $scope.popover.on('mouseleave', beginTimeout);
+        $scope.popover.on('mousemove', cancelTimeout);
+
+        PopoverRegistry.add($scope.popoverId, {
+          element: $element,
+          popover: $scope.popover,
+          group: $scope.options.group
+        });
       }
 
       /**
@@ -141,6 +151,7 @@ export default function PopoverDirective($q, $timeout, $templateCache,
        */
       function remove() {
         if ($scope.popover) {
+          $scope.popover.off();
           $scope.popover.remove();
         }
 
