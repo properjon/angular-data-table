@@ -70,11 +70,11 @@ export default function PopoverDirective($q, $timeout, $templateCache,
       $element.on('mouseleave', beginTimeout);
       $element.on('mousemove', cancelTimeout);
 
-      function cancelTimeout(event) {
+      function cancelTimeout() {
         $timeout.cancel($scope.exitTimeout);
       }
 
-      function beginTimeout(event) {
+      function beginTimeout() {
         $scope.exitTimeout = $timeout(remove, 500);
       }
 
@@ -118,7 +118,7 @@ export default function PopoverDirective($q, $timeout, $templateCache,
           angular.element($document.body).append($scope.popover);
           positionPopover($element, $scope.popover, $scope.options);
 
-          managePopover($element, $scope);
+          managePopover();
         });
       }
 
@@ -129,10 +129,10 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         $scope.popover.html($scope.options.text);
         angular.element($document[0].body).append($scope.popover);
 
-        managePopover($element, $scope);
+        managePopover();
       }
 
-      function managePopover($element, $scope) {
+      function managePopover() {
         positionPopover($element, $scope.popover, $scope.options);
 
         // attach mouse events to popover
@@ -142,7 +142,7 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         PopoverRegistry.add($scope.popoverId, {
           element: $element,
           popover: $scope.popover,
-          group: $scope.options.group
+          group: $scope.options.group,
         });
       }
 
