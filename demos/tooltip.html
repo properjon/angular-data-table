@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
     <meta name="apple-mobile-web-app-title" content="Datagrid" />
+    <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
 
     <title>Datagrid - Tooltips</title>
 
@@ -59,31 +59,31 @@
 
         module.controller('HomeController', function($scope, $http){
           $scope.options = {
-            rowHeight: 50,
             footerHeight: false,
             headerHeight: 50,
+            rowHeight: 50,
             scrollbarV: true,
             columns: [
               {
+                flexGrow: 2,
                 name: "Company",
                 prop: "company",
-                flexGrow: 2
               },
               {
+                flexGrow: 1,
                 name: "Revenue",
-                flexGrow: 1,
-                prop: "revenue"
+                prop: "revenue",
               },
               {
-                name: "Sales",
                 flexGrow: 1,
-                prop: "sales"
+                name: "Sales",
+                prop: "sales",
               },{
                 name: "Comments",
                 prop: "comments",
                 tooltips: true,
                 cellRenderer: function(scope, elm){
-                  return '<span popover popover-placement="left" popover-text="{{$row.comments}}">{{$row.comments}}</span>';
+                  return '<span popover popover-id="{{$row.$$index}}" popover-plain="true" popover-placement="left" popover-text="{{$row.comments}}">{{$row.comments}}</span>';
                 }
               }
             ]

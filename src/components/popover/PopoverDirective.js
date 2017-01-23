@@ -52,16 +52,16 @@ export default function PopoverDirective($q, $timeout, $templateCache,
     replace: false,
     link($scope, $element, $attributes) {
       $scope.popover = null;
-      $scope.popoverId = Date.now();
 
       $scope.options = {
-        text: $attributes.popoverText,
-        template: $attributes.popoverTemplate,
-        plain: toBoolean($attributes.popoverPlain || false),
-        placement: $attributes.popoverPlacement || 'right',
         alignment: $attributes.popoverAlignment || 'center',
-        spacing: parseInt($attributes.popoverSpacing, 10) || 0,
+        placement: $attributes.popoverPlacement || 'right',
+        plain: toBoolean($attributes.popoverPlain || false),
+        popoverId: $attributes.popoverId,
         showCaret: toBoolean($attributes.popoverPlain || false),
+        spacing: parseInt($attributes.popoverSpacing, 10) || 0,
+        template: $attributes.popoverTemplate,
+        text: $attributes.popoverText,
       };
 
       $scope.$on('$destroy', () => {
@@ -94,7 +94,7 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         // Cancel exit timeout
         cancelTimeout();
 
-        const elm = $document[0].getElementById(`#${$scope.popoverId}`);
+        const elm = $document[0].getElementById($scope.options.popoverId);
         if ($scope.popover && elm) return;
 
         if ($scope.options.text && !$scope.options.template) {
@@ -117,8 +117,9 @@ export default function PopoverDirective($q, $timeout, $templateCache,
             }
           }
 
-          $scope.popover = angular.element(`<div class="dt-popover
-              popover-${$scope.options.placement}" id="${$scope.popoverId}"></div>`);
+          $scope.popover = angular.element(`<div
+              class="dt-popover popover-${$scope.options.placement}"
+              id="${$scope.options.popoverId}"></div>`);
 
           $scope.popover.html(template);
           $compile($scope.popover)($scope);
@@ -133,8 +134,9 @@ export default function PopoverDirective($q, $timeout, $templateCache,
        * With text only, simply build up the popover and append it to body
        */
       function displayTextPopover() {
-        $scope.popover = angular.element(`<div class="dt-popover popover-text
-            popover${$scope.options.placement}" id="${$scope.popoverId}"></div>`);
+        $scope.popover = angular.element(`<div
+            class="dt-popover popover-text popover${$scope.options.placement}"
+            id="${$scope.options.popoverId}"></div>`);
 
         $scope.popover.html($scope.options.text);
         angular.element($document[0].body).append($scope.popover);
@@ -152,7 +154,7 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         $scope.popover.on('mouseleave', beginTimeout);
         $scope.popover.on('mousemove', cancelTimeout);
 
-        PopoverRegistry.add($scope.popoverId, {
+        PopoverRegistry.add($scope.options.popoverId, {
           element: $element,
           popover: $scope.popover,
         });
@@ -168,7 +170,14 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         }
 
         $scope.popover = undefined;
-        PopoverRegistry.remove($scope.popoverId);
+        PopoverRegistry.remove($scope.options.popoverId);
+
+        let popovers = document.getElementsByClassName('dt-popover');
+        if (popovers.length !== 0) {
+          for (let i = 0; i <= popovers.length; i++) {
+            popovers[i].remove();
+          }
+        }
       }
 
       /**

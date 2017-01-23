@@ -18,18 +18,5 @@ export default function PopoverRegistry($animate) {
     remove(id) {
       delete popovers[id];
     },
-
-    removeGroup(group, currentId) {
-      return angular.forEach(popovers, (popoverOb, id) => {
-        if (id === currentId) return;
-
-        if (popoverOb.group && popoverOb.group === group) {
-          $animate.removeClass(popoverOb.popover, 'sw-popover-animate').then(() => {
-            popoverOb.popover.remove();
-            delete popovers[id];
-          });
-        }
-      });
-    },
   };
 }
