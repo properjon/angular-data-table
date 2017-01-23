@@ -172,9 +172,9 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         $scope.popover = undefined;
         PopoverRegistry.remove($scope.options.popoverId);
 
-        let popovers = document.getElementsByClassName('dt-popover');
-        if (popovers.length !== 0) {
-          for (let i = 0; i <= popovers.length; i++) {
+        const popovers = $document[0].getElementsByClassName('dt-popover');
+        if (popovers.length > 0) {
+          for (let i = 0; i <= popovers.length; i + 1) {
             popovers[i].remove();
           }
         }
