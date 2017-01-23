@@ -65,17 +65,27 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         showCaret: toBoolean($attributes.popoverPlain || false),
       };
 
+      $scope.$on("$destroy", () => {
+        $element.off();
+      });
+
       // attach mouse events to element
       $element.on('mouseenter', display);
       $element.on('mouseleave', beginTimeout);
       $element.on('mousemove', cancelTimeout);
 
-      function cancelTimeout() {
-        $timeout.cancel($scope.exitTimeout);
-      }
-
+      /**
+       * Begin a timeout of 500ms before hiding popover
+       */
       function beginTimeout() {
         $scope.exitTimeout = $timeout(remove, 500);
+      }
+
+      /**
+       * Cancel the timeout to keep popover visible
+       */
+      function cancelTimeout() {
+        $timeout.cancel($scope.exitTimeout);
       }
 
       /**
@@ -100,6 +110,9 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         }
       }
 
+      /**
+       * When using template, load and compile the template prior to appending popover
+       */
       function displayTemplatePopover() {
         $q.when(loadTemplate($scope.options.template, $scope.options.plain)).then((template) => {
           if (!angular.isString(template)) {
@@ -122,6 +135,9 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         });
       }
 
+      /**
+       * With text only, simply build up the popover and append it to body
+       */
       function displayTextPopover() {
         $scope.popover = angular.element(`<div class="dt-popover popover-text
             popover${$scope.options.placement}" id="${$scope.popoverId}"></div>`);
@@ -132,6 +148,9 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         managePopover();
       }
 
+      /**
+       * Position popover, bind handlers, and register popover
+       */
       function managePopover() {
         positionPopover($element, $scope.popover, $scope.options);
 
@@ -173,21 +192,23 @@ export default function PopoverDirective($q, $timeout, $templateCache,
           let top;
           let left;
 
-          if (options.placement === POSITION.RIGHT) {
-            left = elDimensions.left + elDimensions.width + options.spacing;
-            top = calculateVerticalAlignment();
-          }
-          if (options.placement === POSITION.LEFT) {
-            left = elDimensions.left - popoverDimensions.width - options.spacing;
-            top = calculateVerticalAlignment();
-          }
-          if (options.placement === POSITION.TOP) {
-            top = elDimensions.top - popoverDimensions.height - options.spacing;
-            left = calculateHorizontalAlignment();
-          }
-          if (options.placement === POSITION.BOTTOM) {
-            top = elDimensions.top + elDimensions.height + options.spacing;
-            left = calculateHorizontalAlignment();
+          switch (options.placement) {
+            case POSITION.RIGHT:
+              left = elDimensions.left + elDimensions.width + options.spacing;
+              top = calculateVerticalAlignment();
+              break;
+            case POSITION.LEFT:
+              left = elDimensions.left - popoverDimensions.width - options.spacing;
+              top = calculateVerticalAlignment();
+              break;
+            case POSITION.TOP:
+              top = elDimensions.top - popoverDimensions.height - options.spacing;
+              left = calculateHorizontalAlignment();
+              break;
+            case POSITION.BOTTOM:
+              top = elDimensions.top + elDimensions.height + options.spacing;
+              left = calculateHorizontalAlignment();
+              break;
           }
 
           function calculateVerticalAlignment() {
