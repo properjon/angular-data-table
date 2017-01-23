@@ -65,7 +65,7 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         showCaret: toBoolean($attributes.popoverPlain || false),
       };
 
-      $scope.$on("$destroy", () => {
+      $scope.$on('$destroy', () => {
         $element.off();
       });
 
@@ -192,23 +192,18 @@ export default function PopoverDirective($q, $timeout, $templateCache,
           let top;
           let left;
 
-          switch (options.placement) {
-            case POSITION.RIGHT:
-              left = elDimensions.left + elDimensions.width + options.spacing;
-              top = calculateVerticalAlignment();
-              break;
-            case POSITION.LEFT:
-              left = elDimensions.left - popoverDimensions.width - options.spacing;
-              top = calculateVerticalAlignment();
-              break;
-            case POSITION.TOP:
-              top = elDimensions.top - popoverDimensions.height - options.spacing;
-              left = calculateHorizontalAlignment();
-              break;
-            case POSITION.BOTTOM:
-              top = elDimensions.top + elDimensions.height + options.spacing;
-              left = calculateHorizontalAlignment();
-              break;
+          if (options.placement === POSITION.RIGHT) {
+            left = elDimensions.left + elDimensions.width + options.spacing;
+            top = calculateVerticalAlignment();
+          } else if (options.placement === POSITION.LEFT) {
+            left = elDimensions.left - popoverDimensions.width - options.spacing;
+            top = calculateVerticalAlignment();
+          } else if (options.placement === POSITION.TOP) {
+            top = elDimensions.top - popoverDimensions.height - options.spacing;
+            left = calculateHorizontalAlignment();
+          } else if (options.placement === POSITION.BOTTOM) {
+            top = elDimensions.top + elDimensions.height + options.spacing;
+            left = calculateHorizontalAlignment();
           }
 
           function calculateVerticalAlignment() {
