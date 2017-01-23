@@ -60,7 +60,6 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         plain: toBoolean($attributes.popoverPlain || false),
         placement: $attributes.popoverPlacement || 'right',
         alignment: $attributes.popoverAlignment || 'center',
-        group: $attributes.popoverGroup,
         spacing: parseInt($attributes.popoverSpacing, 10) || 0,
         showCaret: toBoolean($attributes.popoverPlain || false),
       };
@@ -97,11 +96,6 @@ export default function PopoverDirective($q, $timeout, $templateCache,
 
         const elm = $document[0].getElementById(`#${$scope.popoverId}`);
         if ($scope.popover && elm) return;
-
-        // remove other popovers from the same group
-        if ($scope.options.group) {
-          PopoverRegistry.removeGroup($scope.options.group, $scope.popoverId);
-        }
 
         if ($scope.options.text && !$scope.options.template) {
           displayTextPopover();
@@ -161,7 +155,6 @@ export default function PopoverDirective($q, $timeout, $templateCache,
         PopoverRegistry.add($scope.popoverId, {
           element: $element,
           popover: $scope.popover,
-          group: $scope.options.group,
         });
       }
 
