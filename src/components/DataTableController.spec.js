@@ -26,7 +26,7 @@ describe('DataTableController', () => {
       let options = {
         columns: [
           { prop: 'name', sort: 'asc' },
-          { prop: 'age'}
+          { prop: 'age' }
         ]
       };
       let rows = [
@@ -36,7 +36,7 @@ describe('DataTableController', () => {
         { name: 'Maude', age: 48 }
       ];
 
-      setController({ 
+      setController({
         options: options,
         rows: rows
       });
@@ -44,16 +44,44 @@ describe('DataTableController', () => {
       ctrl.$onInit();
     });
 
-    it('should have scrollbarV: true', () => {
-      expect(ctrl.options.scrollbarV).toBe(true);
-    });
+    it('should use default options', () => {
+      let expectedOptions = {
+        checkboxSelection: false,
+        columnMode: 'standard',
+        columns: [
+          { prop: 'name', sort: 'asc' },
+          { prop: 'age' }
+        ],
+        emptyMessage: 'No data to display',
+        footerHeight: 0,
+        headerHeight: 30,
+        internal: {
+          offsetX: 0,
+          offsetY: 0,
+          innerWidth: 0,
+          bodyHeight: 300,
+        },
+        loadingIndicator: false,
+        loadingMessage: 'Loading...',
+        multiSelect: false,
+        paging: {
+          count: 0,
+          offset: 0,
+          mode: null,
+          size: 10,
+        },
+        reorderable: true,
+        rowHeight: 30,
+        scrollbarV: true,
+        selectable: false,
+        sortable: true,
+        sortType: 'multiple',
+      };
 
-    it('should have paging.mode: null', () => {
-      expect(ctrl.options.paging.mode).toBeNull();
-    });
+      let options = ctrl.options;
+      delete options.$outer;      
 
-    it('should have paging.size: 10', () => {
-      expect(ctrl.options.paging.size).toBe(10);
+      expect(ctrl.options).toEqual(expectedOptions);
     });
   });
 
@@ -62,7 +90,7 @@ describe('DataTableController', () => {
       let options = {
         columns: [
           { prop: 'name', sort: 'asc' },
-          { prop: 'age'}
+          { prop: 'age' }
         ]
       };
       let rows = [
@@ -105,174 +133,174 @@ describe('DataTableController', () => {
   });
 
   describe('initializations', () => {
+    beforeEach(() => {
+      let options = {
+        columns: [
+          { prop: 'name', sort: 'asc' },
+          { prop: 'age' }
+        ],
+        internal: {
+          innerWidth: 100,
+          scrollBarWidth: 10
+        }
+      };
+      let rows = [
+        { name: 'Walter', age: 49 },
+        { name: 'Dude', age: 45 },
+        { name: 'Donnie', age: 46 },
+        { name: 'Maude', age: 48 }
+      ];
+
+      setController({
+        options: options,
+        rows: rows
+      });
+    });
+
+    describe('setting column defaults', () => {
       beforeEach(() => {
-          let options = {
-            columns: [
-              { prop: 'name', sort: 'asc' },
-              { prop: 'age'}
-            ],
-            internal: {
-                innerWidth: 100,
-                scrollBarWidth: 10
-            }
-          };
-          let rows = [
-            { name: 'Walter', age: 49 },
-            { name: 'Dude', age: 45 },
-            { name: 'Donnie', age: 46 },
-            { name: 'Maude', age: 48 }
-          ];
-
-          setController({
-            options: options,
-            rows: rows
-          });
+        ctrl.transposeColumnDefaults();
       });
 
-      describe('setting column defaults', () => {
-          beforeEach(() => {
-              ctrl.transposeColumnDefaults();
-          });
+      it('should set the column defaults', () => {
+        var col = ctrl.options.columns[0];
+        delete col.$id;
+        expect(col).toEqual({
+          prop: 'name',
+          sort: 'asc',
+          frozenLeft: false,
+          frozenRight: false,
+          className: undefined,
+          headerClassName: undefined,
+          flexGrow: 0,
+          minWidth: 100,
+          maxWidth: undefined,
+          width: 150,
+          resizable: true,
+          comparator: undefined,
+          sortable: true,
+          sortBy: undefined,
+          headerRenderer: undefined,
+          cellRenderer: undefined,
+          cellDataGetter: undefined,
+          group: false,
+          isTreeColumn: false,
+          isCheckboxColumn: false,
+          headerCheckbox: false,
+          canAutoResize: true
+        });
+        col = ctrl.options.columns[1];
+        delete col.$id;
+        expect(col).toEqual({
+          prop: 'age',
+          sort: undefined,
+          frozenLeft: false,
+          frozenRight: false,
+          className: undefined,
+          headerClassName: undefined,
+          flexGrow: 0,
+          minWidth: 100,
+          maxWidth: undefined,
+          width: 150,
+          resizable: true,
+          comparator: undefined,
+          sortable: true,
+          sortBy: undefined,
+          headerRenderer: undefined,
+          cellRenderer: undefined,
+          cellDataGetter: undefined,
+          group: false,
+          isTreeColumn: false,
+          isCheckboxColumn: false,
+          headerCheckbox: false,
+          canAutoResize: true
+        });
+      });
+    });
 
-          it('should set the column defaults', () => {
-             var col = ctrl.options.columns[0];
-             delete col.$id;
-             expect(col).toEqual({
-                 prop: 'name',
-                 sort: 'asc',
-                 frozenLeft: false,
-                 frozenRight: false,
-                 className: undefined,
-                 headerClassName: undefined,
-                 flexGrow: 0,
-                 minWidth: 100,
-                 maxWidth: undefined,
-                 width: 150,
-                 resizable: true,
-                 comparator: undefined,
-                 sortable: true,
-                 sortBy: undefined,
-                 headerRenderer: undefined,
-                 cellRenderer: undefined,
-                 cellDataGetter: undefined,
-                 group: false,
-                 isTreeColumn: false,
-                 isCheckboxColumn: false,
-                 headerCheckbox: false,
-                 canAutoResize: true
-             });
-             col = ctrl.options.columns[1];
-             delete col.$id;
-             expect(col).toEqual({
-                 prop: 'age',
-                 sort: undefined,
-                 frozenLeft: false,
-                 frozenRight: false,
-                 className: undefined,
-                 headerClassName: undefined,
-                 flexGrow: 0,
-                 minWidth: 100,
-                 maxWidth: undefined,
-                 width: 150,
-                 resizable: true,
-                 comparator: undefined,
-                 sortable: true,
-                 sortBy: undefined,
-                 headerRenderer: undefined,
-                 cellRenderer: undefined,
-                 cellDataGetter: undefined,
-                 group: false,
-                 isTreeColumn: false,
-                 isCheckboxColumn: false,
-                 headerCheckbox: false,
-                 canAutoResize: true
-             });
-          });
+    describe('creating column groups', () => {
+      beforeEach(() => {
+        spyOn(utils, 'ColumnsByPin').and.returnValue('columnsByPinResponse');
+        spyOn(utils, 'ColumnGroupWidths').and.returnValue('columnGroupWidthsResponse');
+
+        ctrl.calculateColumns();
       });
 
-      describe('creating column groups', () => {
-          beforeEach(() => {
-            spyOn(utils, 'ColumnsByPin').and.returnValue('columnsByPinResponse');
-            spyOn(utils, 'ColumnGroupWidths').and.returnValue('columnGroupWidthsResponse');
+      it('sets the column groups', () => {
+        ctrl.columnsByPin = 'columnsByPinResponse';
+        ctrl.columnWidths = 'columnGroupWidthsResponse';
+      });
+    });
 
-            ctrl.calculateColumns();
-          });
-
-          it('sets the column groups', () => {
-              ctrl.columnsByPin = 'columnsByPinResponse';
-              ctrl.columnWidths = 'columnGroupWidthsResponse';
-          });
+    describe('adjusting column sizes', () => {
+      beforeEach(() => {
+        spyOn(math, 'ForceFillColumnWidths');
+        spyOn(math, 'AdjustColumnWidths');
       });
 
-      describe('adjusting column sizes', () => {
+      describe('when columnMode is force', () => {
         beforeEach(() => {
-            spyOn(math, 'ForceFillColumnWidths');
-            spyOn(math, 'AdjustColumnWidths');
+          ctrl.options.columnMode = 'force';
+          ctrl.adjustColumns(2);
         });
 
-        describe('when columnMode is force', () => {
-            beforeEach(() => {
-                ctrl.options.columnMode = 'force';
-                ctrl.adjustColumns(2);
-            });
-
-            it('calls ForceFillColumnWidths', () => {
-                expect(math.ForceFillColumnWidths).toHaveBeenCalledWith(ctrl.options.columns, 90, 2);
-            });
-        });
-
-        describe('when columnMode is flex', () => {
-            beforeEach(() => {
-                ctrl.options.columnMode = 'flex';
-                ctrl.adjustColumns(2);
-            });
-
-            it('calls AdjustColumnWidths', () => {
-                expect(math.AdjustColumnWidths).toHaveBeenCalledWith(ctrl.options.columns, 90);
-            });
+        it('calls ForceFillColumnWidths', () => {
+          expect(math.ForceFillColumnWidths).toHaveBeenCalledWith(ctrl.options.columns, 90, 2);
         });
       });
 
-      describe('setting css', () => {
-          beforeEach(() => {
-              ctrl.options.scrollbarV = 1;
-              ctrl.options.selectable = true;
-              ctrl.options.checkboxSelection = false;
-          });
+      describe('when columnMode is flex', () => {
+        beforeEach(() => {
+          ctrl.options.columnMode = 'flex';
+          ctrl.adjustColumns(2);
+        });
 
-          it('should return the correct table css', () => {
-              expect(ctrl.tableCss()).toEqual({
-                fixed: 1,
-                selectable: true,
-                checkboxable: false,
-            });
-          });
+        it('calls AdjustColumnWidths', () => {
+          expect(math.AdjustColumnWidths).toHaveBeenCalledWith(ctrl.options.columns, 90);
+        });
       });
-  });
-        
-  describe('table level sorting', () => {
+    });
+
+    describe('setting css', () => {
       beforeEach(() => {
-          let options = {
-            sortable: false,
-            columns: [
-              { prop: 'name', sort: 'asc', sortable: true },
-              { prop: 'age'},
-              { prop: 'occupation', sortable: false }
-            ]
-          };
-
-          setController({
-            options: options,
-            rows: []
-          });
+        ctrl.options.scrollbarV = 1;
+        ctrl.options.selectable = true;
+        ctrl.options.checkboxSelection = false;
       });
 
-      it('should populate the sortable property in all appropriate columns', () => {
-          ctrl.inheritColumnSortableProps();
-
-          expect(ctrl.options.columns[0].sortable).toBe(true);
-          expect(ctrl.options.columns[1].sortable).toBe(false);
-          expect(ctrl.options.columns[2].sortable).toBe(false);
+      it('should return the correct table css', () => {
+        expect(ctrl.tableCss()).toEqual({
+          fixed: 1,
+          selectable: true,
+          checkboxable: false,
+        });
       });
+    });
+  });
+
+  describe('table level sorting', () => {
+    beforeEach(() => {
+      let options = {
+        sortable: false,
+        columns: [
+          { prop: 'name', sort: 'asc', sortable: true },
+          { prop: 'age' },
+          { prop: 'occupation', sortable: false }
+        ]
+      };
+
+      setController({
+        options: options,
+        rows: []
+      });
+    });
+
+    it('should populate the sortable property in all appropriate columns', () => {
+      ctrl.inheritColumnSortableProps();
+
+      expect(ctrl.options.columns[0].sortable).toBe(true);
+      expect(ctrl.options.columns[1].sortable).toBe(false);
+      expect(ctrl.options.columns[2].sortable).toBe(false);
+    });
   });
 });
