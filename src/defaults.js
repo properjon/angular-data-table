@@ -135,7 +135,7 @@ export const TableDefaults = {
    * Whether sorting modifier key is active.
    * @type {boolean}
    */
-   modifierActive: true
+  modifierActive: true,
 };
 
 /**

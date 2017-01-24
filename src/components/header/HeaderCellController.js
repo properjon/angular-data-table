@@ -67,7 +67,7 @@ export default class HeaderCellController {
 
       this.onSort({
         column: this.column,
-        modifierPressed: event.shiftKey
+        modifierPressed: event.shiftKey,
       });
     }
   }
