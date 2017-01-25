@@ -1,0 +1,19 @@
+class PopupPage {
+  get() {
+    browser.get('/demos/tooltip.html');
+  }
+
+  showPopup() {
+    browser.actions().mouseMove($('span[popover]'), { x: 5, y: 5 }).perform();
+  }
+
+  getComments() {
+    return element.all(by.css('span[popover]'));
+  }
+
+  getPopups() {
+    return element.all(by.css('.dt-popover'));
+  }
+}
+
+module.exports = PopupPage;
