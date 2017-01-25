@@ -63,6 +63,7 @@ describe('DataTableController', () => {
         },
         loadingIndicator: false,
         loadingMessage: 'Loading...',
+        modifierActive: true,
         multiSelect: false,
         paging: {
           count: 0,
@@ -79,7 +80,7 @@ describe('DataTableController', () => {
       };
 
       let options = ctrl.options;
-      delete options.$outer;      
+      delete options.$outer;
 
       expect(ctrl.options).toEqual(expectedOptions);
     });
