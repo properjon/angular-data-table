@@ -7,6 +7,10 @@ class PopupPage {
     browser.actions().mouseMove($('span[popover]'), { x: 5, y: 5 }).perform();
   }
 
+  hidePopup() {
+    browser.actions().mouseMove($('span[popover]'), { x: -50, y: -50 }).perform();
+  }
+
   getComments() {
     return element.all(by.css('span[popover]'));
   }

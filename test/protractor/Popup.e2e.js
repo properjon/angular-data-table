@@ -12,4 +12,11 @@ describe('On Popup Page: ', () => {
     page.showPopup();
     expect(page.getPopups().count()).toBe(1);
   });
+
+  it('closes popup when comment is moused out', () => {
+    page.showPopup();
+    expect(page.getPopups().count()).toBe(1);
+    page.hidePopup();
+    expect(page.getPopups().count()).toBe(0);
+  });
 });
