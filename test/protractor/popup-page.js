@@ -4,11 +4,11 @@ class PopupPage {
   }
 
   showPopup() {
-    browser.actions().mouseMove($('span[popover]'), { x: 5, y: 5 }).perform();
+    browser.actions().mouseMove($$('span[popover]').first(), { x: 5, y: 5 }).perform();
   }
 
   hidePopup() {
-    browser.actions().mouseMove($('span[popover]'), { x: -50, y: -50 }).perform();
+    browser.actions().mouseMove($$('span[popover]').first(), { x: -50, y: -50 }).perform();
   }
 
   getComments() {
