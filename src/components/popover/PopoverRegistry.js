@@ -1,9 +1,4 @@
-/**
- * Registering to deal with popovers
- * @param {function} $animate
- */
-
-export default function PopoverRegistry($animate) {
+export default function PopoverRegistry() {
   const popovers = {};
 
   return {
