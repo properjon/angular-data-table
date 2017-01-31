@@ -10,8 +10,8 @@ describe('PopoverRegistry', () => {
     expect(popover).toEqual(popoverObject);
   });
 
-  xit('shows me the internal popovers object', () => {
-    expect(registry.popovers).toEqual(jasmine.any(Object));
+  it('denies me the internal popovers object', () => {
+    expect(registry.popovers).not.toEqual(jasmine.any(Object));
   });
 
   describe('popover already exists', () => {
