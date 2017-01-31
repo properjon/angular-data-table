@@ -2,10 +2,11 @@ import PopoverRegistry from './PopoverRegistry';
 
 describe('PopoverRegistry', () => {
   const registry = new PopoverRegistry();
+  const popoverId = 0;
   const popoverObject = { element: 'JQLite', popover: 'JQLite' };
 
   it('adds a popover object to the registry', () => {
-    const popover = registry.add(0, popoverObject);
+    const popover = registry.add(popoverId, popoverObject);
     expect(popover).toEqual(popoverObject);
   });
 
@@ -15,15 +16,15 @@ describe('PopoverRegistry', () => {
 
   describe('popover already exists', () => {
     beforeEach(() => {
-      registry.add(0, popoverObject);
+      registry.add(popoverId, popoverObject);
     });
 
     it('returns a popover by id', () => {
-      expect(registry.find(0)).toEqual(jasmine.any(Object));
+      expect(registry.find(popoverId)).toEqual(jasmine.any(Object));
     });
 
     it('removes a popover by id', () => {
-      expect(registry.remove(0)).toBeUndefined();
+      expect(registry.remove(popoverId)).toBeUndefined();
     });
   });
 });
