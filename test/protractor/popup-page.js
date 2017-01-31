@@ -3,12 +3,12 @@ class PopupPage {
     browser.get('/demos/tooltip.html');
   }
 
-  showPopup() {
-    browser.actions().mouseMove($$('span[popover]').first(), { x: 5, y: 5 }).perform();
+  mouseOverComment() {
+    return browser.actions().mouseMove($$('span[popover]').first(), { x: 5, y: 5 }).perform();
   }
 
-  hidePopup() {
-    browser.actions().mouseMove($$('span[popover]').first(), { x: -50, y: -50 }).perform();
+  mouseOffComment() {
+    return browser.actions().mouseMove($$('span[popover]').first(), { x: -50, y: -50 }).perform();
   }
 
   getComments() {
