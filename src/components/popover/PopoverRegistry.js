@@ -4,6 +4,7 @@ export default function PopoverRegistry() {
   return {
     add(id, object) {
       popovers[id] = object;
+      return popovers[id];
     },
 
     find(id) {
