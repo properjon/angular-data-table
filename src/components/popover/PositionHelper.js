@@ -37,7 +37,7 @@ export default function PositionHelper($log) {
           return elDimensions.top;
         case POSITION.BOTTOM:
           return elDimensions.top + (elDimensions.height - popoverDimensions.height);
-        case POSITION.CENTER:
+        case POSITION.MIDDLE:
           return elDimensions.top + ((elDimensions.height / 2) - (popoverDimensions.height / 2));
         default:
           return $log.warn('calculateVerticalAlignment issue', this);
@@ -59,7 +59,7 @@ export default function PositionHelper($log) {
             caretDimensions.height / 2,
             1,
           ]);
-        case POSITION.CENTER:
+        case POSITION.MIDDLE:
           return subtractAll([
             popoverDimensions.height / 2,
             caretDimensions.height / 2,
