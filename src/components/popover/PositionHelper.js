@@ -14,6 +14,8 @@ export default function PositionHelper($log) {
     items.forEach((count, index) => {
       total = (index === 0) ? total += count : total -= count;
     });
+
+    return total;
   }
 
   return {
