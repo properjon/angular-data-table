@@ -54,7 +54,7 @@ export default function PopoverDirective($q, $timeout, $templateCache,
       $scope.popover = null;
 
       $scope.options = {
-        alignment: $attributes.popoverAlignment || 'center',
+        alignment: $attributes.popoverAlignment || 'middle',
         placement: $attributes.popoverPlacement || 'right',
         plain: toBoolean($attributes.popoverPlain || false),
         popoverId: $attributes.popoverId,
@@ -220,6 +220,7 @@ export default function PopoverDirective($q, $timeout, $templateCache,
           popover.css({
             top: `${top}px`,
             left: `${left}px`,
+            height: '300px',
           });
 
           if ($scope.options.showCaret) {
