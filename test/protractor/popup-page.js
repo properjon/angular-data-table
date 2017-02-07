@@ -4,12 +4,12 @@ class PopupPage {
   }
 
   mouseOverComment() {
-    const popover = element(by.css('span[popover]'));
+    const popover = element.all(by.css('span[popover]')).first();
     return browser.actions().mouseMove(popover, { x: 5, y: 5 }).perform();
   }
 
   mouseOffComment() {
-    const firstHeader = element(by.css('.dt-header-cell-label'));
+    const firstHeader = element.all(by.css('.dt-header-cell-label')).first();
     return browser.actions().mouseMove(firstHeader, { x: 5, y: 5 }).perform();
   }
 
