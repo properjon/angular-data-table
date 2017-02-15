@@ -2,16 +2,19 @@ import POSITION from './Popover.constants';
 
 /**
  * Popover Directive
- * @param {object} $q
- * @param {function} $timeout
- * @param {function} $templateCache
- * @param {function} $compile
- * @param {function} PopoverRegistry
  * @param {function} $animate
+ * @param {function} $compile
+ * @param {function} $document
+ * @param {function} $http
+ * @param {object} $q
+ * @param {function} $templateCache
+ * @param {function} $timeout
+ * @param {function} PopoverRegistry
+ * @param {function} PositionHelper
  */
 
-export default function PopoverDirective($q, $timeout, $templateCache,
-  $compile, PopoverRegistry, PositionHelper, $animate, $document, $http) {
+export default function PopoverDirective($animate, $compile, $document, $http,
+  $q, $templateCache, $timeout, PopoverRegistry, PositionHelper) {
   /**
    * Loads a template from the template cache
    * @param  {string} template
