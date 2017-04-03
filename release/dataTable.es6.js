@@ -1375,9 +1375,7 @@ function DataTableDirective($window, $timeout, $parse) {
             $timeout(resize);
           }
 
-          $window.addEventListener('resize', debounce(calculateResize, 100, {
-            leading: true, trailing: true,
-          }));
+          $window.addEventListener('resize', debounce(calculateResize, 200, { trailing: true }));
           $scope.$on('dtable:resize', calculateResize);
           // When an item is hidden for example
           // in a tab with display none, the height

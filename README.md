@@ -152,10 +152,9 @@ The data table can be created with the following `options`:
 
 # Events
 
-Most of the events are useful for fixing some advanced functionlity.
+There is a single event that handles resizing:
 
-On: dtable:resize
-On: dtable:page(pageNum)
+The event name is `dtable:resize` and it will retrigger the resize functions.
 
 ## Contributing
 
