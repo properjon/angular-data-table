@@ -1,6 +1,6 @@
 import DataTableController from './DataTableController';
 import { ScrollbarWidth, ObjectId } from '../utils/utils';
-import { throttle } from '../utils/throttle';
+import { debounce } from '../utils/throttle';
 import DataTableService from './DataTableService';
 
 export default function DataTableDirective($window, $timeout, $parse) {
@@ -56,6 +56,7 @@ export default function DataTableDirective($window, $timeout, $parse) {
           <dt-footer ng-if="dt.options.footerHeight || dt.options.paging.mode"
                      ng-style="{ height: dt.options.footerHeight + 'px' }"
                      on-page="dt.onFooterPage(offset, size)"
+                     selected= "dt.selected"
                      paging="dt.options.paging">
            </dt-footer>
         </div>`;
@@ -105,13 +106,13 @@ export default function DataTableDirective($window, $timeout, $parse) {
           }
 
           function calculateResize() {
-            throttle(() => {
-              $timeout(resize);
-            });
+            $timeout(resize);
           }
 
-          $window.addEventListener('resize', calculateResize);
-
+          $window.addEventListener('resize', debounce(calculateResize, 100, {
+            leading: true, trailing: true,
+          }));
+          $scope.$on('dtable:resize', calculateResize);
           // When an item is hidden for example
           // in a tab with display none, the height
           // is not calculated correrctly.  We need to watch

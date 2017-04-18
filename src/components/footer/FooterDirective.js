@@ -9,10 +9,11 @@ export default function FooterDirective() {
     bindToController: {
       paging: '=',
       onPage: '&',
+      selected: '<',
     },
     template:
       `<div class="dt-footer">
-        <div class="page-count">{{footer.paging.count}} total</div>
+        <div class="page-count">{{footer.paging.count}} total {{footer.selectedCount}}</div>
         <dt-pager page="footer.page"
                size="footer.paging.size"
                count="footer.paging.count"

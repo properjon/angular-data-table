@@ -229,68 +229,43 @@ function SortableDirective() {
  */
 const TableDefaults = {
 
-  // Enable vertical scrollbars
-  scrollbarV: true,
-
-  // Enable horz scrollbars
-  // scrollbarH: true,
-
-  // The row height, which is necessary
-  // to calculate the height for the lazy rendering.
-  rowHeight: 30,
-
-  // flex
-  // force
-  // standard
-  columnMode: 'standard',
-
-  // Loading message presented when the array is undefined
-  loadingMessage: 'Loading...',
-
-  // Message to show when array is presented
-  // but contains no values
-  emptyMessage: 'No data to display',
-
-  // The minimum header height in pixels.
-  // pass falsey for no header
-  headerHeight: 30,
-
-  // The minimum footer height in pixels.
-  // pass falsey for no footer
-  footerHeight: 0,
-
-  paging: {
-    // if external paging is turned on
-    externalPaging: false,
-
-    // Page size
-    size: undefined,
-
-    // Total count
-    count: 0,
-
-    // Page offset
-    offset: 0,
-
-    // Loading indicator
-    loadingIndicator: false,
-  },
-
-  // if users can select itmes
-  selectable: false,
-
-  // if users can select mutliple items
-  multiSelect: false,
-
-  // checkbox selection vs row click
+  /**
+   * Checkbox selection (true) vs. row click (false)
+   * @type {boolean}
+   */
   checkboxSelection: false,
 
-  // if you can reorder columns
-  reorderable: true,
+  /**
+   * Options: 'flex', 'force', 'standard'
+   * @type {string}
+   */
+  columnMode: 'standard',
 
-  // sorting by single or multiple columns
-  sortType: 'multiple',
+  /**
+   * Message to show when array is presented
+   * but contains no values
+   * @type {string}
+   */
+  emptyMessage: 'No data to display',
 
+  /**
+   * The minimum footer height in pixels.
+   * pass falsey for no footer
+   * @type {number}
+   */
+  footerHeight: 0,
+
+  /**
+   * The minimum header height in pixels.
+   * pass falsey for no header
+   * @type {number}
+   */
+  headerHeight: 30,
+
+  /**
+   * Internal options
+   * @type {Object}
+   */
   internal: {
     offsetX: 0,
     offsetY: 0,
@@ -298,6 +273,94 @@ const TableDefaults = {
     bodyHeight: 300,
   },
 
+  /**
+   * Loading indicator
+   * @type {boolean}
+   */
+  loadingIndicator: false,
+
+  /**
+   *Loading message presented when the array is undefined
+   * @type {boolean}
+   */
+  loadingMessage: 'Loading...',
+
+  /**
+   * Whether multiple rows can be selected at once.
+   * @type {boolean}
+   */
+  multiSelect: false,
+
+  /**
+   * The default paging Options
+   * @type {Object}
+   */
+  paging: {
+    /**
+     * Total count
+     * @type {number}
+     */
+    count: 0,
+
+    /**
+     * Page offset
+     * @type {number}
+     */
+    offset: 0,
+
+    /**
+     * The paging mode to use: 'internal', 'external', null (none)
+     * @type: {string}
+     */
+    mode: null,
+
+    /**
+     * Page size
+     * @type {number}
+     */
+    size: 10,
+  },
+
+  /**
+   * Whether columns can be reordered.
+   * @type {boolean}
+   */
+  reorderable: true,
+
+  /**
+   * The row height, which is necessary to calculate
+   * the height for the lazy rendering.
+   * @type {number}
+   */
+  rowHeight: 30,
+
+  /**
+   * Enable vertical scrollbars
+   * @type {boolean}
+   */
+  scrollbarV: true,
+
+  /**
+   * Whether rows are selectable.
+   * @type {boolean}
+   */
+  selectable: false,
+
+  // If yes then columns can be sorted.
+  sortable: true,
+
+  // sorting by single or multiple columns
+  /**
+   * Whether sorting can be done on single or multiple columns.
+   * @type {string}
+   */
+  sortType: 'multiple',
+
+  /**
+   * Whether sorting modifier key is active.
+   * @type {boolean}
+   */
+  modifierActive: true,
 };
 
 /**
@@ -306,78 +369,140 @@ const TableDefaults = {
  */
 const ColumnDefaults = {
 
-  // pinned to the left
-  frozenLeft: false,
-
-  // pinned to the right
-  frozenRight: false,
-
-  // body cell css class name
-  className: undefined,
-
-  // header cell css class name
-  headerClassName: undefined,
-
-  // The grow factor relative to other columns. Same as the flex-grow
-  // API from http://www.w3.org/TR/css3-flexbox/. Basically,
-  // take any available extra width and distribute it proportionally
-  // according to all columns' flexGrow values.
-  flexGrow: 0,
-
-  // Minimum width of the column.
-  minWidth: 100,
-
-  // Maximum width of the column.
-  maxWidth: undefined,
-
-  // The width of the column, by default (in pixels).
-  width: 150,
-
-  // If yes then the column can be resized, otherwise it cannot.
-  resizable: true,
-
-  // Custom sort comparator
-  // pass false if you want to server sort
-  comparator: undefined,
-
-  // If yes then the column can be sorted.
-  sortable: true,
-
-  // Default sort asecending/descending for the column
-  sort: undefined,
-
-  // If you want to sort a column by a special property
-  // See an example in demos/sort.html
-  sortBy: undefined,
-
-  // The cell renderer that returns content for table column header
-  headerRenderer: undefined,
-
-  // The cell renderer function(scope, elm) that returns React-renderable content for table cell.
-  cellRenderer: undefined,
-
-  // The getter function(value) that returns the cell data for the cellRenderer.
-  // If not provided, the cell data will be collected from row data instead.
-  cellDataGetter: undefined,
-
-  // Grows all rows by this column value
-  // Only one column can have this set, cannot be combined with isTreeColumn
-  group: false,
-
-  // Adds +/- button and makes a secondary call to load nested data
-  // Only one column can have this set, cannot be combined with isGroupColumn
-  isTreeColumn: false,
-
-  // Adds the checkbox selection to the column
-  isCheckboxColumn: false,
-
-  // Toggles the checkbox column in the header
-  // for selecting all values given to the grid
-  headerCheckbox: false,
-
-  // Whether the column can automatically resize to fill space in the table.
+  /**
+   * Whether the column can automatically resize to fill space in the table.
+   * @type {boolean}
+   */
   canAutoResize: true,
 
+  /**
+   * The getter function(value) that returns the cell data for the cellRenderer.
+   * If not provided, the cell data will be collected from row data instead.
+   * @type {function}
+   */
+  cellDataGetter: undefined,
+
+  /**
+   * The cell renderer function(scope, elm) that returns React-renderable content for table cell.
+   * @type {function}
+   */
+  cellRenderer: undefined,
+
+  /**
+   * body cell css class name
+   * @type {string}
+   */
+  className: undefined,
+
+  /**
+   * Custom sort comparator
+   * pass false if you want to server sort
+   * @type {function|boolean}
+   */
+  comparator: undefined,
+
+  /**
+   * The grow factor relative to other columns. Same as the flex-grow
+   * API from http://www.w3.org/TR/css3-flexbox/. Basically,
+   * take any available extra width and distribute it proportionally
+   * according to all columns' flexGrow values.
+   * @type {number}
+   */
+  flexGrow: 0,
+
+  /**
+   * Pinned to the left
+   * @type {boolean}
+   */
+  frozenLeft: false,
+
+  /**
+   * Pinned to the right
+   * @type {boolean}
+   */
+  frozenRight: false,
+
+  /**
+   * Grows all rows by this column value
+   * Only one column can have this set, cannot be combined with isTreeColumn
+   * @type {boolean}
+   */
+  group: false,
+
+  /**
+   * Toggles the checkbox column in the header
+   * for selecting all values given to the grid
+   * @type {boolean}
+   */
+  headerCheckbox: false,
+
+  /**
+   * header cell css class name
+   * @type {string}
+   */
+  headerClassName: undefined,
+
+  /**
+   * The cell renderer that returns content for table column header
+   * @type {function}
+   */
+  headerRenderer: undefined,
+
+  /**
+   * Adds the checkbox selection to the column
+   * @type {boolean}
+   */
+  isCheckboxColumn: false,
+
+  /**
+   * Adds +/- button and makes a secondary call to load nested data
+   * Only one column can have this set, cannot be combined with isGroupColumn
+   * @type {boolean}
+   */
+  isTreeColumn: false,
+
+  /**
+   * Maximum width of the column.
+   * @type {number}
+   */
+  maxWidth: undefined,
+
+  /**
+   * Minimum width of the column.
+   * @type {number}
+   */
+  minWidth: 100,
+
+  /**
+   * If yes then the column can be resized, otherwise it cannot.
+   * @type {boolean}
+   */
+  resizable: true,
+
+  /**
+   * Default sort ('asc' or 'desc') for the column
+   * @type {string}
+   */
+  sort: undefined,
+
+  /**
+   * If yes then the column can be sorted.
+   * @type {boolean}
+   */
+  sortable: true,
+
+  /**
+   * If you want to sort a column by a special property
+   * See an example in demos/sort.html
+   * @type {string}
+   */
+  sortBy: undefined,
+
+  /**
+   * The width of the column, by default (in pixels).
+   * @type {number}
+   */
+  width: 150,
 };
 
 /**
@@ -785,6 +910,16 @@ class DataTableController {
   }
 
   /**
+   * If undefined, set column sortable property to table sortable property value
+   */
+  inheritColumnSortableProps() {
+    angular.forEach(this.options.columns, (column) => {
+      column.sortable = angular.isDefined(column.sortable) ?
+        column.sortable : this.options.sortable;
+    });
+  }
+
+  /**
    * Calculate column groups and widths
    */
   calculateColumns() {
@@ -1018,7 +1153,36 @@ class DataTableController {
  * @param  {int}
  * @param  {boolean}
  */
+function debounce(func, wait, immediate) {
+  return (...args) => {
+    let timeout;
+    let result;
 
+    const context = this;
+    const timestamp = new Date();
+
+    const later = function setLater() {
+      const last = new Date() - timestamp;
+      if (last < wait) {
+        timeout = setTimeout(later, wait - last);
+      } else {
+        timeout = null;
+        if (!immediate) {
+          result = func.apply(context, args);
+        }
+      }
+    };
+
+    const callNow = immediate && !timeout;
+    if (!timeout) {
+      timeout = setTimeout(later, wait);
+    }
+    if (callNow) {
+      result = func.apply(context, args);
+    }
+    return result;
+  };
+}
 
 /**
  * Throttle helper
@@ -1026,37 +1190,6 @@ class DataTableController {
  * @param  {boolean}
  * @param  {object}
  */
-function throttle(func, wait, options) {
-  return (...args) => {
-    const localOptions = options || (options = {});
-
-    let result;
-    let timeout = null;
-    let previous = 0;
-
-    const later = () => {
-      previous = localOptions.leading === false ? 0 : new Date();
-      timeout = null;
-      result = func.apply(this, args);
-    };
-
-    const now = new Date();
-    if (!previous && localOptions.leading === false) {
-      previous = now;
-    }
-    const remaining = wait - (now - previous);
-
-    if (remaining <= 0) {
-      clearTimeout(timeout);
-      timeout = null;
-      previous = now;
-      result = func.apply(this, args);
-    } else if (!timeout && localOptions.trailing !== false) {
-      timeout = setTimeout(later, remaining);
-    }
-    return result;
-  };
-}
 
 var DataTableService = {
 
@@ -1186,9 +1319,10 @@ function DataTableDirective($window, $timeout, $parse) {
                    on-page="dt.onBodyPage(offset, size)"
                    on-tree-toggle="dt.onTreeToggled(row, cell)">
            </dt-body>
-          <dt-footer ng-if="dt.options.footerHeight"
+          <dt-footer ng-if="dt.options.footerHeight || dt.options.paging.mode"
                      ng-style="{ height: dt.options.footerHeight + 'px' }"
                      on-page="dt.onFooterPage(offset, size)"
+                     selected= "dt.selected"
                      paging="dt.options.paging">
            </dt-footer>
         </div>`;
@@ -1207,6 +1341,7 @@ function DataTableDirective($window, $timeout, $parse) {
             ctrl.options.columns = columns;
           }
 
+          ctrl.inheritColumnSortableProps();
           ctrl.transposeColumnDefaults();
           ctrl.options.internal.scrollBarWidth = ScrollbarWidth();
 
@@ -1237,13 +1372,13 @@ function DataTableDirective($window, $timeout, $parse) {
           }
 
           function calculateResize() {
-            throttle(() => {
-              $timeout(resize);
-            });
+            $timeout(resize);
           }
 
-          $window.addEventListener('resize', calculateResize);
-
+          $window.addEventListener('resize', debounce(calculateResize, 100, {
+            leading: true, trailing: true,
+          }));
+          $scope.$on('dtable:resize', calculateResize);
           // When an item is hidden for example
           // in a tab with display none, the height
           // is not calculated correrctly.  We need to watch
@@ -1361,10 +1496,10 @@ class HeaderController {
 
   /**
    * Invoked when a column sort direction has changed
-   * @param  {object} scope
-   * @param  {object} column
+   * @param  {object} sortedColumn
+   * @param  {object} modifierPressed
    */
-  onSorted(sortedColumn) {
+  onSorted(sortedColumn, modifierPressed) {
     // if sort type is single, then only one column can be sorted at once,
     // so we set the sort to undefined for the other columns
     function unsortColumn(column) {
@@ -1373,7 +1508,8 @@ class HeaderController {
       }
     }
 
-    if (this.options.sortType === 'single') {
+    if ((this.options.sortType === 'single' && !(this.options.modifierActive && modifierPressed)) ||
+        (this.options.sortType === 'multiple' && this.options.modifierActive && modifierPressed)) {
       this.columns.left.forEach(unsortColumn);
       this.columns.center.forEach(unsortColumn);
       this.columns.right.forEach(unsortColumn);
@@ -1444,7 +1580,7 @@ function HeaderDirective($timeout) {
                on-sortable-sort="columnsResorted(event, columnId)">
             <dt-header-cell
               ng-repeat="column in header.columns['left'] track by column.$id"
-              on-sort="header.onSorted(column)"
+              on-sort="header.onSorted(column, modifierPressed)"
               options="header.options"
               sort-type="header.options.sortType"
               on-resize="header.onResized(column, width)"
@@ -1459,7 +1595,7 @@ function HeaderDirective($timeout) {
             <dt-header-cell
               ng-repeat="column in header.columns['center'] track by column.$id"
               on-checkbox-change="header.onCheckboxChanged()"
-              on-sort="header.onSorted(column)"
+              on-sort="header.onSorted(column, modifierPressed)"
               sort-type="header.options.sortType"
               selected="header.isSelected()"
               on-resize="header.onResized(column, width)"
@@ -1475,7 +1611,7 @@ function HeaderDirective($timeout) {
             <dt-header-cell
               ng-repeat="column in header.columns['right'] track by column.$id"
               on-checkbox-change="header.onCheckboxChanged()"
-              on-sort="header.onSorted(column)"
+              on-sort="header.onSorted(column, modifierPressed)"
               sort-type="header.options.sortType"
               selected="header.isSelected()"
               on-resize="header.onResized(column, width)"
@@ -1585,7 +1721,7 @@ class HeaderCellController {
   /**
    * Toggles the sorting on the column
    */
-  onSorted() {
+  onSorted(event) {
     if (this.column.sortable) {
       this.column.sort = NextSortDirection(this.sortType, this.column.sort);
 
@@ -1595,6 +1731,7 @@ class HeaderCellController {
 
       this.onSort({
         column: this.column,
+        modifierPressed: event.shiftKey,
       });
     }
   }
@@ -1670,9 +1807,9 @@ function HeaderCellDirective($compile) {
                    ng-change="hcell.checkboxChangeCallback()" />
           </label>
           <span class="dt-header-cell-label"
-                ng-click="hcell.onSorted()">
+                ng-click="hcell.onSorted($event)">
           </span>
-          <span ng-class="hcell.sortClass()"></span>
+          <span ng-class="hcell.sortClass()">{{hcell.column.sortPriority}}</span>
         </div>
       </div>`,
     compile() {
@@ -1743,8 +1880,8 @@ class BodyController {
 
     this.$scope.$watch('body.options.columns', (newVal) => {
       if (newVal) {
-        const origTreeColumn = this.treeColumn;
-        const origGroupColumn = this.groupColumn;
+        const origTreeColumn = angular.copy(this.treeColumn);
+        const origGroupColumn = angular.copy(this.groupColumn);
 
         this.setTreeAndGroupColumns();
 
@@ -1783,11 +1920,16 @@ class BodyController {
    */
   buildInternalPage() {
     let i;
+    let rowsIndex;
 
     this.tempRows.splice(0, this.tempRows.length);
 
     for (i = 0; i < this.options.paging.size; i += 1) {
-      this.tempRows[i] = this.rows[(this.options.paging.offset * this.options.paging.size) + i];
+      rowsIndex = (this.options.paging.offset * this.options.paging.size) + i;
+
+      if (angular.isDefined(this.rows[rowsIndex])) {
+        this.tempRows[i] = this.rows[rowsIndex];
+      }
     }
   }
 
@@ -1799,10 +1941,10 @@ class BodyController {
     }
 
     if (this.options &&
-        (this.options.scrollbarV ||
-            (!this.options.scrollbarV &&
-              this.options.paging &&
-              this.options.paging.size))) {
+      (this.options.scrollbarV ||
+        (!this.options.scrollbarV &&
+          this.options.paging &&
+          this.options.paging.size))) {
       let sized = false;
 
       this.watchListeners.push(this.$scope.$watch('body.options.paging.size', (newVal, oldVal) => {
@@ -1819,7 +1961,7 @@ class BodyController {
 
       this.watchListeners.push(this.$scope.$watch('body.options.paging.offset', (newVal) => {
         if (this.options.paging.size) {
-          if (!this.options.paging.externalPaging) {
+          if (this.options.paging.mode === 'internal') {
             this.buildInternalPage();
           }
 
@@ -1838,7 +1980,7 @@ class BodyController {
     if (!newVal) {
       this.getRows(true);
     } else {
-      if (!this.options.paging.externalPaging) {
+      if (this.options.paging.mode !== 'external') {
         this.options.paging.count = newVal.length;
       }
 
@@ -1862,7 +2004,7 @@ class BodyController {
           rows = this.buildGroups();
         }
 
-        if (this.options.paging.externalPaging) {
+        if (this.options.paging.mode === 'external') {
           // We're using external paging
           const idxs = this.getFirstLastIndexes();
           let idx = idxs.first;
@@ -1871,7 +2013,7 @@ class BodyController {
           while (idx < idxs.last) {
             this.tempRows.push(rows[idx += 1]);
           }
-        } else if (this.options.paging.size) {
+        } else if (this.options.paging.mode === 'internal') {
           // We're using internal paging
           this.buildInternalPage();
         } else {
@@ -1892,9 +2034,9 @@ class BodyController {
 
     if (this.options.scrollbarV) {
       firstRowIndex = Math.max(Math.floor((
-          this.options.internal.offsetY || 0) / this.options.rowHeight, 0), 0);
+        this.options.internal.offsetY || 0) / this.options.rowHeight, 0), 0);
       endIndex = Math.min(firstRowIndex + this.options.paging.size, this.count);
-    } else if (this.options.paging.externalPaging) {
+    } else if (this.options.paging.mode === 'external') {
       firstRowIndex = Math.max(this.options.paging.offset * this.options.paging.size, 0);
       endIndex = Math.min(firstRowIndex + this.options.paging.size, this.count);
     } else {
@@ -2355,12 +2497,12 @@ function BodyDirective() {
       <div
         class="progress-linear"
         role="progressbar"
-        ng-show="body.options.paging.loadingIndicator">
+        ng-show="body.options.loadingIndicator">
         <div class="container">
           <div class="bar"></div>
         </div>
       </div>
-      <div class="dt-body" ng-style="body.styles()" dt-seletion>
+      <div class="dt-body" ng-style="body.styles()" dt-selection>
         <dt-scroller class="dt-body-scroller">
           <dt-group-row ng-repeat-start="r in body.tempRows track by $index"
                         ng-if="r.group"
@@ -3066,6 +3208,11 @@ class FooterController {
     }
   }
 
+  get selectedCount() {
+    const size = this.selected.length;
+    return size > 0 ? `/ ${size} selected` : '';
+  }
+
   $onInit() {
     this.init();
   }
@@ -3109,10 +3256,11 @@ function FooterDirective() {
     bindToController: {
       paging: '=',
       onPage: '&',
+      selected: '<',
     },
     template:
       `<div class="dt-footer">
-        <div class="page-count">{{footer.paging.count}} total</div>
+        <div class="page-count">{{footer.paging.count}} total {{footer.selectedCount}}</div>
         <dt-pager page="footer.page"
                size="footer.paging.size"
                count="footer.paging.count"
@@ -3139,6 +3287,10 @@ class PagerController {
     if (isOldAngular()) {
       this.$onInit();
     }
+
+    $scope.$on('dtable:page', (event, page) => {
+      this.selectPage(page);
+    });
   }
 
   $onInit() {
@@ -3317,20 +3469,24 @@ var POSITION = {
   TOP: 'top',
   BOTTOM: 'bottom',
   CENTER: 'center',
+  MIDDLE: 'middle',
 };
 
 /**
  * Popover Directive
- * @param {object} $q
- * @param {function} $timeout
- * @param {function} $templateCache
- * @param {function} $compile
- * @param {function} PopoverRegistry
  * @param {function} $animate
+ * @param {function} $compile
+ * @param {function} $document
+ * @param {function} $http
+ * @param {object} $q
+ * @param {function} $templateCache
+ * @param {function} $timeout
+ * @param {function} PopoverRegistry
+ * @param {function} PositionHelper
  */
 
-function PopoverDirective($q, $timeout, $templateCache,
-  $compile, PopoverRegistry, PositionHelper, $animate, $document, $http) {
+function PopoverDirective($animate, $compile, $document, $http,
+  $q, $templateCache, $timeout, PopoverRegistry, PositionHelper) {
   /**
    * Loads a template from the template cache
    * @param  {string} template
@@ -3371,27 +3527,39 @@ function PopoverDirective($q, $timeout, $templateCache,
     replace: false,
     link($scope, $element, $attributes) {
       $scope.popover = null;
-      $scope.popoverId = Date.now();
 
       $scope.options = {
-        text: $attributes.popoverText,
-        template: $attributes.popoverTemplate,
-        plain: toBoolean($attributes.popoverPlain || false),
+        alignment: $attributes.popoverAlignment || 'middle',
         placement: $attributes.popoverPlacement || 'right',
-        alignment: $attributes.popoverAlignment || 'center',
-        group: $attributes.popoverGroup,
-        spacing: parseInt($attributes.popoverSpacing, 10) || 0,
+        plain: toBoolean($attributes.popoverPlain || false),
+        popoverId: $attributes.popoverId,
         showCaret: toBoolean($attributes.popoverPlain || false),
+        spacing: parseInt($attributes.popoverSpacing, 10) || 0,
+        template: $attributes.popoverTemplate,
+        text: $attributes.popoverText,
       };
 
-      // attach exit and enter events to element
-      $element.off('mouseenter', display);
-      $element.on('mouseenter', display);
-      $element.off('mouseleave', mouseOut);
-      $element.on('mouseleave', mouseOut);
+      $scope.$on('$destroy', () => {
+        $element.off();
+      });
 
-      function mouseOut() {
+      // attach mouse events to element
+      $element.on('mouseenter', display);
+      $element.on('mouseleave', beginTimeout);
+      $element.on('mousemove', cancelTimeout);
+
+      /**
+       * Begin a timeout of 500ms before hiding popover
+       */
+      function beginTimeout() {
         $scope.exitTimeout = $timeout(remove, 500);
+      }
+
+      /**
+       * Cancel the timeout to keep popover visible
+       */
+      function cancelTimeout() {
+        $timeout.cancel($scope.exitTimeout);
       }
 
       /**
@@ -3399,60 +3567,78 @@ function PopoverDirective($q, $timeout, $templateCache,
        */
       function display() {
         // Cancel exit timeout
-        $timeout.cancel($scope.exitTimeout);
+        cancelTimeout();
 
-        const elm = $document[0].getElementById(`#${$scope.popoverId}`);
+        const elm = $document[0].getElementById($scope.options.popoverId);
         if ($scope.popover && elm) return;
 
-        // remove other popovers from the same group
-        if ($scope.options.group) {
-          PopoverRegistry.removeGroup($scope.options.group, $scope.popoverId);
-        }
-
         if ($scope.options.text && !$scope.options.template) {
-          $scope.popover = angular.element(`<div class="dt-popover popover-text
-            popover${$scope.options.placement}" id="${$scope.popoverId}"></div>`);
-
-          $scope.popover.html($scope.options.text);
-          angular.element($document[0].body).append($scope.popover);
-          positionPopover($element, $scope.popover, $scope.options);
-          PopoverRegistry.add($scope.popoverId, {
-            element: $element,
-            popover: $scope.popover,
-            group: $scope.options.group,
-          });
+          displayTextPopover();
         } else {
-          $q.when(loadTemplate($scope.options.template, $scope.options.plain)).then((template) => {
-            if (!angular.isString(template)) {
-              if (template.data && angular.isString(template.data)) {
-                template = template.data;
-              } else {
-                template = '';
-              }
-            }
-
-            $scope.popover = angular.element(`<div class="dt-popover
-              popover-${$scope.options.placement}" id="${$scope.popoverId}"></div>`);
-
-            $scope.popover.html(template);
-            $compile($scope.popover)($scope);
-            angular.element($document.body).append($scope.popover);
-            positionPopover($element, $scope.popover, $scope.options);
-
-            // attach exit and enter events to popover
-            $scope.popover.off('mouseleave', mouseOut);
-            $scope.popover.on('mouseleave', mouseOut);
-            $scope.popover.on('mouseenter', () => {
-              $timeout.cancel($scope.exitTimeout);
-            });
-
-            PopoverRegistry.add($scope.popoverId, {
-              element: $element,
-              popover: $scope.popover,
-              group: $scope.options.group,
-            });
-          });
+          displayTemplatePopover();
         }
+      }
+
+      /**
+       * When using template, load and compile the template prior to appending popover
+       */
+      function displayTemplatePopover() {
+        $q.when(loadTemplate($scope.options.template, $scope.options.plain)).then((template) => {
+          if (!angular.isString(template)) {
+            if (template.data && angular.isString(template.data)) {
+              template = template.data;
+            } else {
+              template = '';
+            }
+          }
+
+          buildElement('template');
+
+          $scope.popover.html(template);
+          $compile($scope.popover)($scope);
+          angular.element($document.body).append($scope.popover);
+          positionPopover($element, $scope.popover, $scope.options);
+
+          managePopover();
+        });
+      }
+
+      /**
+       * With text only, simply build up the popover and append it to body
+       */
+      function displayTextPopover() {
+        buildElement('text');
+
+        $scope.popover.html($scope.options.text);
+        angular.element($document[0].body).append($scope.popover);
+
+        managePopover();
+      }
+
+      function buildElement(type) {
+        $scope.popover = angular.element(`<div
+          class="dt-popover popover${$scope.options.placement}"
+          id="${$scope.options.popoverId}"></div>`);
+
+        if (type === 'text') {
+          $scope.popover.addClass('popover-text');
+        }
+      }
+
+      /**
+       * Position popover, bind handlers, and register popover
+       */
+      function managePopover() {
+        positionPopover($element, $scope.popover, $scope.options);
+
+        // attach mouse events to popover
+        $scope.popover.on('mouseleave', beginTimeout);
+        $scope.popover.on('mousemove', cancelTimeout);
+
+        PopoverRegistry.add($scope.options.popoverId, {
+          element: $element,
+          popover: $scope.popover,
+        });
       }
 
       /**
@@ -3460,11 +3646,12 @@ function PopoverDirective($q, $timeout, $templateCache,
        */
       function remove() {
         if ($scope.popover) {
+          $scope.popover.off();
           $scope.popover.remove();
         }
 
-        $scope.popover = undefined;
-        PopoverRegistry.remove($scope.popoverId);
+        $scope.popover = null;
+        PopoverRegistry.remove($scope.options.popoverId);
       }
 
       /**
@@ -3484,16 +3671,13 @@ function PopoverDirective($q, $timeout, $templateCache,
           if (options.placement === POSITION.RIGHT) {
             left = elDimensions.left + elDimensions.width + options.spacing;
             top = calculateVerticalAlignment();
-          }
-          if (options.placement === POSITION.LEFT) {
+          } else if (options.placement === POSITION.LEFT) {
             left = elDimensions.left - popoverDimensions.width - options.spacing;
             top = calculateVerticalAlignment();
-          }
-          if (options.placement === POSITION.TOP) {
+          } else if (options.placement === POSITION.TOP) {
             top = elDimensions.top - popoverDimensions.height - options.spacing;
             left = calculateHorizontalAlignment();
-          }
-          if (options.placement === POSITION.BOTTOM) {
+          } else if (options.placement === POSITION.BOTTOM) {
             top = elDimensions.top + elDimensions.height + options.spacing;
             left = calculateHorizontalAlignment();
           }
@@ -3511,6 +3695,7 @@ function PopoverDirective($q, $timeout, $templateCache,
           popover.css({
             top: `${top}px`,
             left: `${left}px`,
+            height: '300px',
           });
 
           if ($scope.options.showCaret) {
@@ -3568,17 +3753,13 @@ function PopoverDirective($q, $timeout, $templateCache,
   };
 }
 
-/**
- * Registering to deal with popovers
- * @param {function} $animate
- */
-
-function PopoverRegistry($animate) {
+function PopoverRegistry() {
   const popovers = {};
 
   return {
     add(id, object) {
       popovers[id] = object;
+      return popovers[id];
     },
 
     find(id) {
@@ -3587,19 +3768,6 @@ function PopoverRegistry($animate) {
 
     remove(id) {
       delete popovers[id];
-    },
-
-    removeGroup(group, currentId) {
-      return angular.forEach(popovers, (popoverOb, id) => {
-        if (id === currentId) return;
-
-        if (popoverOb.group && popoverOb.group === group) {
-          $animate.removeClass(popoverOb.popover, 'sw-popover-animate').then(() => {
-            popoverOb.popover.remove();
-            delete popovers[id];
-          });
-        }
-      });
     },
   };
 }
@@ -3618,6 +3786,8 @@ function PositionHelper($log) {
     items.forEach((count, index) => {
       total = (index === 0) ? total += count : total -= count;
     });
+
+    return total;
   }
 
   return {
@@ -3641,7 +3811,7 @@ function PositionHelper($log) {
           return elDimensions.top;
         case POSITION.BOTTOM:
           return elDimensions.top + (elDimensions.height - popoverDimensions.height);
-        case POSITION.CENTER:
+        case POSITION.MIDDLE:
           return elDimensions.top + ((elDimensions.height / 2) - (popoverDimensions.height / 2));
         default:
           return $log.warn('calculateVerticalAlignment issue', this);
@@ -3663,7 +3833,7 @@ function PositionHelper($log) {
             caretDimensions.height / 2,
             1,
           ]);
-        case POSITION.CENTER:
+        case POSITION.MIDDLE:
           return subtractAll([
             popoverDimensions.height / 2,
             caretDimensions.height / 2,
@@ -3878,7 +4048,7 @@ var dataTable = angular
   .directive('dtHeaderCell', HeaderCellDirective)
   .directive('dtBody', BodyDirective)
   .directive('dtScroller', ScrollerDirective)
-  .directive('dtSeletion', SelectionDirective)
+  .directive('dtSelection', SelectionDirective)
   .directive('dtRow', RowDirective)
   .directive('dtGroupRow', GroupRowDirective)
   .directive('dtCell', CellDirective)
