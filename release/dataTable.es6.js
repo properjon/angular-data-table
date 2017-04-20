@@ -1375,9 +1375,7 @@ function DataTableDirective($window, $timeout, $parse) {
             $timeout(resize);
           }
 
-          $window.addEventListener('resize', debounce(calculateResize, 100, {
-            leading: true, trailing: true,
-          }));
+          $window.addEventListener('resize', debounce(calculateResize, 100));
           $scope.$on('dtable:resize', calculateResize);
           // When an item is hidden for example
           // in a tab with display none, the height
@@ -3209,7 +3207,7 @@ class FooterController {
   }
 
   get selectedCount() {
-    const size = this.selected.length;
+    const size = this.selected && this.selected.length;
     return size > 0 ? `/ ${size} selected` : '';
   }
 

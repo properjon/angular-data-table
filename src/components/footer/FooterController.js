@@ -19,7 +19,7 @@ export default class FooterController {
   }
 
   get selectedCount() {
-    const size = this.selected.length;
+    const size = this.selected && this.selected.length;
     return size > 0 ? `/ ${size} selected` : '';
   }
 
