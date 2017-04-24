@@ -150,6 +150,13 @@ The data table can be created with the following `options`:
 - `sortable`: Whether the columns can be sorted (default: `true`, overridden at column level)
 - `sortType`: Whether to allow sorting by multiple columns or only 1 (`multiple` or `single`) (default: `multiple`)
 
+# Events
+
+Most of the events are useful for fixing some advanced functionlity.
+
+On: dtable:resize
+On: dtable:page(pageNum)
+
 ## Contributing
 
 #### Run Demos

@@ -15,6 +15,10 @@ export default class PagerController {
     if (isOldAngular()) {
       this.$onInit();
     }
+
+    $scope.$on('dtable:page', (event, page) => {
+      this.selectPage(page)
+    })
   }
 
   $onInit() {
