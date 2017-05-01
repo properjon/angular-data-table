@@ -90,31 +90,81 @@
 
         module.controller('HomeController', function ($scope, $http) {
           $scope.options = {
-            rowHeight: 50,
-            footerHeight: false,
-            scrollbarV: true,
-            headerHeight: 50,
+          //   rowHeight: 50,
+          //   footerHeight: false,
+          //   scrollbarV: true,
+          //   headerHeight: 50,
+          //   columnMode: 'flex',
+          //   columns: [
+          //     { 
+          //       name: "Company", 
+          //       prop: "company", 
+          //       flexGrow: 2,
+          //       isTreeColumn: true,
+          //       relationProp: 'parentCompany'
+          //     },
+          //     { 
+          //       name: "Revenue", 
+          //       flexGrow: 1,
+          //       prop: "revenue" 
+          //     },
+          //     { 
+          //       name: "Sales", 
+          //       flexGrow: 1,
+          //       prop: "sales"
+          //     }
+          //   ]rowHeight: 36,
+            headerHeight: 30,
+            selectable: false,
+            resizeable: false,
             columnMode: 'flex',
+            scrollbarV: true,
             columns: [
-              { 
-                name: "Company", 
-                prop: "company", 
-                flexGrow: 2,
-                isTreeColumn: true,
-                relationProp: 'parentCompany'
-              },
-              { 
-                name: "Revenue", 
-                flexGrow: 1,
-                prop: "revenue" 
-              },
-              { 
-                name: "Sales", 
-                flexGrow: 1,
-                prop: "sales"
-              }
-            ]
+                // {
+                //     name: '',
+                //     maxWidth: 65,
+                //     minWidth: 65,
+                //     sortable: false,
+                //     resizeable: false,
+                //     cellRenderer: (scope) => {
+                //         scope.goToPage = this.goToPage.bind(this);
+                //         scope.APP_STATES = APP_STATES;
+
+                //         return `
+                //         <span class="actions">
+                //             <hp-button-old
+                //                 id="panels-results-{{$row.Key}}-details"
+                //                 ng-click="goToPage(APP_STATES.PANELS_DETAILS, { id: $row.Key })"
+                //                 ng-disabled="false"
+                //                 label="false"
+                //                 preset="details">
+                //             </hp-button-old>
+                //             <hp-button-old
+                //                 id="panels-results-{{$row.Key}}-edit"
+                //                 ng-click="!$row.IsArchived && goToPage(APP_STATES.PANELS_EDIT, { id: $row.Key })"
+                //                 ng-disabled="$row.IsArchived"
+                //                 label="false"
+                //                 preset="edit">
+                //             </hp-button-old>
+                //         </span>`;
+                //     }
+                // },
+                // {
+                //     name: 'Icon',
+                //     prop: 'IconKey',
+                //     flexGrow: 1
+                // },
+                {
+                    name: 'Panel Name',
+                    prop: 'Name',
+                    minWidth: 150,
+                    isTreeColumn: true,
+                    relationProp: 'DataSourceName'
+                },
+              ]
           };
+
+          
 
           $scope.expanded = {
             'Acme': true
@@ -124,57 +174,63 @@
             console.log('toggled!')
           };
 
-          $scope.data = [{
-              'company': 'Apple',
-              'revenue': '$1,440,443,111',
-              'sales': '$999,509,433,777,564'
-            }, {
-              'company': 'Apple IBS',
-              'revenue': '$1,440,443,111',
-              'sales': '$999,509,433,777,564',
-              parentCompany: 'Apple'
-            },{
-              'company': 'Apple XYZ',
-              'revenue': '$1,440,443,111',
-              'sales': '$999,509,433,777,564',
-              parentCompany: 'Apple'
-            },
-              {
-              'company': 'Apple IBS South1',
-              'revenue': '$1,440,443,111',
-              'sales': '$999,509,433,777,564',
-              parentCompany: 'Apple IBS'
-            },
-              {
-              'company': 'Apple IBS South1 ABC',
-              'revenue': '$1,440,443,111',
-              'sales': '$999,509,433,777,564',
-              parentCompany: 'Apple IBS South1'
-            },
-              {
-              'company': 'Apple IBS South1 CDE',
-              'revenue': '$1,440,443,111',
-              'sales': '$999,509,433,777,564',
-              parentCompany: 'Apple IBS South1'
-            },
-              {
-              'company': 'Apple IBS South2',
-              'revenue': '$1,440,443,111',
-              'sales': '$999,509,433,777,564',
-              parentCompany: 'Apple IBS'
-            },
-            {
-              'company': 'Apple XYZ South1',
-              'revenue': '$1,440,443,111',
-              'sales': '$999,509,433,777,564',
-              parentCompany: 'Apple XYZ'
-            },
-              {
-              'company': 'Apple XYZ South2',
-              'revenue': '$1,440,443,111',
-              'sales': '$999,509,433,777,564',
-              parentCompany: 'Apple XYZ'
-            }];
+          // $scope.data = [{
+          //     'company': 'Apple',
+          //     'revenue': '$1,440,443,111',
+          //     'sales': '$999,509,433,777,564'
+          //   }, {
+          //     'company': 'Apple IBS',
+          //     'revenue': '$1,440,443,111',
+          //     'sales': '$999,509,433,777,564',
+          //     parentCompany: 'Apple'
+          //   },{
+          //     'company': 'Apple XYZ',
+          //     'revenue': '$1,440,443,111',
+          //     'sales': '$999,509,433,777,564',
+          //     parentCompany: 'Apple'
+          //   },
+          //     {
+          //     'company': 'Apple IBS South1',
+          //     'revenue': '$1,440,443,111',
+          //     'sales': '$999,509,433,777,564',
+          //     parentCompany: 'Apple IBS'
+          //   },
+          //     {
+          //     'company': 'Apple IBS South1 ABC',
+          //     'revenue': '$1,440,443,111',
+          //     'sales': '$999,509,433,777,564',
+          //     parentCompany: 'Apple IBS South1'
+          //   },
+          //     {
+          //     'company': 'Apple IBS South1 CDE',
+          //     'revenue': '$1,440,443,111',
+          //     'sales': '$999,509,433,777,564',
+          //     parentCompany: 'Apple IBS South1'
+          //   },
+          //     {
+          //     'company': 'Apple IBS South2',
+          //     'revenue': '$1,440,443,111',
+          //     'sales': '$999,509,433,777,564',
+          //     parentCompany: 'Apple IBS'
+          //   },
+          //   {
+          //     'company': 'Apple XYZ South1',
+          //     'revenue': '$1,440,443,111',
+          //     'sales': '$999,509,433,777,564',
+          //     parentCompany: 'Apple XYZ'
+          //   },
+          //     {
+          //     'company': 'Apple XYZ South2',
+          //     'revenue': '$1,440,443,111',
+          //     'sales': '$999,509,433,777,564',
+          //     parentCompany: 'Apple XYZ'
+          //   }];
+
+          $scope.data = [
+            {"CreatedBy":{"Date":"\/Date(1479445200000-0500)\/","Type":null,"TypeKey":null,"UserKey":1239,"UserName":"TestUser"},"DataSourceName":"dbo.MemberTrackingBoard-Alias","Description":"My first test panel","IconDescription":"Test Panbel Icon1","IconKey":1,"IsArchived":false,"IsDataSourceArchived":true,"Key":2,"Name":"PCMH-Readmission","UpdatedBy":{"Date":null,"Type":null,"TypeKey":null,"UserKey":null,"UserName":"TestUser"}},
+            {"CreatedBy":{"Date":"\/Date(1479445200000-0500)\/","Type":null,"TypeKey":null,"UserKey":1239,"UserName":"TestUser"},"DataSourceName":"dbo.MemberTrackingBoard-Alias","Description":"My first test panel - 1","IconDescription":"Test Panbel Icon2","IconKey":2,"IsArchived":false,"IsDataSourceArchived":true,"Key":3,"Name":"Test Panel - 1","UpdatedBy":{"Date":null,"Type":null,"TypeKey":null,"UserKey":null,"UserName":"TestUser"}},
+            {"CreatedBy":{"Date":"\/Date(1479445200000-0500)\/","Type":null,"TypeKey":null,"UserKey":1,"UserName":"TestUser"},"DataSourceName":"Office Visits Open","Description":null,"IconDescription":"Test Panbel Icon2","IconKey":2,"IsArchived":false,"IsDataSourceArchived":false,"Key":9,"Name":"Office Visits Open","UpdatedBy":{"Date":null,"Type":null,"TypeKey":null,"UserKey":null,"UserName":"TestUser"}}
+          ];
         });
       });
     </script>
