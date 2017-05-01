@@ -40,7 +40,7 @@ const banner = ['/**',
 //
 // Compile Tasks
 // ------------------------------------------------------------
-gulp.task('es6', () => gulp.src(path.demoSource)
+gulp.task('es6', () => gulp.src(path.source)
     .pipe(plumber())
     .pipe(changed(path.output, { extension: '.js' }))
     .pipe(babel())

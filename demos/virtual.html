@@ -54,8 +54,11 @@
 
     <script>
 
-      System.import('dataTable').then(function(dt){
-        var module = angular.module('app', [ dt.default.name ]);
+      Promise.all([
+        System.import('angular'),
+        System.import('dataTable')
+      ]).then(function(imports){
+        var module = angular.module('app', [ imports[1].default.name ]);
 
         module.controller('HomeController', function($scope, $http){
           $scope.options = {

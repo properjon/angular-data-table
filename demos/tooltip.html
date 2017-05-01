@@ -52,9 +52,9 @@
 
     <script>
       Promise.all([
+        System.import('angular'),
         System.import('dataTable')
-      ]).then(function(modules) {
-
+      ]).then(function(imports){
         var module = angular.module('app', [ 'data-table', 'dt.popover' ]);
 
         module.controller('HomeController', function($scope, $http){

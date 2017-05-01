@@ -58,10 +58,10 @@
     <script>
 
       Promise.all([
+        System.import('angular'),
         System.import('dataTable')
-      ]).then(function(modules) {
-
-        var module = angular.module('app', [ 'data-table', 'dt.menu' ]);
+      ]).then(function(imports){
+        var module = angular.module('app', [ imports[1].default.name ]);
 
         module.controller('HomeController', function($scope, $http){
           $scope.all = [
