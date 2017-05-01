@@ -406,7 +406,7 @@ export default class BodyController {
           }
         }
       });
-    }
+    };
 
     addChildren(this.rows, temp, 0);
 

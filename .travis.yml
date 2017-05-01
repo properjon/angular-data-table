@@ -8,7 +8,7 @@ branches:
   - master
 
 before_install:
-- npm install -g gulp@^3.8.11 jspm@^0.16.1 protractor@^4.0.11 forever@0.15.3 codecov@^1.0.1 codeclimate-test-reporter@^0.4.0
+- npm install -g jspm@^0.16.1 protractor@^4.0.11 forever@0.15.3 codecov@^1.0.1 codeclimate-test-reporter@^0.4.0
 - jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN
 
 before_script:
@@ -22,9 +22,9 @@ after_success:
 - codecov
 
 script:
-- gulp unit
-- protractor test/protractor.conf.js
-- gulp release
+- npm run unit
+- npm run e2e
+- npm run release
 
 addons:
   sauce_connect: true

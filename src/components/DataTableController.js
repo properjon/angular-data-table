@@ -50,11 +50,11 @@ export default class DataTableController {
       }
     });
 
-     this.$scope.$watchCollection('dt.rows', (newVal, oldVal) => {
-         if (newVal && oldVal && newVal.length > oldVal.length) {
-             this.onSorted();
-         }
-     });
+    this.$scope.$watchCollection('dt.rows', (newVal, oldVal) => {
+      if (newVal && oldVal && newVal.length > oldVal.length) {
+        this.onSorted();
+      }
+    });
   }
 
   /**
