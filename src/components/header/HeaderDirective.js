@@ -25,7 +25,7 @@ export default function HeaderDirective($timeout) {
                on-sortable-sort="columnsResorted(event, columnId)">
             <dt-header-cell
               ng-repeat="column in header.columns['left'] track by column.$id"
-              on-sort="header.onSorted(column)"
+              on-sort="header.onSorted(column, modifierPressed)"
               options="header.options"
               sort-type="header.options.sortType"
               on-resize="header.onResized(column, width)"
@@ -40,7 +40,7 @@ export default function HeaderDirective($timeout) {
             <dt-header-cell
               ng-repeat="column in header.columns['center'] track by column.$id"
               on-checkbox-change="header.onCheckboxChanged()"
-              on-sort="header.onSorted(column)"
+              on-sort="header.onSorted(column, modifierPressed)"
               sort-type="header.options.sortType"
               selected="header.isSelected()"
               on-resize="header.onResized(column, width)"
@@ -56,7 +56,7 @@ export default function HeaderDirective($timeout) {
             <dt-header-cell
               ng-repeat="column in header.columns['right'] track by column.$id"
               on-checkbox-change="header.onCheckboxChanged()"
-              on-sort="header.onSorted(column)"
+              on-sort="header.onSorted(column, modifierPressed)"
               sort-type="header.options.sortType"
               selected="header.isSelected()"
               on-resize="header.onResized(column, width)"

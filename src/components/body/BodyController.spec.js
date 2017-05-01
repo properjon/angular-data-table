@@ -59,14 +59,17 @@ describe('BodyController', () => {
 
       expect(ctrl.data).not.toEqual(0);
     });
+  });
 
-    it('should have the correct number of rows', () => {
+  describe('when internal paging is enabled', () => {
+    beforeEach(() => {
       let options = {
         columns: [
           { name: 'Name', prop: 'name' },
           { name: 'Company', prop: 'company' }
         ],
         paging: {
+          mode: 'internal',
           offset: 0,
           size: 3
         }
@@ -76,7 +79,9 @@ describe('BodyController', () => {
         options: options,
         rows: olympicRows
       });
+    });
 
+    it('should have the correct number of rows', () => {
       ctrl.$onInit();
       scope.$digest();
 
@@ -84,22 +89,6 @@ describe('BodyController', () => {
     });
 
     it('should increment page', () => {
-      let options = {
-        columns: [
-          { name: 'Name', prop: 'name' },
-          { name: 'Company', prop: 'company' }
-        ],
-        paging: {
-          offset: 0,
-          size: 3
-        }
-      };
-
-      setController({
-        options: options,
-        rows: olympicRows
-      });
-
       ctrl.$onInit();
       scope.$digest();
 
@@ -108,6 +97,15 @@ describe('BodyController', () => {
       scope.$digest();
 
       expect(ctrl.tempRows[0].name).not.toBe(name);
+    });
+
+    it('should have the correct total number of items', () => {
+      ctrl.$onInit();
+      scope.$digest();
+
+      let count = olympicRows.length;
+
+      expect(ctrl.options.paging.count).toBe(count);
     });
   });
 
@@ -163,7 +161,7 @@ describe('BodyController', () => {
 
     it('should not set watches when no vertical scrollbar or external paging', () => {
       ctrl.options.scrollbarV = false;
-      ctrl.options.paging.externalPaging = false;
+      ctrl.options.paging.mode = null;
 
       ctrl.setConditionalWatches();
 

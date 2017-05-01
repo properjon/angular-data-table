@@ -57,7 +57,7 @@ export default class HeaderCellController {
   /**
    * Toggles the sorting on the column
    */
-  onSorted() {
+  onSorted(event) {
     if (this.column.sortable) {
       this.column.sort = NextSortDirection(this.sortType, this.column.sort);
 
@@ -67,6 +67,7 @@ export default class HeaderCellController {
 
       this.onSort({
         column: this.column,
+        modifierPressed: event.shiftKey,
       });
     }
   }

@@ -16,7 +16,7 @@
         box-sizing: border-box;
       }
 
-      body{
+      body {
         font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
         font-style: normal;
         font-weight: 300;
@@ -30,7 +30,7 @@
         text-rendering: optimizeLegibility;
       }
 
-      .dt{
+      .dt {
         width:75%;
         margin:50px auto;
         height:400px;
@@ -43,8 +43,8 @@
   </head>
   <body ng-app="app" ng-controller="HomeController">
 
-    <button type="button" ng-click="groupCountry()">Group on Country</button>
-    <button type="button" ng-click="groupYear()">Group on Year</button>
+    <button type="button" class="group-country" ng-click="groupCountry()">Group on Country</button>
+    <button type="button" class="group-year" ng-click="groupYear()">Group on Year</button>
 
     <dtable options="options" rows="data" class="material"></dtable>
 
@@ -52,17 +52,17 @@
     <script src="../config.js"></script>
 
     <script>
-
-      System.import('dataTable').then(function(dt) {
+      System.import('dataTable').then(function (dt) {
         var module = angular.module('app', [ dt.default.name ]);
 
-        module.controller('HomeController', function($scope, $http) {
+        module.controller('HomeController', function ($scope, $http) {
           $scope.options = {
             rowHeight: 50,
             footerHeight: false,
             scrollbarV: true,
             headerHeight: 50,
             forceFillColumns: true,
+            columnMode: 'force',
             columns: [
               { name: 'Athlete', prop: 'athlete', width: 300 },
               { name: 'Country', prop: 'country', group: true },
@@ -71,38 +71,21 @@
             ]
           };
 
-          $http.get('/demos/data/olympics.json').success(function(data) {
+          $http.get('/demos/data/olympics.json').success(function (data) {
             $scope.data = data;
           });
 
           $scope.groupCountry = function() {
-            _clearGroupColumns();
-
-            var col = $scope.options.columns.find(function(c) {
-              return c.prop === 'country';
+            $scope.options.columns.forEach(function (col) {
+              col.group = col.prop === 'country';
             });
-
-            col.group = !col.group;
           };
 
           $scope.groupYear = function() {
-            _clearGroupColumns();
-
-            var col = $scope.options.columns.find(function(c) {
-              return c.prop === 'year';
-            });
-
-            col.group = !col.group;
-          };
-
-          function _clearGroupColumns() {
-            $scope.options.columns.map(function(column) {
-              if (column.group) {
-                delete column.group;
-              }
+            $scope.options.columns.forEach(function (col) {
+              col.group = col.prop === 'year';
             });
           };
-
         });
       });
     </script>

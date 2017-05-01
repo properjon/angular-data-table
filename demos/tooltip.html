@@ -1,16 +1,16 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset=" utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="Datagrid" />
     <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
-    <meta name="apple-mobile-web-app-title" content="Datagrid">
 
     <title>Datagrid - Tooltips</title>
 
-    <base href="/">
+    <base href="/" />
 
     <style>
       *, *:after, *:before {
@@ -19,7 +19,7 @@
         box-sizing: border-box;
       }
 
-      body{
+      body {
         font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
         font-style: normal;
         font-weight: 300;
@@ -33,16 +33,15 @@
         text-rendering: optimizeLegibility;
       }
 
-      .dt{
-        width:75%;
-        margin:50px auto;
-        height:400px;
+      .dt {
+        width: 75%;
+        margin: 50px auto;
+        height: 400px;
       }
-
     </style>
     <link href="../dist/dataTable.css" media="all" rel="stylesheet" />
     <link href="../dist/themes/material.css" media="all" rel="stylesheet" />
-    <link href="../dist/themes/icons.css" rel="stylesheet">
+    <link href="../dist/themes/icons.css" media="all" rel="stylesheet" />
   </head>
   <body ng-app="app" ng-controller="HomeController">
 
@@ -52,7 +51,6 @@
     <script src="../config.js"></script>
 
     <script>
-
       Promise.all([
         System.import('dataTable')
       ]).then(function(modules) {
@@ -61,31 +59,31 @@
 
         module.controller('HomeController', function($scope, $http){
           $scope.options = {
-            rowHeight: 50,
             footerHeight: false,
             headerHeight: 50,
+            rowHeight: 50,
             scrollbarV: true,
             columns: [
               {
+                flexGrow: 2,
                 name: "Company",
                 prop: "company",
-                flexGrow: 2
               },
               {
+                flexGrow: 1,
                 name: "Revenue",
-                flexGrow: 1,
-                prop: "revenue"
+                prop: "revenue",
               },
               {
-                name: "Sales",
                 flexGrow: 1,
-                prop: "sales"
+                name: "Sales",
+                prop: "sales",
               },{
                 name: "Comments",
                 prop: "comments",
                 tooltips: true,
                 cellRenderer: function(scope, elm){
-                  return '<span popover popover-placement="left" popover-text="{{$row.comments}}" popover-group="main">{{$row.comments}}</span>';
+                  return '<span popover popover-id="{{$row.$$index}}" popover-plain="true" popover-placement="left" popover-text="{{$row.comments}}">{{$row.comments}}</span>';
                 }
               }
             ]

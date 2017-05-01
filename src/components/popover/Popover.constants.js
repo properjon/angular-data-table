@@ -4,4 +4,5 @@ export default {
   TOP: 'top',
   BOTTOM: 'bottom',
   CENTER: 'center',
+  MIDDLE: 'middle',
 };

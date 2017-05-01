@@ -23,12 +23,12 @@ export default function BodyDirective() {
       <div
         class="progress-linear"
         role="progressbar"
-        ng-show="body.options.paging.loadingIndicator">
+        ng-show="body.options.loadingIndicator">
         <div class="container">
           <div class="bar"></div>
         </div>
       </div>
-      <div class="dt-body" ng-style="body.styles()" dt-seletion>
+      <div class="dt-body" ng-style="body.styles()" dt-selection>
         <dt-scroller class="dt-body-scroller">
           <dt-group-row ng-repeat-start="r in body.tempRows track by $index"
                         ng-if="r.group"

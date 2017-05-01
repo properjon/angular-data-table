@@ -16,7 +16,7 @@
         box-sizing: border-box;
       }
 
-      body{
+      body {
         font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
         font-style: normal;
         font-weight: 300;
@@ -30,7 +30,7 @@
         text-rendering: optimizeLegibility;
       }
 
-      .dt{
+      .dt {
         width:75%;
         margin:50px auto;
       }
@@ -48,10 +48,10 @@
 
     <script>
 
-      System.import('dataTable').then(function(dt){
+      System.import('dataTable').then(function (dt) {
         var module = angular.module('app', [ dt.default.name ]);
 
-        module.controller('HomeController', function($scope, $http){
+        module.controller('HomeController', function ($scope, $http) {
           $scope.options = {
             rowHeight: 50,
             headerHeight: 50,
@@ -65,18 +65,13 @@
             ]
           };
 
-          angular.extend($scope, {
-              onRowDblClick: onRowDblClick
-          });
-
-          function onRowDblClick(row) {
+          $scope.onRowDblClick = function (row) {
               console.log('Row Double Clicked', row);
           }
 
-          $http.get('/demos/data/100.json').success(function(data) {
+          $http.get('/demos/data/100.json').success(function (data) {
             $scope.data = data;
           });
-
         });
       });
     </script>

@@ -17,7 +17,7 @@
         box-sizing: border-box;
       }
 
-      body{
+      body {
         font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
         font-style: normal;
         font-weight: 300;
@@ -31,12 +31,12 @@
         text-rendering: optimizeLegibility;
       }
 
-      .dt{
+      .dt {
         width:75%;
         margin:50px auto;
       }
 
-      .dt-row-even{
+      .dt-row-even {
         background:#f6f7f8;
       }
     </style>
@@ -60,10 +60,13 @@
         module.controller('HomeController', function ($scope, $http) {
           $scope.data = [];
 
+          // To enable internal automatic paging, make sure to set:
+          //    scrollbarV: false
+          //    paging.mode: 'internal'
+
           $scope.options = {
             rowHeight: 50,
             headerHeight: 50,
-            footerHeight: 50,
             scrollbarV: false,
             sortType: 'single',
             columns: [
@@ -73,7 +76,8 @@
             ],
             columnMode: 'force',
             paging: {
-              size: 10
+              mode: 'internal',
+              size: 12
             }
           };
 
