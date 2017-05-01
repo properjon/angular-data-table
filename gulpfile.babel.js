@@ -19,6 +19,7 @@ const gutils = require('gulp-util');
 const KarmaServer = require('karma').Server;
 
 const path = {
+  demoSource: 'demo/index.js',
   source: 'src/**/*.js',
   less: 'src/**/*.less',
   output: 'dist/',
@@ -39,7 +40,7 @@ const banner = ['/**',
 //
 // Compile Tasks
 // ------------------------------------------------------------
-gulp.task('es6', () => gulp.src(path.source)
+gulp.task('es6', () => gulp.src(path.demoSource)
     .pipe(plumber())
     .pipe(changed(path.output, { extension: '.js' }))
     .pipe(babel())

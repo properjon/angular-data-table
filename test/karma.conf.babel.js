@@ -24,10 +24,9 @@ const karmaBaseConfig = {
 
   files: [
     {
-      pattern: '../src/**/*!(.spec).js',
-      included: false,
+      pattern: '../node_modules/angular/angular.js',
+      watched: false,
     },
-    'dataTable.mock.js',
     {
       pattern: '../node_modules/sinon/pkg/sinon.js',
       watched: false,
@@ -40,14 +39,19 @@ const karmaBaseConfig = {
       pattern: '../node_modules/angular-mocks/angular-mocks.js',
       watched: false,
     },
+    {
+      pattern: '../src/**/*!(.spec).js',
+      included: false,
+    },
+    'dataTable.mock.js',
     './karma.helper.js',
     '../src/**/*.spec.js',
   ],
 
   preprocessors: {
+    'dataTable.mock.js': ['browserify'],
     'karma.helper.js': ['browserify'],
     '../src/**/*.spec.js': ['browserify'],
-    'dataTable.mock.js': ['browserify'],
   },
 
   browserify: {

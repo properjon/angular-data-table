@@ -1,5 +1,3 @@
-import 'angular';
-
 import './utils/polyfill';
 
 import ResizableDirective from './components/header/ResizableDirective';
