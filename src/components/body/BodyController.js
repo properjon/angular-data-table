@@ -429,7 +429,7 @@ export default class BodyController {
       temp = this.treeTemp || [];
       // cache the tree build
       if ((refresh || !this.treeTemp)) {
-        this.treeTemp = temp = this.buildTree();
+        this.treeTemp = temp = this.buildTree(); // eslint-disable-line no-multi-assign
         this.count = temp.length;
 
         // have to force reset, optimize this later
