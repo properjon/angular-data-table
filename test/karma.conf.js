@@ -65,12 +65,12 @@ const karmaBaseConfig = {
           '**/*.spec.js',
         ],
       }),
-      'babelify' // Note: uses .babelrc
+      'babelify', // Note: uses .babelrc
     ],
   },
 
   excludes: [
-      'node_modules'
+    'node_modules',
   ],
 
   browsers: ['PhantomJS'],
