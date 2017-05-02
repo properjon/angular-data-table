@@ -86,7 +86,6 @@
     "isparta": "^4.0.0",
     "istanbul": "^0.4.5",
     "jasmine-core": "^2.5.2",
-    "jspm": "^0.16.1",
     "karma": "~1.5.0",
     "karma-angular": "0.0.6",
     "karma-babel-preprocessor": "^6.0.1",
@@ -112,17 +111,6 @@
     "watchify": "^3.7.0",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^2.4.5"
-  },
-  "jspm": {
-    "dependencies": {
-      "angular": "npm:angular@^1.5.8",
-      "jspm/nodelibs-assert": "github:jspm/nodelibs-assert@^0.1.0"
-    },
-    "devDependencies": {
-      "babel": "npm:babel-core@^6.9.0",
-      "babel-runtime": "npm:babel-runtime@^6.11.6",
-      "core-js": "npm:core-js@^2.4.0"
-    }
   },
   "babel": {
     "sourceMaps": false,
