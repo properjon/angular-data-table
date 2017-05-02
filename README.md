@@ -158,7 +158,7 @@ Ensure you have the latest NPM and JSPM installed globally.  If you don't alread
 
 - `npm install && jspm install`
 - `npm start` or `gulp serve watch`
-- Open your browser to `http://localhost:9000`
+- Open your browser to `http://localhost:8080`
 
 #### Build
 

@@ -12,7 +12,9 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
-
+  depCache: {
+    "dataTable": ["angular"]
+  },
   map: {
     "angular": "npm:angular@1.5.8",
     "babel": "npm:babel-core@5.8.38",

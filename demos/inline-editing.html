@@ -1,113 +1,107 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset=" utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
-    <meta name="apple-mobile-web-app-title" content="Datagrid">
-    <title>Datagrid - Templates</title>
-    <base href="/">
-    <style>
-      *, *:after, *:before {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-      }
+<html ng-app="app" lang="en">
 
-      body{
-        font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
-        font-style: normal;
-        font-weight: 300;
-        font-size: 1.4rem;
-        line-height: 2rem;
-        letter-spacing: 0.01rem;
-        color: #212121;
-        background-color: #f5f5f5;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-rendering: optimizeLegibility;
-      }
+<head>
+  <meta charset=" utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
+  <meta name="apple-mobile-web-app-title" content="Datagrid">
+  <title>Datagrid - Templates</title>
+  <base href="/">
+  <style>
+    *,
+    *:after,
+    *:before {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 1.4rem;
+      line-height: 2rem;
+      letter-spacing: 0.01rem;
+      color: #212121;
+      background-color: #f5f5f5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    
+    path {
+      stroke: steelblue;
+      stroke-width: 1;
+      fill: none;
+    }
+    
+    .dt {
+      width: 75%;
+      margin: 50px auto;
+    }
+  </style>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
 
-      path{
-        stroke: steelblue;
-        stroke-width:1;
-        fill:none;
-      }
+<body ng-controller="HomeController">
 
-      .dt{
-        width:75%;
-        margin:50px auto;
-      }
+  <p>Double click a name to edit</p>
+  <dtable options="options" rows="data" class="material"></dtable>
 
-    </style>
-    <link href="../dist/dataTable.css" media="all" rel="stylesheet" />
-    <link href="../dist/themes/material.css" media="all" rel="stylesheet" />
-    <link href="../dist/themes/icons.css" rel="stylesheet">
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-  </head>
-  <body ng-app="app" ng-controller="HomeController">
+  <script src="/assets/dataTable.js"></script>
 
-    <p>Double click a name to edit</p>
-    <dtable options="options" rows="data" class="material"></dtable>
+  <code ng-bind="code"></code>
 
-    <script src="../jspm_packages/system.js"></script>
-    <script src="../config.js"></script>
+  <script>
+    var module = angular.module('app', ['data-table']);
 
-    <code ng-bind="code"></code>
-
-    <script>
-
-      Promise.all([
-        System.import('angular'),
-        System.import('dataTable')
-      ]).then(function(imports){
-        var module = angular.module('app', [ imports[1].default.name ]);
-
-        module.controller('HomeController', function($scope, $http){
-          $scope.options = {
-            rowHeight: 50,
-            headerHeight: 50,
-            footerHeight: false,
-            scrollbarV: false,
-            columns: [
-              {
-                name: "Name",
-                prop: "name",
-                width: 300,
-                cellRenderer: function($scope){
-                  return '<div><div ng-dblclick="editing = true" ng-show="!editing"><strong>{{$cell}}</strong></div><div><input ng-show="editing" type="text" ng-model="$cell" ng-change="changed($cell, $row, $column)" ng-blur="editing = false" /></div>';
-                }
-              },
-              {
-                name: "Gender",
-                prop: "gender"
-              },
-              {
-                name: "Company",
-                prop: "company"
-              }
-            ]
-          };
-
-          $http.get('/demos/data/100.json').success(function(data) {
-            $scope.data = data.splice(0, 15);
-          });
-
-          $scope.$watch('data', function(){
-            $scope.code = JSON.stringify($scope.data, null, 2)
-          }, true)
-
-          $scope.changed = function(cellVal, row, col){
-            var idx = $scope.data.indexOf(row);
-            row[col.prop] = cellVal;
-            $scope.data[idx] = row;
+    module.controller('HomeController', function ($scope, $http) {
+      $scope.options = {
+        rowHeight: 50,
+        headerHeight: 50,
+        footerHeight: false,
+        scrollbarV: false,
+        columns: [
+          {
+            name: "Name",
+            prop: "name",
+            width: 300,
+            cellRenderer: function ($scope) {
+              return '<div><div ng-dblclick="editing = true" ng-show="!editing"><strong>{{$cell}}</strong></div><div><input ng-show="editing" type="text" ng-model="$cell" ng-change="changed($cell, $row, $column)" ng-blur="editing = false" /></div>';
+            }
+          },
+          {
+            name: "Gender",
+            prop: "gender"
+          },
+          {
+            name: "Company",
+            prop: "company"
           }
+        ]
+      };
 
-        });
+      $http.get('/data/100.json').success(function (data) {
+        $scope.data = data.splice(0, 15);
       });
-    </script>
 
-  </body>
+      $scope.$watch('data', function () {
+        $scope.code = JSON.stringify($scope.data, null, 2)
+      }, true)
+
+      $scope.changed = function (cellVal, row, col) {
+        var idx = $scope.data.indexOf(row);
+        row[col.prop] = cellVal;
+        $scope.data[idx] = row;
+      }
+
+    });
+  </script>
+
+</body>
+
 </html>

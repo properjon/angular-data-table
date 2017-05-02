@@ -13,7 +13,7 @@ before_install:
 
 before_script:
 - jspm install
-- forever start node_modules/gulp/bin/gulp.js watch serve
+- forever start node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.dev.js
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)

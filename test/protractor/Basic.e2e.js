@@ -15,8 +15,6 @@ describe('When Basic:', () => {
   });
 
   it('should have a header height of 50', () => {
-    browser.wait(EC.presenceOf($('.dt-header')), 500);
-
     const header = $$('.dt-header');
 
     header.getCssValue('height').then((val) => {
@@ -25,8 +23,6 @@ describe('When Basic:', () => {
   });
 
   it('should display 100 rows', () => {
-    browser.wait(EC.presenceOf($('.dt-row')), 500);
-
     element.all(by.css('.dt-row')).then((items) => {
       expect(items.length).toBe(100);
     });

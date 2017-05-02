@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html ng-app="app" lang="en">
   <head>
     <meta charset=" utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -36,11 +36,8 @@
       }
 
     </style>
-    <link href="../dist/dataTable.css" media="all" rel="stylesheet" />
-    <link href="../dist/themes/material.css" media="all" rel="stylesheet" />
-    <link href="http://fontastic.s3.amazonaws.com/Jnf54BZCm7mSjGCxNRbfp3/icons.css" rel="stylesheet">
   </head>
-  <body ng-app="app" ng-controller="HomeController">
+  <body ng-controller="HomeController">
 
     <button type="button" ng-click="addRow()">Add Row</button>
     <button type="button" ng-click="removeRow()">Remove Row</button>
@@ -48,16 +45,10 @@
 
     <dtable options="options" rows="data" class="material" ng-if="ngIfTable"></dtable>
 
-    <script src="../jspm_packages/system.js"></script>
-    <script src="../config.js"></script>
+    <script src="/assets/dataTable.js"></script>
 
     <script>
-
-      Promise.all([
-        System.import('angular'),
-        System.import('dataTable')
-      ]).then(function(imports){
-        var module = angular.module('app', [ imports[1].default.name ]);
+        var module = angular.module('app', [ 'data-table' ]);
 
         module.controller('HomeController', function($scope, $http){
           $scope.ngIfTable = true;
@@ -74,7 +65,7 @@
             ]
           };
 
-          $http.get('/demos/data/100.json').success(function(data) {
+          $http.get('/data/100.json').success(function(data) {
             $scope.dataPool = data;
 
             $scope.data = $scope.dataPool.slice(0, 4);
@@ -94,7 +85,6 @@
             $scope.data.splice(0, 1);
           }
         });
-      });
     </script>
 
   </body>

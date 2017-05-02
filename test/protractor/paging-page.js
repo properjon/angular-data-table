@@ -2,7 +2,7 @@ const EC = protractor.ExpectedConditions;
 
 class PagingPage {
   get() {
-    browser.get('/demos/paging.html');
+    browser.get('/paging.html');
     browser.wait(EC.presenceOf($('.dt-row')), 5000);
   }
 

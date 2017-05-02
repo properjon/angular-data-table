@@ -6,7 +6,7 @@ class TreePage {
   }
 
   get() {
-    browser.get('/demos/tree.html');
+    browser.get('/tree.html');
     browser.wait(EC.presenceOf($('.dt-row')), 5000);
   }
 

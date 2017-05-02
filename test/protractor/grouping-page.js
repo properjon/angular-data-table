@@ -2,7 +2,7 @@ const EC = protractor.ExpectedConditions;
 
 class GroupingPage {
   get() {
-    browser.get('/demos/grouping.html');
+    browser.get('/grouping.html');
     browser.wait(EC.presenceOf($('.dt-group-row')), 5000);
   }
 

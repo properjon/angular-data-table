@@ -6,7 +6,7 @@ class BasicPage {
   }
 
   get() {
-    browser.get('/demos/basic.html');
+    browser.get('/basic.html');
     browser.wait(EC.presenceOf($('.dt-body')), 5000);
   }
 

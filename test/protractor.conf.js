@@ -1,7 +1,7 @@
 const config = {
   framework: 'jasmine',
   specs: ['./protractor/*.e2e.js'],
-  baseUrl: 'http://localhost:9000/',
+  baseUrl: 'http://localhost:8080/',
 };
 
 if (process.env.TRAVIS) {
