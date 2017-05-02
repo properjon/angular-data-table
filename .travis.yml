@@ -11,7 +11,7 @@ before_install:
 - npm install -g protractor@^4.0.11 forever@0.15.3 codecov@^1.0.1 codeclimate-test-reporter@^0.4.0
 
 before_script:
-- forever start node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.dev.js
+- forever start node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.dev.js
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
