@@ -1,94 +1,91 @@
-  <!doctype html>
-  <html lang="en">
-  <head>
-    <meta charset=" utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
-    <meta name="apple-mobile-web-app-title" content="Datagrid">
-    <title>Datagrid - Grouping</title>
-    <base href="/">
-    <style>
-      *, *:after, *:before {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-      }
+<!doctype html>
+<html ng-app="app" lang="en">
 
-      body {
-        font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
-        font-style: normal;
-        font-weight: 300;
-        font-size: 1.4rem;
-        line-height: 2rem;
-        letter-spacing: 0.01rem;
-        color: #212121;
-        background-color: #f5f5f5;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-rendering: optimizeLegibility;
-      }
+<head>
+  <meta charset=" utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
+  <meta name="apple-mobile-web-app-title" content="Datagrid">
+  <title>Datagrid - Grouping</title>
+  <base href="/">
+  <style>
+    *,
+    *:after,
+    *:before {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 1.4rem;
+      line-height: 2rem;
+      letter-spacing: 0.01rem;
+      color: #212121;
+      background-color: #f5f5f5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    
+    .dt {
+      width: 75%;
+      margin: 50px auto;
+      height: 400px;
+    }
+  </style>
+</head>
 
-      .dt {
-        width:75%;
-        margin:50px auto;
-        height:400px;
-      }
+<body ng-controller="HomeController">
 
-    </style>
-    <link href="../dist/dataTable.css" media="all" rel="stylesheet" />
-    <link href="../dist/themes/material.css" media="all" rel="stylesheet" />
-    <link href="../dist/themes/icons.css" rel="stylesheet">
-  </head>
-  <body ng-app="app" ng-controller="HomeController">
+  <button type="button" class="group-country" ng-click="groupCountry()">Group on Country</button>
+  <button type="button" class="group-year" ng-click="groupYear()">Group on Year</button>
 
-    <button type="button" class="group-country" ng-click="groupCountry()">Group on Country</button>
-    <button type="button" class="group-year" ng-click="groupYear()">Group on Year</button>
+  <dtable options="options" rows="data" class="material"></dtable>
 
-    <dtable options="options" rows="data" class="material"></dtable>
+  <script src="/assets/dataTable.js"></script>
+  <script>
+    var module = angular.module('app', ['data-table']);
 
-    <script src="../jspm_packages/system.js"></script>
-    <script src="../config.js"></script>
+    module.controller('HomeController', function ($scope, $http) {
+      $scope.options = {
+        rowHeight: 50,
+        footerHeight: false,
+        scrollbarV: true,
+        headerHeight: 50,
+        forceFillColumns: true,
+        columnMode: 'force',
+        columns: [
+          { name: 'Athlete', prop: 'athlete', width: 300 },
+          { name: 'Country', prop: 'country', group: true },
+          { name: 'Year', prop: 'year' },
+          { name: 'Sport', prop: 'sport' }
+        ]
+      };
 
-    <script>
-      System.import('dataTable').then(function (dt) {
-        var module = angular.module('app', [ dt.default.name ]);
-
-        module.controller('HomeController', function ($scope, $http) {
-          $scope.options = {
-            rowHeight: 50,
-            footerHeight: false,
-            scrollbarV: true,
-            headerHeight: 50,
-            forceFillColumns: true,
-            columnMode: 'force',
-            columns: [
-              { name: 'Athlete', prop: 'athlete', width: 300 },
-              { name: 'Country', prop: 'country', group: true },
-              { name: 'Year', prop: 'year' },
-              { name: 'Sport', prop: 'sport' }
-            ]
-          };
-
-          $http.get('/demos/data/olympics.json').success(function (data) {
-            $scope.data = data;
-          });
-
-          $scope.groupCountry = function() {
-            $scope.options.columns.forEach(function (col) {
-              col.group = col.prop === 'country';
-            });
-          };
-
-          $scope.groupYear = function() {
-            $scope.options.columns.forEach(function (col) {
-              col.group = col.prop === 'year';
-            });
-          };
-        });
+      $http.get('/data/olympics.json').success(function (data) {
+        $scope.data = data;
       });
-    </script>
 
-  </body>
-  </html>
+      $scope.groupCountry = function () {
+        $scope.options.columns.forEach(function (col) {
+          col.group = col.prop === 'country';
+        });
+      };
+
+      $scope.groupYear = function () {
+        $scope.options.columns.forEach(function (col) {
+          col.group = col.prop === 'year';
+        });
+      };
+    });
+  </script>
+
+</body>
+
+</html>

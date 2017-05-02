@@ -1,106 +1,103 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset=" utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
-    <meta name="apple-mobile-web-app-title" content="Datagrid">
-    <title>Datagrid - Column Add / Remove</title>
-    <base href="/">
-    <style>
-      *, *:after, *:before {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-      }
+<html ng-app="app" lang="en">
 
-      body{
-        font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
-        font-style: normal;
-        font-weight: 300;
-        font-size: 1.4rem;
-        line-height: 2rem;
-        letter-spacing: 0.01rem;
-        color: #212121;
-        background-color: #f5f5f5;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-rendering: optimizeLegibility;
-      }
+<head>
+  <meta charset=" utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
+  <meta name="apple-mobile-web-app-title" content="Datagrid">
+  <title>Datagrid - Column Add / Remove</title>
+  <base href="/">
+  <style>
+    *,
+    *:after,
+    *:before {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 1.4rem;
+      line-height: 2rem;
+      letter-spacing: 0.01rem;
+      color: #212121;
+      background-color: #f5f5f5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    
+    .dt {
+      width: 75%;
+      margin: 10px auto;
+    }
+    
+    .my-menu {
+      width: 75%;
+      margin: 0 auto;
+      text-align: right;
+      display: block;
+    }
+  </style>
+</head>
 
-      .dt{
-        width:75%;
-        margin:10px auto;
-      }
+<body ng-controller="HomeController">
 
-      .my-menu{
-        width:75%;
-        margin:0 auto;
-        text-align: right;
-        display:block;
-      }
+  <button type="button" ng-click="small()">3 Cols</button>
+  <button type="button" ng-click="big()">7 Cols</button>
 
-    </style>
-    <link href="../dist/dataTable.css" media="all" rel="stylesheet" />
-    <link href="../dist/themes/material.css" media="all" rel="stylesheet" />
-    <link href="../dist/themes/icons.css" rel="stylesheet">
-  </head>
-  <body ng-app="app" ng-controller="HomeController">
+  <dtable options="optionz" rows="data" class="material"></dtable>
 
-    <button type="button" ng-click="small()">3 Cols</button>
-    <button type="button" ng-click="big()">7 Cols</button>
+  <script src="/assets/dataTable.js"></script>
 
-    <dtable options="optionz" rows="data" class="material"></dtable>
+  <script>
+    var module = angular.module('app', ['data-table']);
 
-    <script src="../jspm_packages/system.js"></script>
-    <script src="../config.js"></script>
+    module.controller('HomeController', function ($scope, $http) {
+      var big = [
+        { name: "Department", prop: "dept", width: 200 },
+        { name: "Clearance", prop: "clearance", width: 200 },
+        { name: "Date of Birth", prop: "dob", width: 200 }
+      ];
 
-    <script>
+      var small = [
+        { name: "Age", prop: "age", width: 100, canAutoResize: false },
+        { name: "Name", prop: "name", width: 200 },
+        { name: "Gender", prop: "gender", width: 200 },
+        { name: "Company", prop: "company", width: 200 }
+      ];
 
-      System.import('dataTable').then(function(dt){
-        var module = angular.module('app', [ dt.default.name ]);
+      $scope.optionz = {
+        rowHeight: 50,
+        footerHeight: false,
+        headerHeight: 50,
+        scrollbarV: false,
+        selectable: false,
+        columns: small,
+        columnMode: 'force'
+      };
 
-        module.controller('HomeController', function($scope, $http){
-          var big = [ 
-            { name: "Department", prop: "dept", width: 200 },
-            { name: "Clearance", prop: "clearance", width: 200 },
-            { name: "Date of Birth", prop: "dob", width: 200 }
-          ];
+      $scope.small = function (n) {
+        $scope.optionz.columns.splice(3, $scope.optionz.columns.length)
+      };
 
-          var small = [ 
-            { name: "Age", prop: "age", width: 100, canAutoResize: false },
-            { name: "Name", prop: "name", width: 200 },
-            { name: "Gender", prop: "gender", width: 200 },
-            { name: "Company", prop: "company", width: 200 }
-          ];
+      $scope.big = function (n) {
+        $scope.optionz.columns.push.apply($scope.optionz.columns, big);
+      };
 
-          $scope.optionz = {
-            rowHeight: 50,
-            footerHeight: false,
-            headerHeight: 50,
-            scrollbarV: false,
-            selectable: false,
-            columns: small,
-            columnMode: 'force'
-          };
-
-          $scope.small = function(n){
-            $scope.optionz.columns.splice(3, $scope.optionz.columns.length)
-          };
-
-          $scope.big = function(n){
-            $scope.optionz.columns.push.apply($scope.optionz.columns, big);
-          };
-
-          $http.get('/demos/data/columns.json').success(function(data) {
-            $scope.data = data;
-          });
-
-        });
+      $http.get('/data/columns.json').success(function (data) {
+        $scope.data = data;
       });
-    </script>
 
-  </body>
+    });
+  </script>
+
+</body>
+
 </html>

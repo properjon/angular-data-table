@@ -79,10 +79,16 @@
 .dt .dt-header .dt-header-cell .sort-btn {
   visibility: hidden;
   display: inline-block;
+  font-size: 0.7rem;
+  vertical-align: super;
 }
 .dt .dt-header .dt-header-cell .sort-btn.sort-desc,
 .dt .dt-header .dt-header-cell .sort-btn.sort-asc {
   visibility: visible;
+}
+.dt .dt-header .dt-header-cell .sort-btn::before {
+  font-size: 1.2rem;
+  vertical-align: bottom;
 }
 .dt .dt-header .dt-header-cell .dt-resize-handle {
   display: inline-block;

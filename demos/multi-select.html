@@ -1,216 +1,196 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset=" utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
-    <meta name="apple-mobile-web-app-title" content="Datagrid">
-    <title>Datagrid - Checkboxes</title>
-    <base href="/">
-    <style>
-      *, *:after, *:before {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-      }
+<html ng-app="app" lang="en">
 
-      body{
-        font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
-        font-style: normal;
-        font-weight: 300;
-        font-size: 1.4rem;
-        line-height: 2rem;
-        letter-spacing: 0.01rem;
-        color: #212121;
-        background-color: #f5f5f5;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-rendering: optimizeLegibility;
-      }
+<head>
+  <meta charset=" utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
+  <meta name="apple-mobile-web-app-title" content="Datagrid">
+  <title>Datagrid - Checkboxes</title>
+  <base href="/">
+  <style>
+    *,
+    *:after,
+    *:before {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 1.4rem;
+      line-height: 2rem;
+      letter-spacing: 0.01rem;
+      color: #212121;
+      background-color: #f5f5f5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    
+    .wrapper {
+      width: 80%;
+      margin: 50px auto;
+    }
+    
+    .dt {
+      width: 65%;
+      display: inline-block;
+    }
+    
+    .selected-box {
+      background: #FFF;
+      display: inline-block;
+      padding: 10px;
+      vertical-align: top;
+      width: 30%;
+      -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+      -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+    }
+    
+    h5 {
+      padding: 0;
+      margin: 0;
+    }
+    
+    code {
+      font-size: 11px;
+    }
+  </style>
+</head>
 
-      .wrapper{
-        width:80%;
-        margin:50px auto;
-      }
+<body ng-controller="HomeController">
 
-      .dt{
-        width:65%;
-        display:inline-block;
-      }
+  <div class="wrapper">
+    <h2>Multi-select by clicking</h2>
+    <dtable options="options" rows="data" on-row-click="onRowClick(row)" class="material" on-select="onSelect(rows)" selected="selected"></dtable>
 
-      .selected-box{
-        background:#FFF;
-        display:inline-block;
-        padding:10px;
-        vertical-align: top;
-        width:30%;
-        -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
-        -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
-      }
-
-      h5{
-        padding:0;
-        margin:0;
-      }
-
-      code{
-        font-size: 11px;
-      }
-
-    </style>
-    <link href="../dist/dataTable.css" media="all" rel="stylesheet" />
-    <link href="../dist/themes/material.css" media="all" rel="stylesheet" />
-    <link href="../dist/themes/icons.css" rel="stylesheet">
-  </head>
-  <body ng-app="app" ng-controller="HomeController">
-
-    <div class="wrapper">
-      <h2>Multi-select by clicking</h2>
-      <dtable options="options"
-      rows="data"
-      on-row-click="onRowClick(row)"
-      class="material"
-      on-select="onSelect(rows)"
-      selected="selected"></dtable>
-
-      <div class="selected-box">
-        <h5>Selected list</h5>
-        <div ng-if="selected.length === 0">
-          <code>
+    <div class="selected-box">
+      <h5>Selected list</h5>
+      <div ng-if="selected.length === 0">
+        <code>
             []
           </code>
-        </div>
-        <div
-          ng-repeat="item in selected"
-          ng-if="selected.length > 0">
-          <code>
+      </div>
+      <div ng-repeat="item in selected" ng-if="selected.length > 0">
+        <code>
             <strong ng-click="popItem(item)">
               x
             </strong>
             {{item}}
           </code>
-        </div>
       </div>
-
     </div>
 
-    <div class="wrapper">
-      <h2>Multi-select only when SHIFT is held</h2>
-      <dtable options="options2"
-      rows="data"
-      on-row-click="onRowClick(row)"
-      class="material"
-      on-select="onSelect(row)"
-      selected="selected2"></dtable>
+  </div>
 
-      <div class="selected-box">
-        <h5>Selected list</h5>
-        <code>{{selected2}}</code>
-      </div>
+  <div class="wrapper">
+    <h2>Multi-select only when SHIFT is held</h2>
+    <dtable options="options2" rows="data" on-row-click="onRowClick(row)" class="material" on-select="onSelect(row)" selected="selected2"></dtable>
 
+    <div class="selected-box">
+      <h5>Selected list</h5>
+      <code>{{selected2}}</code>
     </div>
 
-    <div class="wrapper">
-      <h2>Multi-select with virtual paging</h2>
-      <dtable options="options3"
-      rows="data"
-      on-row-click="onRowClick(row)"
-      style="height:300px"
-      class="material"
-      on-select="onSelect(row)"
+  </div>
+
+  <div class="wrapper">
+    <h2>Multi-select with virtual paging</h2>
+    <dtable options="options3" rows="data" on-row-click="onRowClick(row)" style="height:300px" class="material" on-select="onSelect(row)"
       selected="selected3"></dtable>
 
-      <div class="selected-box">
-        <h5>Selected list</h5>
-        <code>{{selected3}}</code>
-      </div>
-
+    <div class="selected-box">
+      <h5>Selected list</h5>
+      <code>{{selected3}}</code>
     </div>
 
-    <script src="../jspm_packages/system.js"></script>
-    <script src="../config.js"></script>
+  </div>
 
-    <script>
+  <script src="/assets/dataTable.js"></script>
 
-      System.import('dataTable').then(function(dt){
-        var module = angular.module('app', [ dt.default.name ]);
+  <script>
+    var module = angular.module('app', ['data-table']);
 
-        module.controller('HomeController', function($scope, $http){
-          $scope.options = {
-            rowHeight: 50,
-            footerHeight: false,
-            scrollbarV: false,
-            headerHeight: 50,
-            selectable: true,
-            multiSelect: true,
-            columns: [
-              { name: "Name", prop: "name", width: 300 },
-              { name: "Gender", prop: "gender" },
-              { name: "Company", prop: "company" }
-            ]
-          };
+    module.controller('HomeController', function ($scope, $http) {
+      $scope.options = {
+        rowHeight: 50,
+        footerHeight: false,
+        scrollbarV: false,
+        headerHeight: 50,
+        selectable: true,
+        multiSelect: true,
+        columns: [
+          { name: "Name", prop: "name", width: 300 },
+          { name: "Gender", prop: "gender" },
+          { name: "Company", prop: "company" }
+        ]
+      };
 
-          $scope.options2 = {
-            rowHeight: 50,
-            footerHeight: false,
-            scrollbarV: false,
-            headerHeight: 50,
-            selectable: true,
-            multiSelect: true,
-            multiSelectOnShift: true,
-            columns: [
-              { name: "Name", prop: "name", width: 300 },
-              { name: "Gender", prop: "gender" },
-              { name: "Company", prop: "company" }
-            ]
-          };
+      $scope.options2 = {
+        rowHeight: 50,
+        footerHeight: false,
+        scrollbarV: false,
+        headerHeight: 50,
+        selectable: true,
+        multiSelect: true,
+        multiSelectOnShift: true,
+        columns: [
+          { name: "Name", prop: "name", width: 300 },
+          { name: "Gender", prop: "gender" },
+          { name: "Company", prop: "company" }
+        ]
+      };
 
-          $scope.options3 = {
-            rowHeight: 50,
-            footerHeight: false,
-            scrollbarV: true,
-            headerHeight: 50,
-            selectable: true,
-            multiSelect: true,
-            columns: [
-              { name: "Name", prop: "name", width: 300 },
-              { name: "Gender", prop: "gender" },
-              { name: "Company", prop: "company" }
-            ]
-          };
+      $scope.options3 = {
+        rowHeight: 50,
+        footerHeight: false,
+        scrollbarV: true,
+        headerHeight: 50,
+        selectable: true,
+        multiSelect: true,
+        columns: [
+          { name: "Name", prop: "name", width: 300 },
+          { name: "Gender", prop: "gender" },
+          { name: "Company", prop: "company" }
+        ]
+      };
 
-          $scope.selected = [];
-          $scope.selected2 = [];
-          $scope.selected3 = [];
+      $scope.selected = [];
+      $scope.selected2 = [];
+      $scope.selected3 = [];
 
-          $scope.popItem = function(item) {
-            var indexOfItem = $scope.selected.indexOf(item);
+      $scope.popItem = function (item) {
+        var indexOfItem = $scope.selected.indexOf(item);
 
-            if (indexOfItem !== -1) {
-              $scope.selected.splice(indexOfItem, 1);
+        if (indexOfItem !== -1) {
+          $scope.selected.splice(indexOfItem, 1);
 
-              console.log('new selected', $scope.selected);
-            }
-          }
+          console.log('new selected', $scope.selected);
+        }
+      }
 
-          $scope.onSelect = function(row){
-            console.log('ROW SELECTED!', row);
-          }
+      $scope.onSelect = function (row) {
+        console.log('ROW SELECTED!', row);
+      }
 
-          $scope.onRowClick = function(row){
-            console.log('ROW CLICKED', row);
-          }
+      $scope.onRowClick = function (row) {
+        console.log('ROW CLICKED', row);
+      }
 
-          $http.get('/demos/data/100.json').success(function(data) {
-            $scope.data = data.splice(0, 10);
-          });
-
-        });
+      $http.get('/data/100.json').success(function (data) {
+        $scope.data = data.splice(0, 10);
       });
-    </script>
 
-  </body>
+    });
+  </script>
+
+</body>
+
 </html>

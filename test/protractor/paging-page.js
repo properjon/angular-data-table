@@ -1,23 +1,26 @@
+const EC = protractor.ExpectedConditions;
+
 class PagingPage {
-    get() {
-        browser.get('/demos/paging.html');
-    }
+  get() {
+    browser.get('/paging.html');
+    browser.wait(EC.presenceOf($('.dt-row')), 5000);
+  }
 
-    getCurrentPageRows() {
-        return element.all(by.css('.dt-row'));
-    }
+  getCurrentPageRows() {
+    return element.all(by.css('.dt-row'));
+  }
 
-    goToLastPage() {
-        let lastButton = $$('.icon-skip');
+  goToLastPage() {
+    const lastButton = $$('.icon-skip');
 
-        lastButton.click();
-    }
+    lastButton.click();
+  }
 
-    goToNextPage() {
-        let nextButton = $$('.icon-right');
+  goToNextPage() {
+    const nextButton = $$('.icon-right');
 
-        nextButton.click();
-    }
+    nextButton.click();
+  }
 }
 
 module.exports = PagingPage;

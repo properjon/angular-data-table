@@ -8,12 +8,10 @@ branches:
   - master
 
 before_install:
-- npm install -g gulp@^3.8.11 jspm@^0.16.1 protractor@^4.0.11 forever@0.15.3 codecov@^1.0.1 codeclimate-test-reporter@^0.4.0
-- jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN
+- npm install -g protractor@^4.0.11 forever@0.15.3 codecov@^1.0.1 codeclimate-test-reporter@^0.4.0
 
 before_script:
-- jspm install
-- forever start node_modules/gulp/bin/gulp.js watch serve
+- forever start node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.dev.js
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
@@ -22,9 +20,11 @@ after_success:
 - codecov
 
 script:
-- gulp unit
-- protractor test/protractor.conf.js
-- gulp release
+- npm run unit
+- npm run e2e
+- npm run lint
+- npm run stylelint
+- npm run release
 
 addons:
   sauce_connect: true

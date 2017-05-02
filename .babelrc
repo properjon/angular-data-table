@@ -4,7 +4,7 @@
   "plugins": [
     "transform-object-assign",
     [
-      "babel-root-import",
+      "root-import",
       [
         {
           "rootPathPrefix": "~",

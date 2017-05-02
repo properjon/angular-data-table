@@ -1,16 +1,18 @@
+const EC = protractor.ExpectedConditions;
+
 class TreePage {
+  expandRow(index) {
+    element.all(by.css('.dt-row')).get(index).element(by.css('.dt-tree-toggle')).click();
+  }
 
-    expandRow(index) {
-        element.all(by.css('.dt-row')).get(index).element(by.css('.dt-tree-toggle')).click();
-    }
+  get() {
+    browser.get('/tree.html');
+    browser.wait(EC.presenceOf($('.dt-row')), 5000);
+  }
 
-    get() {
-        browser.get('/demos/tree.html');
-    }
-
-    getCurrentPageRows() {
-        return element.all(by.css('.dt-row'));
-    }
+  getCurrentPageRows() {
+    return element.all(by.css('.dt-row'));
+  }
 }
 
 module.exports = TreePage;

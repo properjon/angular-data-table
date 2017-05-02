@@ -27,14 +27,14 @@ describe('PositionHelper', () => {
     width: 6,
   };
 
-  let positionHelper = null,
-    logMock = null,
-    getPositionHelper = null;
+  let positionHelper = null;
+  let logMock = null;
+  let getPositionHelper = null;
 
   beforeEach(() => {
     getPositionHelper = () => {
       logMock = {
-        warn: jasmine.createSpy('warn')
+        warn: jasmine.createSpy('warn'),
       };
 
       positionHelper = new PositionHelper(logMock);
@@ -62,17 +62,20 @@ describe('PositionHelper', () => {
     });
 
     it('calculate horizontal alignment with center value', () => {
-      const calculated = positionHelper.calculateHorizontalAlignment(elementBox, popoverBox, POPOVER.CENTER);
+      const calculated = positionHelper.calculateHorizontalAlignment(
+        elementBox, popoverBox, POPOVER.CENTER);
       expect(calculated).toEqual(3247.46019);
     });
 
     it('calculate horizontal alignment with left value', () => {
-      const calculated = positionHelper.calculateHorizontalAlignment(elementBox, popoverBox, POPOVER.LEFT);
+      const calculated = positionHelper.calculateHorizontalAlignment(
+        elementBox, popoverBox, POPOVER.LEFT);
       expect(calculated).toEqual(595.9375);
     });
 
     it('calculate horizontal alignment with right value', () => {
-      const calculated = positionHelper.calculateHorizontalAlignment(elementBox, popoverBox, POPOVER.RIGHT);
+      const calculated = positionHelper.calculateHorizontalAlignment(
+        elementBox, popoverBox, POPOVER.RIGHT);
       expect(calculated).toEqual(5898.98288);
     });
 
@@ -82,17 +85,20 @@ describe('PositionHelper', () => {
     });
 
     it('calculate vertical alignment with bottom value', () => {
-      const calculated = positionHelper.calculateVerticalAlignment(elementBox, popoverBox, POPOVER.BOTTOM);
+      const calculated = positionHelper.calculateVerticalAlignment(
+        elementBox, popoverBox, POPOVER.BOTTOM);
       expect(calculated).toEqual(-162);
     });
 
     it('calculate vertical alignment with middle value', () => {
-      const calculated = positionHelper.calculateVerticalAlignment(elementBox, popoverBox, POPOVER.MIDDLE);
+      const calculated = positionHelper.calculateVerticalAlignment(
+        elementBox, popoverBox, POPOVER.MIDDLE);
       expect(calculated).toEqual(-24.5);
     });
 
     it('calculate vertical alignment with top value', () => {
-      const calculated = positionHelper.calculateVerticalAlignment(elementBox, popoverBox, POPOVER.TOP);
+      const calculated = positionHelper.calculateVerticalAlignment(
+        elementBox, popoverBox, POPOVER.TOP);
       expect(calculated).toEqual(113);
     });
 
@@ -102,37 +108,44 @@ describe('PositionHelper', () => {
     });
 
     it('calculate horizontal caret alignment with center value', () => {
-      const calculated = positionHelper.calculateHorizontalCaret(elementBox, popoverBox, caretBox, POPOVER.CENTER);
+      const calculated = positionHelper.calculateHorizontalCaret(
+        elementBox, popoverBox, caretBox, POPOVER.CENTER);
       expect(calculated).toEqual(118.5);
     });
 
     it('calculate horizontal caret alignment with left value', () => {
-      const calculated = positionHelper.calculateHorizontalCaret(elementBox, popoverBox, caretBox, POPOVER.LEFT);
+      const calculated = positionHelper.calculateHorizontalCaret(
+        elementBox, popoverBox, caretBox, POPOVER.LEFT);
       expect(calculated).toEqual(2770.02269);
     });
 
     it('calculate horizontal caret alignment with right value', () => {
-      const calculated = positionHelper.calculateHorizontalCaret(elementBox, popoverBox, caretBox, POPOVER.RIGHT);
+      const calculated = positionHelper.calculateHorizontalCaret(
+        elementBox, popoverBox, caretBox, POPOVER.RIGHT);
       expect(calculated).toEqual(-2533.02269);
     });
 
     it('calculate vertical caret alignment with invalid value', () => {
-      positionHelper.calculateVerticalCaret(elementBox, popoverBox, caretBox, '');
+      positionHelper.calculateVerticalCaret(
+        elementBox, popoverBox, caretBox, '');
       expect(logMock.warn).toHaveBeenCalled();
     });
 
     it('calculate vertical caret alignment with bottom value', () => {
-      const calculated = positionHelper.calculateVerticalCaret(elementBox, popoverBox, caretBox, POPOVER.BOTTOM);
+      const calculated = positionHelper.calculateVerticalCaret(
+        elementBox, popoverBox, caretBox, POPOVER.BOTTOM);
       expect(calculated).toEqual(281);
     });
 
     it('calculate vertical caret alignment with middle value', () => {
-      const calculated = positionHelper.calculateVerticalCaret(elementBox, popoverBox, caretBox, POPOVER.MIDDLE);
+      const calculated = positionHelper.calculateVerticalCaret(
+        elementBox, popoverBox, caretBox, POPOVER.MIDDLE);
       expect(calculated).toEqual(143.5);
     });
 
     it('calculate vertical caret alignment with top value', () => {
-      const calculated = positionHelper.calculateVerticalCaret(elementBox, popoverBox, caretBox, POPOVER.TOP);
+      const calculated = positionHelper.calculateVerticalCaret(
+        elementBox, popoverBox, caretBox, POPOVER.TOP);
       expect(calculated).toEqual(6);
     });
   });
