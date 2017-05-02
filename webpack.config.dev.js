@@ -1,3 +1,6 @@
+/* eslint-disable */
+/* linting disabled temporarily due to scope of this pull request */
+
 const path = require('path'),
     webpack = require('webpack');
 

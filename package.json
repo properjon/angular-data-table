@@ -33,7 +33,7 @@
     "unit": "karma start test/karma.conf.js",
     "e2e": "protractor test/protractor.conf.js",
     "report-coverage": "codecov",
-    "lint": "eslint src/**/*.js src/components/**/*.js src/components/menu/**/*.js src/*.js test/*.js config.js gulpfile.babel.js",
+    "lint": "eslint ./*.js ./src/**/*.js ./demos/**/*.js",
     "stylelint": "stylelint src/dataTable.less src/themes/*.less src/components/menu/menu.less src/components/popover/popover.less"
   },
   "peerDependencies": {
@@ -54,6 +54,7 @@
     "babel-plugin-transform-object-assign": "^6.8.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.24.1",
     "babelify": "^7.3.0",
     "bardjs": "^0.1.8",
     "browser-sync": "^2.7.2",
