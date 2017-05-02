@@ -41,15 +41,6 @@ export default class DataTableController {
       this.calculateColumns();
     }, true);
 
-    // default sort
-    const watch = this.$scope.$watch('dt.rows', (newVal) => {
-      if (newVal) {
-        watch();
-
-        this.onSorted();
-      }
-    });
-
     this.$scope.$watchCollection('dt.rows', (newVal, oldVal) => {
       if (newVal && oldVal && newVal.length > oldVal.length) {
         this.onSorted();
