@@ -3,7 +3,7 @@ const EC = protractor.ExpectedConditions;
 class PagingPage {
   get() {
     browser.get('/demos/paging.html');
-    browser.wait(EC.presenceOf($('.dt-row')), 500);
+    browser.wait(EC.presenceOf($('.dt-row')), 5000);
   }
 
   getCurrentPageRows() {

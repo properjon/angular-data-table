@@ -1,7 +1,5 @@
 const BasicPage = require('./basic-page');
 
-const EC = protractor.ExpectedConditions;
-
 describe('When Basic:', () => {
   let page;
 
@@ -11,8 +9,6 @@ describe('When Basic:', () => {
   });
 
   it('should display table body', () => {
-    browser.wait(EC.presenceOf($('.dt-body')), 500);
-
     element.all(by.css('.dt-body')).then((items) => {
       expect(items.length).toBe(1);
     });

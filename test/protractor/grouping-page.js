@@ -3,7 +3,7 @@ const EC = protractor.ExpectedConditions;
 class GroupingPage {
   get() {
     browser.get('/demos/grouping.html');
-    browser.wait(EC.presenceOf($('.dt-group-row')), 500);
+    browser.wait(EC.presenceOf($('.dt-group-row')), 5000);
   }
 
   getCell(row, column) {

@@ -15,7 +15,7 @@ class SortingPage {
 
   get() {
     browser.get('/demos/sort.html');
-    browser.wait(EC.presenceOf($('.dt-row')), 500);
+    browser.wait(EC.presenceOf($('.dt-row')), 5000);
   }
 
   getColHeaderIcon(index) {

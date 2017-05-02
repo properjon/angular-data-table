@@ -1,3 +1,5 @@
+const EC = protractor.ExpectedConditions;
+
 class BasicPage {
   constructor() {
     this.colHeaderList = null;
@@ -5,6 +7,7 @@ class BasicPage {
 
   get() {
     browser.get('/demos/basic.html');
+    browser.wait(EC.presenceOf($('.dt-body')), 5000);
   }
 
   getColHeaderIcon(index) {
@@ -20,9 +23,9 @@ class BasicPage {
       this.loadColHeaderList();
     }
 
-    return this.getColHeaderIcon(index).getAttribute('class').then(classes => {
-      return classes.split(' ').indexOf('sort-asc') !== -1;
-    });
+    return this.getColHeaderIcon(index).getAttribute('class').then(classes => (
+      classes.split(' ').indexOf('sort-asc') !== -1
+    ));
   }
 
   isColSortedDesc(index) {
@@ -30,9 +33,9 @@ class BasicPage {
       this.loadColHeaderList();
     }
 
-    return this.getColHeaderIcon(index).getAttribute('class').then(classes => {
-      return classes.split(' ').indexOf('sort-desc') !== -1;
-    });
+    return this.getColHeaderIcon(index).getAttribute('class').then(classes => (
+        classes.split(' ').indexOf('sort-desc') !== -1
+    ));
   }
 
   isColSorted(index) {
@@ -40,7 +43,7 @@ class BasicPage {
       this.loadColHeaderList();
     }
 
-    return this.getColHeaderIcon(index).getAttribute('class').then(classes => {
+    return this.getColHeaderIcon(index).getAttribute('class').then((classes) => {
       const splits = classes.split(' ');
       for (let i = 0; i < splits.length; ++i) {
         if (splits[i] === 'sort-asc' || splits[i] === 'sort-desc') {
