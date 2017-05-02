@@ -1,5 +1,7 @@
 const BasicPage = require('./basic-page');
 
+const EC = protractor.ExpectedConditions;
+
 describe('When Basic:', () => {
   let page;
 
@@ -9,21 +11,27 @@ describe('When Basic:', () => {
   });
 
   it('should display table body', () => {
-    element.all(by.css('.dt-body')).then(items => {
+    browser.wait(EC.presenceOf($('.dt-body')), 500);
+
+    element.all(by.css('.dt-body')).then((items) => {
       expect(items.length).toBe(1);
     });
   });
 
   it('should have a header height of 50', () => {
-    let header = $$('.dt-header');
+    browser.wait(EC.presenceOf($('.dt-header')), 500);
 
-    header.getCssValue('height').then(val => {
+    const header = $$('.dt-header');
+
+    header.getCssValue('height').then((val) => {
       expect(val).toEqual(['50px']);
     });
   });
 
   it('should display 100 rows', () => {
-    element.all(by.css('.dt-row')).then(items => {
+    browser.wait(EC.presenceOf($('.dt-row')), 500);
+
+    element.all(by.css('.dt-row')).then((items) => {
       expect(items.length).toBe(100);
     });
   });
