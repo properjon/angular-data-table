@@ -439,7 +439,8 @@ export default class BodyController {
       temp = this.groupsTemp || [];
       // cache the group build
       if ((refresh || !this.groupsTemp)) {
-        this.groupsTemp = temp = this.buildGroups();
+        temp = this.buildGroups();
+        this.groupsTemp = temp;
         this.count = temp.length;
       }
     } else {
