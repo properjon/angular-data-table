@@ -846,15 +846,6 @@ class DataTableController {
       this.calculateColumns();
     }, true);
 
-    // default sort
-    const watch = this.$scope.$watch('dt.rows', (newVal) => {
-      if (newVal) {
-        watch();
-
-        this.onSorted();
-      }
-    });
-
     this.$scope.$watchCollection('dt.rows', (newVal, oldVal) => {
       if (newVal && oldVal && newVal.length > oldVal.length) {
         this.onSorted();
@@ -2278,7 +2269,8 @@ class BodyController {
       temp = this.treeTemp || [];
       // cache the tree build
       if ((refresh || !this.treeTemp)) {
-        this.treeTemp = temp = this.buildTree(); // eslint-disable-line no-multi-assign
+        temp = this.buildTree();
+        this.treeTemp = temp;
         this.count = temp.length;
 
         // have to force reset, optimize this later

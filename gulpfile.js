@@ -62,10 +62,9 @@ gulp.task('less', () => gulp.src(path.less)
 gulp.task('clean', () => gulp.src([path.output, path.release])
     .pipe(vinylPaths(del)));
 
-gulp.task('compile', callback => (runSequence(
-    ['less', 'es6'],
-    callback,
-  )));
+gulp.task('compile', callback => (
+    runSequence(['less', 'es6'], callback)
+));
 
 //
 // Dev Mode Tasks
@@ -96,14 +95,9 @@ gulp.task('watch', ['serve'], () => {
 // Release Tasks
 // ------------------------------------------------------------
 
-gulp.task('release', callback => (runSequence(
-    'clean',
-    ['release-less', 'release-build'],
-    'release-umd',
-    'release-common',
-    'release-es6-min',
-    callback,
-    )));
+gulp.task('release', callback => (
+    runSequence('clean', ['release-less', 'release-build'], 'release-umd', 'release-common', 'release-es6-min', callback)
+));
 
 gulp.task('release-less', () => gulp.src(['src/themes/*.less', 'src/dataTable.less'])
     .pipe(less())
