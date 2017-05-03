@@ -41,11 +41,8 @@ export default class DataTableController {
       this.calculateColumns();
     }, true);
 
-    // default sort
-    const watch = this.$scope.$watch('dt.rows', (newVal) => {
-      if (newVal) {
-        watch();
-
+    this.$scope.$watchCollection('dt.rows', (newVal, oldVal) => {
+      if (newVal && oldVal && newVal.length > oldVal.length) {
         this.onSorted();
       }
     });
@@ -100,6 +97,16 @@ export default class DataTableController {
 
       this.options.columns[i] = column;
     }
+  }
+
+  /**
+   * If undefined, set column sortable property to table sortable property value
+   */
+  inheritColumnSortableProps() {
+    angular.forEach(this.options.columns, (column) => {
+      column.sortable = angular.isDefined(column.sortable) ?
+        column.sortable : this.options.sortable;
+    });
   }
 
   /**

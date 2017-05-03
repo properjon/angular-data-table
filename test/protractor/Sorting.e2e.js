@@ -1,55 +1,50 @@
-describe('When Sorting:', function () {
-    var hasClass = function (element, cls) {
-      return element.getAttribute('class').then(function (classes) {
-        return classes.split(' ').indexOf(cls) !== -1;
-      });
-    }
+const SortingPage = require('./sorting-page');
 
-      var colHeaderList,
-          colHeader1,
-          colHeader1Icon,
-          colHeader2,
-          colHeader2Icon,
-          row1Column1;
+let defaultTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
 
-      beforeEach(function () {
-           browser.get('/demos/sort.html');
+describe('When Sorting:', () => {
+    let page;
 
-           colHeaderList = by.repeater('column in header.columns[\'center\'] track by column.$id');
-           colHeader1 = element(colHeaderList.row(0));
-           colHeader1Icon = colHeader1.element(by.css('.sort-btn'));
-           colHeader2 = element(colHeaderList.row(1));
-           colHeader2Icon = colHeader2.element(by.css('.sort-btn'));
-           row1Column1 = element.all(by.css('.dt-cell')).first();
-      });
+    beforeEach(() => {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
-      describe('multi column', function () {
-          it('should be able to sort by multiple columns', function() {
-              colHeader1.click();
+        page = new SortingPage();
+        page.get();
+    });
 
-              expect(hasClass(colHeader1Icon, 'icon-up')).toBe(true);
-              expect(hasClass(colHeader2Icon, 'icon-down')).toBe(true);
-              expect(row1Column1.getText()).toBe('Valarie Atkinson');
-          });
-      });
+    afterEach(() => {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = defaultTimeout;
+    });
 
-      describe('single column', function () {
-          beforeEach(function () {
-              element(by.model('multiple')).click();
-          });
+    describe('multi column', () => {
+        it('should be able to sort by multiple columns', () => {
+            page.clickHeader(0);
+            page.clickHeader(1);
+            page.clickHeader(2);
 
-          it('should only sort by one column at a time', function () {
-              colHeader2.click();
+            let firstCell = page.getFirstCell();
 
-              setTimeout(function () {
-                  colHeader1.click();
-              }, 10);
+            expect(page.isColSorted(0)).toBe(false);
+            expect(page.isColSortedDesc(1)).toBe(true);
+            expect(page.isColSortedDesc(2)).toBe(true);
+            expect(firstCell.getText()).toBe('Bruce Strong');
+        });
+    });
 
-              setTimeout(function () {
-                  expect(hasClass(colHeader1Icon, 'icon-up')).toBe(true);
-                  expect(hasClass(colHeader2Icon, 'icon-down')).toBe(false);
-                  expect(row1Column1.getText()).toBe('Wilder Gonzales');
-              }, 10);
-          });
-      });
+    describe('single column', () => {
+        beforeEach(() => {
+            element(by.model('multiple')).click();
+        });
+
+        it('should only sort by one column at a time', () => {
+            page.clickHeader(1);
+            
+            let firstCell = page.getFirstCell();
+            
+            expect(page.isColSorted(0)).toBe(false);
+            expect(page.isColSortedDesc(1)).toBe(true);
+            expect(page.isColSorted(2)).toBe(false);
+            expect(firstCell.getText()).toBe('Wilder Gonzales');
+        });
+    });
 });

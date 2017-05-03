@@ -26,10 +26,10 @@ export default class HeaderController {
 
   /**
    * Invoked when a column sort direction has changed
-   * @param  {object} scope
-   * @param  {object} column
+   * @param  {object} sortedColumn
+   * @param  {object} modifierPressed
    */
-  onSorted(sortedColumn) {
+  onSorted(sortedColumn, modifierPressed) {
     // if sort type is single, then only one column can be sorted at once,
     // so we set the sort to undefined for the other columns
     function unsortColumn(column) {
@@ -38,7 +38,8 @@ export default class HeaderController {
       }
     }
 
-    if (this.options.sortType === 'single') {
+    if ((this.options.sortType === 'single' && !(this.options.modifierActive && modifierPressed)) ||
+        (this.options.sortType === 'multiple' && this.options.modifierActive && modifierPressed)) {
       this.columns.left.forEach(unsortColumn);
       this.columns.center.forEach(unsortColumn);
       this.columns.right.forEach(unsortColumn);

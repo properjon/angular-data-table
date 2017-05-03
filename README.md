@@ -42,7 +42,6 @@ See live demos [here]( http://jonshaffer.github.io/angular-data-table/).
 #### Download This Fork
 
 - NPM `npm install jonshaffer/angular-data-table`
-- JSPM `jspm install github:jonshaffer/angular-data-table`
 
 or Github download or clone of course!
 
@@ -133,31 +132,30 @@ The data table can be created with the following `options`:
   - `template`
   - `width`: Width, in pixels (default: `150`)
 - `emptyMessage`: Message to show when array is presented but contains no values (default: `'No data to display'`)
-- `footerHeight`: Footer height in pixels. Pass a  `falsey` value for no footer (default: `0`)
+- `footerHeight`: Footer height in pixels. Pass a  `falsey` value for no footer. (default: `0`)
 - `headerHeight`: Header height in pixels. Pass a  `falsey` value for no header (default: `30`)
+- `loadingIndicator`: (default: `false`)
 - `loadingMessage`: Loading message presented when the array is undefined (default: `'Loading...'`)
 - `multiSelect`: Whether users can select multiple items (default: `false`)
 - `paging`
-  - `externalPaging`. Default `false`
-  - `size`. Default `undefined`
-  - `count`. Default `0`
-  - `offset`. Default `0`
-  - `loadingIndicator`. Default `false`
+  - `count`: (default: `0`)
+  - `mode`: (default `null`)
+  - `offset`: (default: `0`)
+  - `size`: (default: `undefined`)
 - `reorderable`: Whether you can reorder columns (default: `true`)
 - `rowHeight`: Row height in pixels, necessary if using lazy rendering (default: `30`)
-- `scrollbarV`: Enable vertical scrollbars (default: `true`)
+- `scrollbarV`: Enables vertical scrollbars (default: `true`)
 - `selectable`: Whether users can select items (default: `false`)
+- `sortable`: Whether the columns can be sorted (default: `true`, overridden at column level)
 - `sortType`: Whether to allow sorting by multiple columns or only 1 (`multiple` or `single`) (default: `multiple`)
 
 ## Contributing
 
 #### Run Demos
 
-Ensure you have the latest NPM and JSPM installed globally.  If you don't already have JSPM installed run: `npm install jspm -g`.
-
-- `npm install && jspm install`
-- `npm start` or `gulp serve watch`
-- Open your browser to `http://localhost:9000`
+- `npm install`
+- `npm start`
+- Open your browser to `http://localhost:8080`
 
 #### Build
 

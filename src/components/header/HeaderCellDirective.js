@@ -32,7 +32,7 @@ export default function HeaderCellDirective($compile) {
                    ng-change="hcell.checkboxChangeCallback()" />
           </label>
           <span class="dt-header-cell-label"
-                ng-click="hcell.onSorted()">
+                ng-click="hcell.onSorted($event)">
           </span>
           <span ng-class="hcell.sortClass()">{{hcell.column.sortPriority}}</span>
         </div>

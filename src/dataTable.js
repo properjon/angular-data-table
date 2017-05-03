@@ -1,5 +1,3 @@
-import 'angular';
-
 import './utils/polyfill';
 
 import ResizableDirective from './components/header/ResizableDirective';
@@ -30,7 +28,7 @@ export default angular
   .directive('dtHeaderCell', HeaderCellDirective)
   .directive('dtBody', BodyDirective)
   .directive('dtScroller', ScrollerDirective)
-  .directive('dtSeletion', SelectionDirective)
+  .directive('dtSelection', SelectionDirective)
   .directive('dtRow', RowDirective)
   .directive('dtGroupRow', GroupRowDirective)
   .directive('dtCell', CellDirective)

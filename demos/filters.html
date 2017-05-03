@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html ng-app="app" lang="en">
   <head>
     <meta charset=" utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -16,7 +16,7 @@
         box-sizing: border-box;
       }
 
-      body{
+      body {
         font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
         font-style: normal;
         font-weight: 300;
@@ -30,17 +30,13 @@
         text-rendering: optimizeLegibility;
       }
 
-      .dt{
+      .dt {
         width:75%;
         margin:50px auto;
       }
-
     </style>
-    <link href="../dist/dataTable.css" media="all" rel="stylesheet" />
-    <link href="../dist/themes/material.css" media="all" rel="stylesheet" />
-    <link href="../dist/themes/icons.css" rel="stylesheet">
   </head>
-  <body ng-app="app" ng-controller="HomeController">
+  <body ng-controller="HomeController">
 
   <input type="text" ng-model-options="{ debounce: 100 }" placeholder="Filter names"
            ng-model="$parent.filterKeywords" />
@@ -65,15 +61,12 @@
       <column name="Company" flex-grow="1"></column>
     </dtable>
 
-    <script src="../jspm_packages/system.js"></script>
-    <script src="../config.js"></script>
+    <script src="/assets/dataTable.js"></script>
 
     <script>
+        var module = angular.module('app', [ 'data-table' ]);
 
-      System.import('dataTable').then(function(dt){
-        var module = angular.module('app', [ dt.default.name ]);
-
-        module.controller('HomeController', function($scope, $http){
+        module.controller('HomeController', function ($scope, $http) {
           var data;
 
           $scope.options = {
@@ -84,24 +77,24 @@
             selectable: false
           };
 
-          $scope.prev = function(ev){
+          $scope.prev = function (ev) {
             ev.stopPropagation();
           }
 
-          $scope.$watch('filterKeywords', function(newVal) {
-            if(!data)return;
-            $scope.data = data.filter(function(d) {
+          $scope.$watch('filterKeywords', function (newVal) {
+            if (!data) {
+              return;
+            }
+            $scope.data = data.filter(function (d) {
               console.log(d.name, d.name.indexOf(newVal))
               return d.name.toLowerCase().indexOf(newVal) !== -1 || !newVal;
             })
           });
 
-          $http.get('/demos/data/100.json').success(function(d) {
+          $http.get('/data/100.json').success(function (d) {
             $scope.data = data = d;
           });
-
         });
-      });
     </script>
 
     <script>
