@@ -7,6 +7,9 @@ branches:
   only:
   - master
 
+env:
+- DBUS_SESSION_BUS_ADDRESS=/dev/null
+
 before_install:
 - npm install -g protractor@^4.0.11 forever@0.15.3 codecov@^1.0.1 codeclimate-test-reporter@^0.4.0
 
@@ -20,11 +23,11 @@ after_success:
 - codecov
 
 script:
-- npm run unit
-- npm run e2e
-- npm run lint
-- npm run stylelint
-- npm run release
+- npm run unit -s
+- npm run e2e -s
+- npm run lint -s
+- npm run stylelint -s
+- npm run release -s
 
 addons:
   sauce_connect: true

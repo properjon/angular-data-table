@@ -1,4 +1,7 @@
 {
   "plugins": ["protractor"],
-  "extends": "plugin:protractor/recommended"
+  "extends": "plugin:protractor/recommended",
+  "rules": {
+    "class-methods-use-this": [0]
+  }
 }
