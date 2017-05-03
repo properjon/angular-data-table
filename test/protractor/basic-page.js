@@ -7,7 +7,7 @@ class BasicPage {
 
   get() {
     browser.get('/basic.html');
-    browser.wait(EC.presenceOf($('.dt-body')), 5000);
+    browser.wait(EC.presenceOf($('.dt-body')), 5000, 'Data Table body should be rendered within 5 seconds.');
   }
 
   getColHeaderIcon(index) {

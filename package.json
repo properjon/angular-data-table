@@ -32,12 +32,13 @@
     "test": "npm run test && npm run e2e",
     "unit": "karma start test/karma.conf.js",
     "e2e": "protractor test/protractor.conf.js",
+    "webdriver-update": "webdriver-manager update",
     "report-coverage": "codecov",
     "lint": "eslint ./*.js ./src/**/*.js ./demos/**/*.js",
     "stylelint": "stylelint src/dataTable.less src/themes/*.less src/components/menu/menu.less src/components/popover/popover.less"
   },
   "peerDependencies": {
-    "angular": ">=1.4.x <2.0.0"
+    "angular": ">=1.4.0 <2.0.0"
   },
   "devDependencies": {
     "angular": "1.5.8",

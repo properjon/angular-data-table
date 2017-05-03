@@ -23,11 +23,11 @@ after_success:
 - codecov
 
 script:
-- npm run unit
-- npm run e2e
-- npm run lint
-- npm run stylelint
-- npm run release
+- npm run unit -s
+- npm run e2e -s
+- npm run lint -s
+- npm run stylelint -s
+- npm run release -s
 
 addons:
   sauce_connect: true
