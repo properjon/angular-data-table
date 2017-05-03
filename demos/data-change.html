@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
     <meta name="apple-mobile-web-app-title" content="Datagrid">
-    <title>Datagrid - Empty</title>
+    <title>Datagrid-change</title>
     <base href="/">
     <style>
       *, *:after, *:before {
@@ -39,11 +39,11 @@
   </head>
   <body ng-controller="HomeController">
 
+    <button type="button" ng-click="addRow()">Add Row</button>
+    <button type="button" ng-click="removeRow()">Remove Row</button>
+    <label><input type="checkbox" ng-model="ngIfTable" /> ngIf Table</label>
 
-    <button type="button" ng-click="loadData()">Load Data</button>
-    <button type="button" ng-click="clearData()">Clear Data</button>
-
-    <dtable options="options" rows="data" class="material"></dtable>
+    <dtable options="options" rows="data" class="material" ng-if="ngIfTable"></dtable>
 
     <script src="/assets/dataTable.js"></script>
 
@@ -51,29 +51,38 @@
         var module = angular.module('app', [ 'data-table' ]);
 
         module.controller('HomeController', function($scope, $http){
+          $scope.ngIfTable = true;
+
           $scope.options = {
             rowHeight: 50,
             footerHeight: false,
             headerHeight: 50,
-            scrollbarV: false,
-            emptyMessage: 'Nothing to show...',
+            scrollbarV: true,
             columns: [
               { name: "Name", prop: "name", width: 300 },
-              { name: "Gender", prop: "gender" },
+              { name: "Gender", prop: "gender", group: true },
               { name: "Company", prop: "company" }
             ]
           };
 
-          $scope.data = [];
+          $http.get('/data/100.json').success(function(data) {
+            $scope.dataPool = data;
 
-          $scope.loadData = function(){
-            $http.get('/data/100.json').success(function(data) {
-              $scope.data.push.apply($scope.data, data);
-            });
+            $scope.data = $scope.dataPool.slice(0, 4);
+            $scope.currentIndex = 5;
+          });
+
+          $scope.addRow = function(){
+            if ($scope.currentIndex > $scope.dataPool.length -1) {
+                $scope.currentIndex = 0;
+            }
+
+            $scope.data.push($scope.dataPool[$scope.currentIndex]);
+            $scope.currentIndex++;
           };
 
-          $scope.clearData = function(){
-            $scope.data.splice(0, $scope.data.length);
+          $scope.removeRow = function(){
+            $scope.data.splice(0, 1);
           }
         });
     </script>

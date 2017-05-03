@@ -1,22 +1,21 @@
 import PopoverDirective from './PopoverDirective';
 import PopoverRegistry from './PopoverRegistry';
 import PositionHelper from './PositionHelper';
-import POPOVER from './Popover.constants';
 
 describe('PopoverDirective', () => {
-  let animate = null,
-    attributes = null,
-    compile = null,
-    element = null,
-    getPopoverDirective = null,
-    http = null,
-    popoverDirective = null,
-    q = null,
-    scope = null,
-    timeout = null,
-    templateCache = null;
+  let animate = null;
+  let attributes = null;
+  let compile = null;
+  let element = null;
+  let getPopoverDirective = null;
+  let http = null;
+  let popoverDirective = null;
+  let q = null;
+  let scope = null;
+  let timeout = null;
+  let templateCache = null;
 
-  beforeEach(inject(($rootScope, $compile) => {
+  beforeEach(inject(($rootScope, $compile) => { // eslint-disable-line no-undef
     scope = $rootScope.$new();
     compile = $compile;
     element = angular.element(`<span

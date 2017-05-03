@@ -1,7 +1,6 @@
 **/*{.,-}min.js
 node_modules
-jspm_packages
-bower_components
 release
 dist
 test/coverage
+config.js

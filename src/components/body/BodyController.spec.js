@@ -63,21 +63,21 @@ describe('BodyController', () => {
 
   describe('when internal paging is enabled', () => {
     beforeEach(() => {
-      let options = {
+      const options = {
         columns: [
           { name: 'Name', prop: 'name' },
-          { name: 'Company', prop: 'company' }
+          { name: 'Company', prop: 'company' },
         ],
         paging: {
           mode: 'internal',
           offset: 0,
-          size: 3
-        }
+          size: 3,
+        },
       };
 
       setController({
-        options: options,
-        rows: olympicRows
+        options,
+        rows: olympicRows,
       });
     });
 
@@ -92,7 +92,7 @@ describe('BodyController', () => {
       ctrl.$onInit();
       scope.$digest();
 
-      let name = ctrl.tempRows[0].name;
+      const name = ctrl.tempRows[0].name;
       ctrl.options.paging.offset = 1;
       scope.$digest();
 
@@ -103,7 +103,7 @@ describe('BodyController', () => {
       ctrl.$onInit();
       scope.$digest();
 
-      let count = olympicRows.length;
+      const count = olympicRows.length;
 
       expect(ctrl.options.paging.count).toBe(count);
     });

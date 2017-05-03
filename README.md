@@ -42,7 +42,6 @@ See live demos [here]( http://jonshaffer.github.io/angular-data-table/).
 #### Download This Fork
 
 - NPM `npm install jonshaffer/angular-data-table`
-- JSPM `jspm install github:jonshaffer/angular-data-table`
 
 or Github download or clone of course!
 
@@ -154,11 +153,9 @@ The data table can be created with the following `options`:
 
 #### Run Demos
 
-Ensure you have the latest NPM and JSPM installed globally.  If you don't already have JSPM installed run: `npm install jspm -g`.
-
-- `npm install && jspm install`
-- `npm start` or `gulp serve watch`
-- Open your browser to `http://localhost:9000`
+- `npm install`
+- `npm start`
+- Open your browser to `http://localhost:8080`
 
 #### Build
 

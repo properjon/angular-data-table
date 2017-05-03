@@ -392,7 +392,7 @@ export default class BodyController {
     const temp = [];
     const self = this;
 
-    function addChildren(fromArray, toArray, level) {
+    const addChildren = (fromArray, toArray, level) => {
       fromArray.forEach((row) => {
         const relVal = row[self.treeColumn.relationProp];
         const key = row[self.treeColumn.prop];
@@ -406,7 +406,7 @@ export default class BodyController {
           }
         }
       });
-    }
+    };
 
     addChildren(this.rows, temp, 0);
 
@@ -429,7 +429,8 @@ export default class BodyController {
       temp = this.treeTemp || [];
       // cache the tree build
       if ((refresh || !this.treeTemp)) {
-        this.treeTemp = temp = this.buildTree();
+        temp = this.buildTree();
+        this.treeTemp = temp;
         this.count = temp.length;
 
         // have to force reset, optimize this later
@@ -439,7 +440,8 @@ export default class BodyController {
       temp = this.groupsTemp || [];
       // cache the group build
       if ((refresh || !this.groupsTemp)) {
-        this.groupsTemp = temp = this.buildGroups();
+        temp = this.buildGroups();
+        this.groupsTemp = temp;
         this.count = temp.length;
       }
     } else {

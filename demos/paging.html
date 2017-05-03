@@ -1,92 +1,87 @@
 <!doctype html>
-<html lang="en">
+<html ng-app="app" lang="en">
 
-  <head>
-    <meta charset=" utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
-    <meta name="apple-mobile-web-app-title" content="Datagrid">
-    <title>Datagrid - Paging</title>
-    <base href="/">
-    <style>
-      *, *:after, *:before {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-      }
+<head>
+  <meta charset=" utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
+  <meta name="apple-mobile-web-app-title" content="Datagrid">
+  <title>Datagrid - Paging</title>
+  <base href="/">
+  <style>
+    *,
+    *:after,
+    *:before {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 1.4rem;
+      line-height: 2rem;
+      letter-spacing: 0.01rem;
+      color: #212121;
+      background-color: #f5f5f5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+    
+    .dt {
+      width: 75%;
+      margin: 50px auto;
+    }
+    
+    .dt-row-even {
+      background: #f6f7f8;
+    }
+  </style>
+</head>
 
-      body {
-        font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif;
-        font-style: normal;
-        font-weight: 300;
-        font-size: 1.4rem;
-        line-height: 2rem;
-        letter-spacing: 0.01rem;
-        color: #212121;
-        background-color: #f5f5f5;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-rendering: optimizeLegibility;
-      }
+<body ng-controller="HomeController">
 
-      .dt {
-        width:75%;
-        margin:50px auto;
-      }
+  <dtable options="options" rows="data" class="material"></dtable>
 
-      .dt-row-even {
-        background:#f6f7f8;
-      }
-    </style>
-    <link href="../dist/dataTable.css" media="all" rel="stylesheet" />
-    <link href="../dist/themes/material.css" media="all" rel="stylesheet" />
-    <link href="../dist/themes/icons.css" rel="stylesheet">
-  </head>
+  <script src="/assets/dataTable.js"></script>
 
-  <body ng-app="app" ng-controller="HomeController">
+  <script>
+    var module = angular.module('app', ['data-table']);
 
-    <dtable options="options" rows="data" class="material"></dtable>
+    module.controller('HomeController', function ($scope, $http) {
+      $scope.data = [];
 
-    <script src="../jspm_packages/system.js"></script>
-    <script src="../config.js"></script>
+      // To enable internal automatic paging, make sure to set:
+      //    scrollbarV: false
+      //    paging.mode: 'internal'
 
-    <script>
+      $scope.options = {
+        rowHeight: 50,
+        headerHeight: 50,
+        scrollbarV: false,
+        sortType: 'single',
+        columns: [
+          { name: 'Name', prop: 'name' },
+          { name: 'Gender', prop: 'gender' },
+          { name: 'Company', prop: 'company' }
+        ],
+        columnMode: 'force',
+        paging: {
+          mode: 'internal',
+          size: 12
+        }
+      };
 
-      System.import('dataTable').then(function (dt) {
-        var module = angular.module('app', [dt.default.name]);
-
-        module.controller('HomeController', function ($scope, $http) {
-          $scope.data = [];
-
-          // To enable internal automatic paging, make sure to set:
-          //    scrollbarV: false
-          //    paging.mode: 'internal'
-
-          $scope.options = {
-            rowHeight: 50,
-            headerHeight: 50,
-            scrollbarV: false,
-            sortType: 'single',
-            columns: [
-              { name: 'Name', prop: 'name' },
-              { name: 'Gender', prop: 'gender' },
-              { name: 'Company', prop: 'company' }
-            ],
-            columnMode: 'force',
-            paging: {
-              mode: 'internal',
-              size: 12
-            }
-          };
-
-          $http.get('/demos/data/100.json').success(function (d) {
-            $scope.data = d;
-          });
-        });
+      $http.get('/data/100.json').success(function (d) {
+        $scope.data = d;
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
 
 </html>

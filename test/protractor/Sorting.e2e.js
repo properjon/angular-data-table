@@ -1,11 +1,19 @@
 const SortingPage = require('./sorting-page');
 
+let defaultTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+
 describe('When Sorting:', () => {
     let page;
 
     beforeEach(() => {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+
         page = new SortingPage();
         page.get();
+    });
+
+    afterEach(() => {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = defaultTimeout;
     });
 
     describe('multi column', () => {

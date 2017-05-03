@@ -9,21 +9,21 @@ describe('When Basic:', () => {
   });
 
   it('should display table body', () => {
-    element.all(by.css('.dt-body')).then(items => {
+    element.all(by.css('.dt-body')).then((items) => {
       expect(items.length).toBe(1);
     });
   });
 
   it('should have a header height of 50', () => {
-    let header = $$('.dt-header');
+    const header = $$('.dt-header');
 
-    header.getCssValue('height').then(val => {
+    header.getCssValue('height').then((val) => {
       expect(val).toEqual(['50px']);
     });
   });
 
   it('should display 100 rows', () => {
-    element.all(by.css('.dt-row')).then(items => {
+    element.all(by.css('.dt-row')).then((items) => {
       expect(items.length).toBe(100);
     });
   });
