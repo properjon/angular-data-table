@@ -63,7 +63,7 @@ export default class ScrollerController {
         this.$scope.scrollerStyles = () => {
             if (this.options.scrollbarV) {
                 return {
-                    height: `${this.count * this.options.rowHeight}px`,
+                    height: `${ctrl.$scope.body.count * this.options.rowHeight}px`,
                 };
             }
 
