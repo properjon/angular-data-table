@@ -144,7 +144,7 @@ export default class BodyController {
 
       this.count = this.options.paging.count;
 
-      if (this.treeColumn || this.groupColumn) {
+      if (this.treeColumn || this.groupColumn || this.options.subTables) {
         this.buildRowsByGroup();
       }
 
@@ -160,6 +160,8 @@ export default class BodyController {
           rows = this.buildTree();
         } else if (this.groupColumn) {
           rows = this.buildGroups();
+        } else if (this.options.subTables) {
+          rows = this.buildSubTables();
         }
 
         if (this.options.paging.mode === 'external') {
@@ -392,14 +394,37 @@ export default class BodyController {
    */
   buildTree() {
     const temp = [];
-    const self = this;
 
     const addChildren = (fromArray, toArray, level) => {
       fromArray.forEach((row) => {
-        const relVal = row[self.treeColumn.relationProp];
-        const key = row[self.treeColumn.prop];
-        const groupRows = self.rowsByGroup[key];
-        const expanded = self.expanded[key];
+        const relVal = row[this.treeColumn.relationProp];
+        const key = row[this.treeColumn.prop];
+        const groupRows = this.rowsByGroup[key];
+        const expanded = this.expanded[key];
+
+        if (level > 0 || !relVal) {
+          toArray.push(row);
+          if (groupRows && groupRows.length > 0 && expanded) {
+            addChildren(groupRows, toArray, level + 1);
+          }
+        }
+      });
+    };
+
+    addChildren(this.rows, temp, 0);
+
+    return temp;
+  }
+
+  buildSubTables() {
+    const temp = [];
+
+    const addChildren = (fromArray, toArray, level) => {
+      fromArray.forEach((row) => {
+        const relVal = row[this.treeColumn.relationProp];
+        const key = row[this.treeColumn.prop];
+        const groupRows = this.rowsByGroup[key];
+        const expanded = this.expanded[key];
 
         if (level > 0 || !relVal) {
           toArray.push(row);
@@ -421,13 +446,18 @@ export default class BodyController {
    */
   getRows(refresh) {
     // only proceed when we have pre-aggregated the values
-    if ((this.treeColumn || this.groupColumn) && !this.rowsByGroup) {
+    if ((this.treeColumn || this.groupColumn || this.options.subTables) && !this.rowsByGroup) {
       return false;
     }
 
     let temp;
 
-    if (this.treeColumn) {
+    if (this.options.subTables) {
+      temp = this.buildSubTables();
+      this.count = temp.length;
+
+      this.tempRows.splice(0, this.tempRows.length);
+    } else if (this.treeColumn) {
       temp = this.treeTemp || [];
       // cache the tree build
       if ((refresh || !this.treeTemp)) {
