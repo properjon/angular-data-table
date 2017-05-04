@@ -21,6 +21,8 @@ export default class BodyController {
     if (isOldAngular()) {
       this.$onInit();
     }
+
+    window.bCtrl = this;
   }
 
   $onInit() {
