@@ -29,7 +29,7 @@ export default function BodyDirective() {
         </div>
       </div>
       <div class="dt-body" ng-style="body.styles()" dt-selection>
-        <dt-scroller class="dt-body-scroller">
+        <dt-scroller class="dt-body-scroller" options="body.options">
           <dt-group-row ng-repeat-start="r in body.tempRows track by $index"
                         ng-if="r.group"
                         ng-style="body.groupRowStyles(r)"
