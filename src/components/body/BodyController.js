@@ -2,8 +2,7 @@ import { isOldAngular } from '../../utils/utils';
 
 const HIERARCHY_TYPES = {
   GROUP: 'buildGroups',
-  TREE: 'buildTree',
-  SUBTABLES: 'buildSubTables'
+  TREE: 'buildTree'
 };
 
 export default class BodyController {
@@ -64,19 +63,15 @@ export default class BodyController {
   }
 
   setHierarchyColumns() {
-    if (this.options && !this.options.hasSubTables && this.options.columns) {
+    if (this.options && this.options.columns) {
       this.treeColumn = this.options.columns.find(c => c.isTreeColumn);
 
       if (!this.treeColumn) {
-        return this.subTableColumn = this.options.columns.find(c => c.isSubTableColumn);
-
-        if (!this.subTableColumn) {
-          return this.groupColumn = this.options.columns.find(c => c.group);
-        }
+        this.groupColumn = this.options.columns.find(c => c.group);
+      } else {
+        this.groupColumn = undefined;
       }
     }
-
-    this.groupColumn = undefined;
   }
 
   /**
@@ -150,7 +145,7 @@ export default class BodyController {
 
       this.count = this.options.paging.count;
 
-      if (this.treeColumn || this.groupColumn || this.subTableColumn) {
+      if (this.treeColumn || this.groupColumn) {
         this.buildRowsByGroup();
       }
 
@@ -166,8 +161,6 @@ export default class BodyController {
           rows = this.buildTree();
         } else if (this.groupColumn) {
           rows = this.buildGroups();
-        } else if (this.options.hasSubTables) {
-          rows = this.buildSubTables();
         }
 
         if (this.options.paging.mode === 'external') {
@@ -254,8 +247,10 @@ export default class BodyController {
    * @return {Integer}
   */
   calculateDepth(row, depth = 0) {
-    const parentProp = this.getParentProp();
-    const prop = this.treeColumn.prop;
+    const {
+      parentProp,
+      prop
+    } = this.treeColumn;
 
     if (!row[parentProp]) {
       return depth;
@@ -286,9 +281,7 @@ export default class BodyController {
 
   getParentProp() {
     if (this.treeColumn) {
-      return this.treecolumn.relationProp || this.$log.warn('Tree column set without a relationProp.');
-    } else if (this.subTableColumn) {
-      return this.subTableColumn.relationProp || this.$log.warn('SubTable column set without a relationProp.');
+      return this.treeColumn.relationProp || this.$log.warn('Tree column set without a relationProp.');
     } else if (this.groupColumn) {
       return this.groupColumn.prop;
     }
@@ -432,36 +425,19 @@ export default class BodyController {
     return temp;
   }
 
-  buildSubTables() {
-    const temp = [];
-
-    const addChildren = (fromArray, toArray, level) => {
-      console.log(fromArray, toArray, level);
-    };
-
-    addChildren(this.rows, temp, 0);
-
-    return temp;
-  }
-
   /**
    * Creates the intermediate collection that is shown in the view.
    * @param  {boolean} refresh - bust the tree/group cache
    */
   getRows(refresh) {
     // only proceed when we have pre-aggregated the values
-    if ((this.treeColumn || this.groupColumn || this.options.hasSubTables) && !this.rowsByGroup) {
+    if ((this.treeColumn || this.groupColumn) && !this.rowsByGroup) {
       return false;
     }
 
     let temp;
 
-    if (this.options.hasSubTables) {
-      temp = this.buildSubTables();
-      this.count = temp.length;
-
-      this.tempRows.splice(0, this.tempRows.length);
-    } else if (this.treeColumn) {
+    if (this.treeColumn) {
       temp = this.treeTemp || [];
       // cache the tree build
       if ((refresh || !this.treeTemp)) {
@@ -625,21 +601,13 @@ export default class BodyController {
    * @return {boolean}
    */
   getRowHasChildren(row) {
-    if (!this.treeColumn) return undefined;
+    if (!this.treeColumn) {
+      return undefined;
+    }
 
     const children = this.rowsByGroup[row[this.treeColumn.prop]];
 
     return angular.isDefined(children) || (children && !children.length);
-  }
-
-  refreshSubTables() {
-    this.refresh(HIERARCHY_TYPES.SUBTABLES);
-  }
-
-  onSubTableToggled(row, cell) {
-    this.expanded[val] = !this.expanded[val];
-
-    this.refreshSubTables();
   }
 
   refreshTree() {
