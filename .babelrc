@@ -1,16 +1,10 @@
 {
   "presets": ["es2015"],
   "sourceMaps": true,
+  "compact": true,
   "plugins": [
-    "transform-object-assign",
-    [
-      "root-import",
-      [
-        {
-          "rootPathPrefix": "~",
-          "rootPathSuffix": "."
-        }
-      ]
-    ]
+    "transform-runtime",
+    "root-import",
+    "rewire"
   ]
 }
