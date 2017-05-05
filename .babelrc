@@ -4,7 +4,6 @@
   "compact": true,
   "plugins": [
     "transform-runtime",
-    "root-import",
-    "rewire"
+    "root-import"
   ]
 }
