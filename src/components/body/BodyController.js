@@ -256,7 +256,7 @@ export default class BodyController {
       return depth;
     }
 
-    if (row.$$depth) {
+    if (row && row.$$depth) {
       return row.$$depth + depth;
     }
 
