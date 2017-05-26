@@ -114,15 +114,5 @@
     "watchify": "^3.7.0",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^2.4.5"
-  },
-  "babel": {
-    "sourceMaps": false,
-    "presets": [
-      "es2015",
-      "stage-0"
-    ],
-    "moduleIds": false,
-    "comments": false,
-    "compact": false
   }
 }

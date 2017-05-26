@@ -1,7 +1,12 @@
 {
-  "presets": ["es2015"],
+  "presets": [
+    "es2015",
+    "stage-0"
+  ],
   "sourceMaps": true,
   "compact": true,
+  "moduleIds": false,
+  "comments": false,
   "plugins": [
     "transform-runtime",
     "root-import"
