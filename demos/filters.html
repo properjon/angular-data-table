@@ -41,7 +41,7 @@
   <input type="text" ng-model-options="{ debounce: 100 }" placeholder="Filter names"
            ng-model="$parent.filterKeywords" />
 
-    <dtable
+    <russell
       options="options"
       rows="data"
       class="material">
@@ -59,12 +59,12 @@
       </column>
       <column name="Gender" flex-grow="1"></column>
       <column name="Company" flex-grow="1"></column>
-    </dtable>
+    </russell>
 
-    <script src="/assets/dataTable.js"></script>
+    <script src="/assets/russell.js"></script>
 
     <script>
-        var module = angular.module('app', [ 'data-table' ]);
+        var module = angular.module('app', [ 'russell' ]);
 
         module.controller('HomeController', function ($scope, $http) {
           var data;

@@ -6,7 +6,7 @@ const path = require('path'),
 
 module.exports = {
     entry: {
-        dataTable: './demos/index.js'
+        russell: './demos/index.js'
     },
     output: {
         path: path.resolve(__dirname, 'assets'),
@@ -20,7 +20,7 @@ module.exports = {
         })
     ],
     /* Allows debugging */
-    devtool: 'source-map',
+    devtool: 'eval-source-map',
     module: {
         rules: [
             {
@@ -28,10 +28,7 @@ module.exports = {
                 include: [
                     path.resolve(__dirname, 'src')
                 ],
-                loader: 'babel-loader',
-                options: {
-                    presets: ['es2015']
-                }
+                loader: 'babel-loader'
             },
             {
                 test: /\.css$/,

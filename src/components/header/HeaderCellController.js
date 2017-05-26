@@ -1,6 +1,6 @@
 import { isOldAngular, NextSortDirection } from '../../utils/utils';
 
-export default class HeaderCellController {
+export default class DataTableHeaderCellController {
   /* @ngInject */
   constructor($scope) {
     Object.assign(this, {

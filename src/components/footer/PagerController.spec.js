@@ -1,6 +1,6 @@
 /* global inject */
 
-import PagerController from './PagerController';
+import DataTablePagerController from './PagerController';
 
 import { TableDefaults } from '../../defaults';
 
@@ -19,7 +19,7 @@ describe('PagerController', () => {
 
       spyOn(scope, '$watch');
 
-      ctrl = new PagerController(scope);
+      ctrl = new DataTablePagerController(scope);
 
       Object.assign(ctrl, bindings);
     };

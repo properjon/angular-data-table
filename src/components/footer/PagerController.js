@@ -1,6 +1,6 @@
 import { isOldAngular } from '../../utils/utils';
 
-export default class PagerController {
+export default class {
   /**
    * Creates an instance of the Pager Controller
    * @param  {object} $scope

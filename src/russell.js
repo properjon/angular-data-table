@@ -14,16 +14,21 @@ import CellDirective from './components/body/CellDirective';
 import FooterDirective from './components/footer/FooterDirective';
 import PagerDirective from './components/footer/PagerDirective';
 
-import dtPopover from './components/popover/popover';
-import dtMenu from './components/menu/menu';
+import dtPopover from './components/dtPopover/popover';
+import dtMenu from './components/dtMenu/menu';
+
+const moduleName = 'russell';
 
 export { dtPopover, dtMenu };
 
-export default angular
-  .module('data-table', [])
-  .directive('dtable', DataTableDirective)
-  .directive('resizable', ResizableDirective)
-  .directive('sortable', SortableDirective)
+angular
+  .module(moduleName, [
+    dtPopover,
+    dtMenu,
+  ])
+  .directive('russell', DataTableDirective)
+  .directive('dtResizable', ResizableDirective)
+  .directive('dtSortable', SortableDirective)
   .directive('dtHeader', HeaderDirective)
   .directive('dtHeaderCell', HeaderCellDirective)
   .directive('dtBody', BodyDirective)
@@ -34,3 +39,5 @@ export default angular
   .directive('dtCell', CellDirective)
   .directive('dtFooter', FooterDirective)
   .directive('dtPager', PagerDirective);
+
+export default moduleName;

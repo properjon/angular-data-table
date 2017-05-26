@@ -10,10 +10,12 @@ export default class DataTableController {
    */
 
   /* @ngInject */
-  constructor($scope, $filter) {
+  constructor($scope, $filter, $timeout) {
     Object.assign(this, {
       $scope,
       $filter,
+      $timeout,
+      showTable: true,
     });
 
     if (isOldAngular()) {
@@ -30,6 +32,16 @@ export default class DataTableController {
 
     // set scope to the parent
     this.options.$outer = this.$scope.$parent;
+
+    this.$timeout(() => {
+      this.$scope.$watchCollection('dt.options', () => {
+        this.showTable = false;
+
+        this.$timeout(() => {
+          this.showTable = true;
+        });
+      });
+    });
 
     this.$scope.$watch('dt.options.columns', (newVal, oldVal) => {
       this.transposeColumnDefaults();

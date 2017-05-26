@@ -68,7 +68,7 @@
 <body ng-controller="HomeController">
 
   <div class="wrapper">
-    <dtable options="options" rows="data" on-row-click="onRowClick(row)" class="material" on-select="onSelect(rows)" selected="selectedz"></dtable>
+    <russell options="options" rows="data" on-row-click="onRowClick(row)" class="material" on-select="onSelect(rows)" selected="selectedz"></russell>
 
     <div class="selected-box">
       <h5>Selected item</h5>
@@ -77,10 +77,10 @@
 
   </div>
 
-  <script src="/assets/dataTable.js"></script>
+  <script src="/assets/russell.js"></script>
 
   <script>
-    var module = angular.module('app', ['data-table']);
+    var module = angular.module('app', ['russell']);
 
     module.controller('HomeController', function ($scope, $http) {
       $scope.options = {

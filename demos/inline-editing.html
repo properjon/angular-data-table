@@ -50,14 +50,14 @@
 <body ng-controller="HomeController">
 
   <p>Double click a name to edit</p>
-  <dtable options="options" rows="data" class="material"></dtable>
+  <russell options="options" rows="data" class="material"></russell>
 
-  <script src="/assets/dataTable.js"></script>
+  <script src="/assets/russell.js"></script>
 
   <code ng-bind="code"></code>
 
   <script>
-    var module = angular.module('app', ['data-table']);
+    var module = angular.module('app', ['russell']);
 
     module.controller('HomeController', function ($scope, $http) {
       $scope.options = {

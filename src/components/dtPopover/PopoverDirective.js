@@ -9,12 +9,12 @@ import POSITION from './Popover.constants';
  * @param {object} $q
  * @param {function} $templateCache
  * @param {function} $timeout
- * @param {function} PopoverRegistry
- * @param {function} PositionHelper
+ * @param {function} DataTablePopoverRegistry
+ * @param {function} DataTablePositionHelper
  */
 
 export default function PopoverDirective($animate, $compile, $document, $http,
-  $q, $templateCache, $timeout, PopoverRegistry, PositionHelper) {
+  $q, $templateCache, $timeout, DataTablePopoverRegistry, DataTablePositionHelper) {
   /**
    * Loads a template from the template cache
    * @param  {string} template
@@ -163,7 +163,7 @@ export default function PopoverDirective($animate, $compile, $document, $http,
         $scope.popover.on('mouseleave', beginTimeout);
         $scope.popover.on('mousemove', cancelTimeout);
 
-        PopoverRegistry.add($scope.options.popoverId, {
+        DataTablePopoverRegistry.add($scope.options.popoverId, {
           element: $element,
           popover: $scope.popover,
         });
@@ -179,7 +179,7 @@ export default function PopoverDirective($animate, $compile, $document, $http,
         }
 
         $scope.popover = null;
-        PopoverRegistry.remove($scope.options.popoverId);
+        DataTablePopoverRegistry.remove($scope.options.popoverId);
       }
 
       /**
@@ -211,12 +211,12 @@ export default function PopoverDirective($animate, $compile, $document, $http,
           }
 
           function calculateVerticalAlignment() {
-            return PositionHelper.calculateVerticalAlignment(elDimensions,
+            return DataTablePositionHelper.calculateVerticalAlignment(elDimensions,
               popoverDimensions, options.alignment);
           }
 
           function calculateHorizontalAlignment() {
-            return PositionHelper.calculateHorizontalAlignment(elDimensions,
+            return DataTablePositionHelper.calculateHorizontalAlignment(elDimensions,
               popoverDimensions, options.alignment);
           }
 
@@ -263,12 +263,12 @@ export default function PopoverDirective($animate, $compile, $document, $http,
         }
 
         function calculateVerticalCaret() {
-          return PositionHelper.calculateVerticalCaret(elDimensions,
+          return DataTablePositionHelper.calculateVerticalCaret(elDimensions,
             popoverDimensions, caretDimensions, $scope.options.alignment);
         }
 
         function calculateHorizontalCaret() {
-          return PositionHelper.calculateHorizontalCaret(elDimensions,
+          return DataTablePositionHelper.calculateHorizontalCaret(elDimensions,
             popoverDimensions, caretDimensions, $scope.options.alignment);
         }
 

@@ -75,12 +75,12 @@
 <body ng-controller="HomeController">
 
 
-  <dtable options="options" rows="data" class="material" expanded="expanded" on-tree-toggle="treeToggled(cell)"></dtable>
+  <russell options="options" rows="data" class="material" expanded="expanded" on-tree-toggle="treeToggled(cell)"></russell>
 
-  <script src="/assets/dataTable.js"></script>
+  <script src="/assets/russell.js"></script>
 
   <script>
-    var module = angular.module('app', ['data-table']);
+    var module = angular.module('app', ['russell']);
 
     module.controller('HomeController', function ($scope, $http) {
       $scope.options = {
@@ -118,57 +118,9 @@
         console.log('toggled!')
       };
 
-      $scope.data = [{
-        'company': 'Apple',
-        'revenue': '$1,440,443,111',
-        'sales': '$999,509,433,777,564'
-      }, {
-        'company': 'Apple IBS',
-        'revenue': '$1,440,443,111',
-        'sales': '$999,509,433,777,564',
-        parentCompany: 'Apple'
-      }, {
-        'company': 'Apple XYZ',
-        'revenue': '$1,440,443,111',
-        'sales': '$999,509,433,777,564',
-        parentCompany: 'Apple'
-      },
-      {
-        'company': 'Apple IBS South1',
-        'revenue': '$1,440,443,111',
-        'sales': '$999,509,433,777,564',
-        parentCompany: 'Apple IBS'
-      },
-      {
-        'company': 'Apple IBS South1 ABC',
-        'revenue': '$1,440,443,111',
-        'sales': '$999,509,433,777,564',
-        parentCompany: 'Apple IBS South1'
-      },
-      {
-        'company': 'Apple IBS South1 CDE',
-        'revenue': '$1,440,443,111',
-        'sales': '$999,509,433,777,564',
-        parentCompany: 'Apple IBS South1'
-      },
-      {
-        'company': 'Apple IBS South2',
-        'revenue': '$1,440,443,111',
-        'sales': '$999,509,433,777,564',
-        parentCompany: 'Apple IBS'
-      },
-      {
-        'company': 'Apple XYZ South1',
-        'revenue': '$1,440,443,111',
-        'sales': '$999,509,433,777,564',
-        parentCompany: 'Apple XYZ'
-      },
-      {
-        'company': 'Apple XYZ South2',
-        'revenue': '$1,440,443,111',
-        'sales': '$999,509,433,777,564',
-        parentCompany: 'Apple XYZ'
-      }];
+      $http.get('/data/companies.json').success(function (data) {
+        $scope.data = data;
+      });
     });
   </script>
 

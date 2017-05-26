@@ -3,6 +3,7 @@ import { ScrollbarWidth, ObjectId } from '../utils/utils';
 import { throttle } from '../utils/throttle';
 import DataTableService from './DataTableService';
 
+/* @ngInject */
 export default function DataTableDirective($window, $timeout, $parse) {
   return {
     restrict: 'E',
@@ -51,7 +52,8 @@ export default function DataTableDirective($window, $timeout, $parse) {
                    column-widths="dt.columnWidths"
                    options="dt.options"
                    on-page="dt.onBodyPage(offset, size)"
-                   on-tree-toggle="dt.onTreeToggled(row, cell)">
+                   on-tree-toggle="dt.onTreeToggled(row, cell)"
+                   ng-show="dt.showTable">
            </dt-body>
           <dt-footer ng-if="dt.options.footerHeight || dt.options.paging.mode"
                      ng-style="{ height: dt.options.footerHeight + 'px' }"

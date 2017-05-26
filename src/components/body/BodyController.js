@@ -1,8 +1,8 @@
 import { isOldAngular } from '../../utils/utils';
 
-const TREE_TYPES = {
-  GROUP: 'refreshGroups',
-  TREE: 'refreshTree',
+const HIERARCHY_TYPES = {
+  GROUP: 'buildGroups',
+  TREE: 'buildTree',
 };
 
 export default class BodyController {
@@ -13,9 +13,10 @@ export default class BodyController {
    */
 
   /* @ngInject */
-  constructor($scope) {
+  constructor($scope, $log) {
     Object.assign(this, {
       $scope,
+      $log,
     });
 
     if (isOldAngular()) {
@@ -31,7 +32,7 @@ export default class BodyController {
     this.tempRows = [];
     this.watchListeners = [];
 
-    this.setTreeAndGroupColumns();
+    this.setHierarchyColumns();
     this.setConditionalWatches();
 
     this.$scope.$watch('body.options.columns', (newVal) => {
@@ -39,7 +40,7 @@ export default class BodyController {
         const origTreeColumn = angular.copy(this.treeColumn);
         const origGroupColumn = angular.copy(this.groupColumn);
 
-        this.setTreeAndGroupColumns();
+        this.setHierarchyColumns();
 
         this.setConditionalWatches();
 
@@ -59,7 +60,7 @@ export default class BodyController {
     this.$scope.$watchCollection('body.rows', this.rowsUpdated.bind(this));
   }
 
-  setTreeAndGroupColumns() {
+  setHierarchyColumns() {
     if (this.options && this.options.columns) {
       this.treeColumn = this.options.columns.find(c => c.isTreeColumn);
 
@@ -244,14 +245,16 @@ export default class BodyController {
    * @return {Integer}
   */
   calculateDepth(row, depth = 0) {
-    const parentProp = this.treeColumn ? this.treeColumn.relationProp : this.groupColumn.prop;
-    const prop = this.treeColumn.prop;
+    const {
+      parentProp,
+      prop,
+    } = this.treeColumn;
 
     if (!row[parentProp]) {
       return depth;
     }
 
-    if (row.$$depth) {
+    if (row && row.$$depth) {
       return row.$$depth + depth;
     }
 
@@ -274,6 +277,16 @@ export default class BodyController {
     return depth;
   }
 
+  getParentProp() {
+    if (this.treeColumn) {
+      return this.treeColumn.relationProp || this.$log.warn('Tree column set without a relationProp.');
+    } else if (this.groupColumn) {
+      return this.groupColumn.prop;
+    }
+
+    return this.$log.warn('Issue with getting parent prop.');
+  }
+
   /**
    * Matches groups to their respective parents by index.
    *
@@ -293,9 +306,7 @@ export default class BodyController {
     this.index = {};
     this.rowsByGroup = {};
 
-    const parentProp = this.treeColumn ?
-      this.treeColumn.relationProp :
-      this.groupColumn.prop;
+    const parentProp = this.getParentProp();
 
     for (let i = 0, len = this.rows.length; i < len; i += 1) {
       const row = this.rows[i];
@@ -390,14 +401,13 @@ export default class BodyController {
    */
   buildTree() {
     const temp = [];
-    const self = this;
 
     const addChildren = (fromArray, toArray, level) => {
       fromArray.forEach((row) => {
-        const relVal = row[self.treeColumn.relationProp];
-        const key = row[self.treeColumn.prop];
-        const groupRows = self.rowsByGroup[key];
-        const expanded = self.expanded[key];
+        const relVal = row[this.treeColumn.relationProp];
+        const key = row[this.treeColumn.prop];
+        const groupRows = this.rowsByGroup[key];
+        const expanded = this.expanded[key];
 
         if (level > 0 || !relVal) {
           toArray.push(row);
@@ -589,7 +599,9 @@ export default class BodyController {
    * @return {boolean}
    */
   getRowHasChildren(row) {
-    if (!this.treeColumn) return undefined;
+    if (!this.treeColumn) {
+      return undefined;
+    }
 
     const children = this.rowsByGroup[row[this.treeColumn.prop]];
 
@@ -597,7 +609,7 @@ export default class BodyController {
   }
 
   refreshTree() {
-    this.refresh(TREE_TYPES.TREE);
+    this.refresh(HIERARCHY_TYPES.TREE);
   }
 
   /**
@@ -618,7 +630,7 @@ export default class BodyController {
   }
 
   refreshGroups() {
-    this.refresh(TREE_TYPES.GROUP);
+    this.refresh(HIERARCHY_TYPES.GROUP);
   }
 
   /**

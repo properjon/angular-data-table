@@ -69,7 +69,7 @@
 
   <div class="wrapper">
     <h2>Multi-select by clicking</h2>
-    <dtable options="options" rows="data" on-row-click="onRowClick(row)" class="material" on-select="onSelect(rows)" selected="selected"></dtable>
+    <russell options="options" rows="data" on-row-click="onRowClick(row)" class="material" on-select="onSelect(rows)" selected="selected"></russell>
 
     <div class="selected-box">
       <h5>Selected list</h5>
@@ -92,7 +92,7 @@
 
   <div class="wrapper">
     <h2>Multi-select only when SHIFT is held</h2>
-    <dtable options="options2" rows="data" on-row-click="onRowClick(row)" class="material" on-select="onSelect(row)" selected="selected2"></dtable>
+    <russell options="options2" rows="data" on-row-click="onRowClick(row)" class="material" on-select="onSelect(row)" selected="selected2"></russell>
 
     <div class="selected-box">
       <h5>Selected list</h5>
@@ -103,8 +103,8 @@
 
   <div class="wrapper">
     <h2>Multi-select with virtual paging</h2>
-    <dtable options="options3" rows="data" on-row-click="onRowClick(row)" style="height:300px" class="material" on-select="onSelect(row)"
-      selected="selected3"></dtable>
+    <russell options="options3" rows="data" on-row-click="onRowClick(row)" style="height:300px" class="material" on-select="onSelect(row)"
+      selected="selected3"></russell>
 
     <div class="selected-box">
       <h5>Selected list</h5>
@@ -113,10 +113,10 @@
 
   </div>
 
-  <script src="/assets/dataTable.js"></script>
+  <script src="/assets/russell.js"></script>
 
   <script>
-    var module = angular.module('app', ['data-table']);
+    var module = angular.module('app', ['russell']);
 
     module.controller('HomeController', function ($scope, $http) {
       $scope.options = {

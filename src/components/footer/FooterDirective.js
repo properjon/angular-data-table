@@ -1,9 +1,9 @@
-import FooterController from './FooterController';
+import DataTableFooterController from './FooterController';
 
 export default function FooterDirective() {
   return {
     restrict: 'E',
-    controller: FooterController,
+    controller: DataTableFooterController,
     controllerAs: 'footer',
     scope: true,
     bindToController: {

@@ -49,7 +49,7 @@
   </head>
   <body ng-controller="HomeController">
     <div class="container">
-      <dtable options="options" rows="data" class="material"></dtable>
+      <russell options="options" rows="data" class="material"></russell>
 
       <h4>Native flexbox behavior</h4>
       <div class="flexbox-container">
@@ -59,10 +59,10 @@
       </div>
     </div>
 
-    <script src="/assets/dataTable.js"></script>
+    <script src="/assets/russell.js"></script>
 
     <script>
-        var module = angular.module('app', [ 'data-table' ]);
+        var module = angular.module('app', [ 'russell' ]);
 
         module.controller('HomeController', function($scope, $http){
           $scope.options = {

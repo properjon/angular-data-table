@@ -1,6 +1,6 @@
 import TranslateXY from '../../utils/translate';
 
-export default class HeaderController {
+export default class DataTableHeaderController {
   /**
    * Returns the styles for the header directive.
    * @param  {object} scope
