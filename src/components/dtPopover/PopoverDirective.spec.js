@@ -29,28 +29,29 @@ describe('PopoverDirective', () => {
     compile(element)(scope);
     scope.$digest();
 
-    popoverDirective = getPopoverDirective();
-  }));
-  getPopoverDirective = () => {
-    animate = {
-      addClass: jasmine.createSpy('addClass'),
-    };
-    http = {
-      get: jasmine.createSpy('get'),
-    };
-    q = {
-      when: jasmine.createSpy('when'),
-    };
-    timeout = {
-      cancel: jasmine.createSpy('cancel'),
-    };
-    templateCache = {
-      get: jasmine.createSpy('get'),
+    getPopoverDirective = () => {
+      animate = {
+        addClass: jasmine.createSpy('addClass'),
+      };
+      http = {
+        get: jasmine.createSpy('get'),
+      };
+      q = {
+        when: jasmine.createSpy('when'),
+      };
+      timeout = {
+        cancel: jasmine.createSpy('cancel'),
+      };
+      templateCache = {
+        get: jasmine.createSpy('get'),
+      };
+
+      return new PopoverDirective(animate, compile, document, http,
+        q, templateCache, timeout, PopoverRegistry, PositionHelper);
     };
 
-    return new PopoverDirective(animate, compile, document, http,
-                        q, templateCache, timeout, PopoverRegistry, PositionHelper);
-  };
+    popoverDirective = getPopoverDirective();
+  }));
 
   describe('default setup', () => {
     it('loads as an Object', () => {

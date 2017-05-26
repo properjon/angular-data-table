@@ -46,7 +46,7 @@
 </head>
 
 <body ng-controller="HomeController">
-  <dtable options="tableOptions" rows="data" class="material">
+  <russell options="tableOptions" rows="data" class="material">
     <column name="Name" flex-grow="1" sort="asc">
       {{$cell}}
     </column>
@@ -55,12 +55,12 @@
       <a ng-click="destroyApp($row)">DELETE</a> |
       <a ng-click="display($row);">LOG</a>
     </column>
-  </dtable>
+  </russell>
 
   <script src="/assets/dataTable.js"></script>
 
   <script>
-    var module = angular.module('app', [ 'data-table' ]);
+    var module = angular.module('app', [ 'russell' ]);
 
     module.controller('HomeController', function ($scope, $http) {
       $scope.tableOptions = {

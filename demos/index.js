@@ -1,7 +1,7 @@
 import 'angular';
 
-import '../src/dataTable';
+import '../src/russell';
 
-import '../src/dataTable.less';
+import '../src/russell.less';
 import '../src/themes/icons.less';
 import '../src/themes/material.less';

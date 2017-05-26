@@ -1,9 +1,9 @@
-import PagerController from './PagerController';
+import DataTablePagerController from './PagerController';
 
 export default function PagerDirective() {
   return {
     restrict: 'E',
-    controller: PagerController,
+    controller: DataTablePagerController,
     controllerAs: 'pager',
     scope: true,
     bindToController: {

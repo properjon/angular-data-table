@@ -34,7 +34,7 @@
     "e2e": "protractor test/protractor.conf.js",
     "report-coverage": "codecov",
     "lint": "eslint ./*.js ./src/**/*.js ./demos/**/*.js",
-    "stylelint": "stylelint src/dataTable.less src/themes/*.less src/components/menu/menu.less src/components/popover/popover.less"
+    "stylelint": "stylelint src/russell.less src/themes/*.less src/components/menu/menu.less src/components/popover/popover.less"
   },
   "peerDependencies": {
     "angular": ">=1.4.x <2.0.0"

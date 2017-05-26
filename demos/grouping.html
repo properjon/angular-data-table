@@ -46,11 +46,11 @@
   <button type="button" class="group-country" ng-click="groupCountry()">Group on Country</button>
   <button type="button" class="group-year" ng-click="groupYear()">Group on Year</button>
 
-  <dtable options="options" rows="data" class="material"></dtable>
+  <russell options="options" rows="data" class="material"></russell>
 
   <script src="/assets/dataTable.js"></script>
   <script>
-    var module = angular.module('app', ['data-table']);
+    var module = angular.module('app', ['russell']);
 
     module.controller('HomeController', function ($scope, $http) {
       $scope.options = {

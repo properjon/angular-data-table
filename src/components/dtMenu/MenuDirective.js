@@ -1,7 +1,7 @@
 export default function MenuDirective() {
   return {
     restrict: 'E',
-    controller: 'MenuController',
+    controller: 'DataTableMenuController',
     controllerAs: 'dtm',
     scope: {
       current: '=',

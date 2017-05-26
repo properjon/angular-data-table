@@ -21,8 +21,6 @@ export default class DataTableController {
     if (isOldAngular()) {
       this.$onInit();
     }
-
-    window.dtableCtrl = this;
   }
 
   $onInit() {
@@ -36,7 +34,7 @@ export default class DataTableController {
     this.options.$outer = this.$scope.$parent;
 
     this.$timeout(() => {
-      this.$scope.$watchCollection('dt.options', (newVal, oldVal) => {
+      this.$scope.$watchCollection('dt.options', () => {
         this.showTable = false;
 
         this.$timeout(() => {
@@ -59,11 +57,6 @@ export default class DataTableController {
       if (newVal && oldVal && newVal.length > oldVal.length) {
         this.onSorted();
       }
-      // this.showTable = false;
-
-      // this.$timeout(() => {
-      //   this.showTable = true;
-      // });
     });
   }
 

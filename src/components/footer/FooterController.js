@@ -1,6 +1,6 @@
 import { isOldAngular } from '../../utils/utils';
 
-export default class FooterController {
+export default class DataTableFooterController {
   /**
    * Creates an instance of the Footer Controller
    * @param  {scope}

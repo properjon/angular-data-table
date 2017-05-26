@@ -75,12 +75,12 @@
 <body ng-controller="HomeController">
 
 
-  <dtable options="options" rows="data" class="material" expanded="expanded" on-tree-toggle="treeToggled(cell)"></dtable>
+  <russell options="options" rows="data" class="material" expanded="expanded" on-tree-toggle="treeToggled(cell)"></russell>
 
   <script src="/assets/dataTable.js"></script>
 
   <script>
-    var module = angular.module('app', ['data-table']);
+    var module = angular.module('app', ['russell']);
 
     module.controller('HomeController', function ($scope, $http) {
       $scope.options = {

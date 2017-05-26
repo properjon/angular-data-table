@@ -1,4 +1,4 @@
-import dataTable from '../src/dataTable';
+import dataTable from '../src/russell';
 
 import BodyController from '../src/components/body/BodyController';
 

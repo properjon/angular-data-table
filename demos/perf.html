@@ -43,22 +43,22 @@
 
 <body ng-controller="HomeController">
 
-  <dtable options="options1" rows="data" class="material"></dtable>
-  <dtable options="options2" rows="data" class="material"></dtable>
-  <dtable options="options3" rows="data" class="material"></dtable>
-  <dtable options="options4" rows="data" class="material"></dtable>
-  <dtable options="options5" rows="data" class="material"></dtable>
-  <dtable options="options6" rows="data" class="material"></dtable>
-  <dtable options="options7" rows="data" class="material"></dtable>
-  <dtable options="options8" rows="data" class="material"></dtable>
-  <dtable options="options9" rows="data" class="material"></dtable>
-  <dtable options="options10" rows="data" class="material"></dtable>
+  <russell options="options1" rows="data" class="material"></russell>
+  <russell options="options2" rows="data" class="material"></russell>
+  <russell options="options3" rows="data" class="material"></russell>
+  <russell options="options4" rows="data" class="material"></russell>
+  <russell options="options5" rows="data" class="material"></russell>
+  <russell options="options6" rows="data" class="material"></russell>
+  <russell options="options7" rows="data" class="material"></russell>
+  <russell options="options8" rows="data" class="material"></russell>
+  <russell options="options9" rows="data" class="material"></russell>
+  <russell options="options10" rows="data" class="material"></russell>
 
   <script src="/assets/dataTable.js"></script>
   <script src="../config.js"></script>
 
   <script>
-    var module = angular.module('app', ['data-table']);
+    var module = angular.module('app', ['russell']);
 
     module.controller('HomeController', function ($scope, $http) {
       var options = {

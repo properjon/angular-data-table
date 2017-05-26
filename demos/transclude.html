@@ -44,7 +44,7 @@
 
   <outer-wrap>
     <inner-wrap>
-      <dtable options="options" rows="data" class="material">
+      <russell options="options" rows="data" class="material">
         <column name="Name" width="300">
           <span>{{value}}</span>
         </column>
@@ -53,14 +53,14 @@
             <button ng-click="outerwrapCtrl.setBar('New Bar!')">Set "New Bar"</button>
             </span>
         </column>
-      </dtable>
+      </russell>
     </inner-wrap>
   </outer-wrap>
 
   <script src="/assets/dataTable.js"></script>
 
   <script>
-    var module = angular.module('app', ['data-table']);
+    var module = angular.module('app', ['russell']);
 
     module.controller('OuterwrapCtrl', function () {
       this.bar = 'valBar';

@@ -1,12 +1,12 @@
- import HeaderController from './HeaderController';
+ import DataTableHeaderController from './HeaderController';
 
- describe('HeaderController', () => {
+ describe('DataTableHeaderController', () => {
    let ctrl = null;
    let setController = null;
 
    beforeEach(() => {
      setController = (options, columns) => {
-       ctrl = new HeaderController();
+       ctrl = new DataTableHeaderController();
 
        ctrl.options = options;
        ctrl.columns = columns;
@@ -39,7 +39,7 @@
        };
      });
 
-     describe('when the modifier is active', () => {
+     describe('when modifierActive is true', () => {
        beforeEach(() => {
          options.modifierActive = true;
          setController(options, columns);
@@ -66,13 +66,13 @@
        });
      });
 
-     describe('when the modifier is not active', () => {
+     describe('when modifierActive is false', () => {
        beforeEach(() => {
          options.modifierActive = false;
          setController(options, columns);
        });
 
-       it('adds a sorted column when not holding the modifier', () => {
+       it('add a sorted column when not holding the modifier', () => {
          ctrl.columns.left[1].sort = 'asc';
          ctrl.onSorted(ctrl.columns.left[1], false);
 
@@ -82,7 +82,7 @@
          expect(ctrl.onSort).toHaveBeenCalled();
        });
 
-       it('adds a sorted column when holding the modifier', () => {
+       it('add a sorted column when holding the modifier', () => {
          ctrl.columns.left[1].sort = 'asc';
          ctrl.onSorted(ctrl.columns.left[1], true);
 
@@ -151,7 +151,7 @@
          setController(options, columns);
        });
 
-       it('removes sorting on all other columns when not holding the modifier', () => {
+       it('remove sorting on all other columns when not holding the modifier', () => {
          ctrl.columns.left[1].sort = 'asc';
          ctrl.onSorted(ctrl.columns.left[1], false);
 
@@ -161,7 +161,7 @@
          expect(ctrl.onSort).toHaveBeenCalled();
        });
 
-       it('removes sorting on all other columns when holding the modifier', () => {
+       it('remove sorting on all other columns when holding the modifier', () => {
          ctrl.columns.left[1].sort = 'asc';
          ctrl.onSorted(ctrl.columns.left[1], true);
 

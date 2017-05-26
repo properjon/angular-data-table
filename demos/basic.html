@@ -41,11 +41,11 @@
 </head>
 
 <body ng-controller="HomeController">
-  <dtable id="dtable" options="options" rows="data" class="material" on-row-dbl-click="onRowDblClick(row)"></dtable>
+  <russell id="russell" options="options" rows="data" class="material" on-row-dbl-click="onRowDblClick(row)"></russell>
 
   <script src="/assets/dataTable.js"></script>
   <script>
-    var module = angular.module('app', ['data-table']);
+    var module = angular.module('app', ['russell']);
 
     module.controller('HomeController', function ($scope, $http) {
       $scope.options = {

@@ -1,6 +1,6 @@
 import ScrollerController from './ScrollerController';
 
-export default function ScrollerDirective($timeout) {
+export default function ScrollerDirective() {
   return {
     restrict: 'E',
     require: '^dtBody',

@@ -72,7 +72,7 @@
     some content here
   </div>
   <div ng-show="active === 'tab2'">
-    <dtable options="options" rows="data" class="material"></dtable>
+    <russell options="options" rows="data" class="material"></russell>
   </div>
 
 
@@ -80,7 +80,7 @@
   <script src="/assets/dataTable.js"></script>
 
   <script>
-    var module = angular.module('app', ['data-table']);
+    var module = angular.module('app', ['russell']);
 
     module.controller('HomeController', function ($scope, $http) {
 

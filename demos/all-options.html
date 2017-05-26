@@ -53,13 +53,13 @@
   <label><input type="checkbox" ng-model="showTable" />Show Table</label>
 
   <div ng-if="showTable">
-    <dtable options="options" rows="data" class="material" on-row-dbl-click="onRowDblClick(row)"></dtable>
+    <russell options="options" rows="data" class="material" on-row-dbl-click="onRowDblClick(row)"></russell>
   </div>
 
   <script src="/assets/dataTable.js"></script>
 
   <script>
-    var module = angular.module('app', [ 'data-table' ]);
+    var module = angular.module('app', [ 'russell' ]);
 
     module.controller('HomeController', function ($scope, $http) {
       window.scope = $scope;

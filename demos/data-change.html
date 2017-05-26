@@ -43,12 +43,12 @@
     <button type="button" ng-click="removeRow()">Remove Row</button>
     <label><input type="checkbox" ng-model="ngIfTable" /> ngIf Table</label>
 
-    <dtable options="options" rows="data" class="material" ng-if="ngIfTable"></dtable>
+    <russell options="options" rows="data" class="material" ng-if="ngIfTable"></russell>
 
     <script src="/assets/dataTable.js"></script>
 
     <script>
-        var module = angular.module('app', [ 'data-table' ]);
+        var module = angular.module('app', [ 'russell' ]);
 
         module.controller('HomeController', function($scope, $http){
           $scope.ngIfTable = true;

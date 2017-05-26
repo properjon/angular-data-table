@@ -99,12 +99,12 @@ gulp.task('release', callback => (
     runSequence('clean', ['release-less', 'release-build'], 'release-umd', 'release-common', 'release-es6-min', callback)
 ));
 
-gulp.task('release-less', () => gulp.src(['src/themes/*.less', 'src/dataTable.less'])
+gulp.task('release-less', () => gulp.src(['src/themes/*.less', 'src/russell.less'])
     .pipe(less())
     .pipe(gulp.dest(path.release)));
 
 gulp.task('release-build', () => rollup.rollup({
-  entry: 'src/dataTable.js',
+  entry: 'src/russell.js',
   external: ['angular'],
 }).then(bundle => bundle.write({
   dest: 'release/dataTable.es6.js',
