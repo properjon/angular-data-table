@@ -5,5 +5,5 @@ import dropdown from './dropdown/dropdown';
 
 export default angular
   .module('dt.menu', [dropdown.name])
-  .controller('MenuController', MenuController)
+  .controller('DtMenuController', MenuController)
   .directive('dtm', MenuDirective);

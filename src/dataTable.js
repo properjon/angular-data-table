@@ -22,8 +22,8 @@ export { dtPopover, dtMenu };
 export default angular
   .module('data-table', [])
   .directive('dtable', DataTableDirective)
-  .directive('resizable', ResizableDirective)
-  .directive('sortable', SortableDirective)
+  .directive('dtResizable', ResizableDirective)
+  .directive('dtSortable', SortableDirective)
   .directive('dtHeader', HeaderDirective)
   .directive('dtHeaderCell', HeaderCellDirective)
   .directive('dtBody', BodyDirective)

@@ -1,8 +1,8 @@
 export default function DropdownToggleDirective($timeout) {
   return {
     restrict: 'C',
-    controller: 'DropdownController',
-    require: '?^dropdown',
+    controller: 'DtDropdownController',
+    require: '?^DtDropdown',
     link($scope, $elm, $attrs, ctrl) {
       function toggleClick(event) {
         event.preventDefault();

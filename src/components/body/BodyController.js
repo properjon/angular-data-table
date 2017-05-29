@@ -2,7 +2,7 @@ import { isOldAngular } from '../../utils/utils';
 
 const HIERARCHY_TYPES = {
   GROUP: 'buildGroups',
-  TREE: 'buildTree'
+  TREE: 'buildTree',
 };
 
 export default class BodyController {
@@ -22,8 +22,6 @@ export default class BodyController {
     if (isOldAngular()) {
       this.$onInit();
     }
-
-    window.bCtrl = this;
   }
 
   $onInit() {
@@ -249,7 +247,7 @@ export default class BodyController {
   calculateDepth(row, depth = 0) {
     const {
       parentProp,
-      prop
+      prop,
     } = this.treeColumn;
 
     if (!row[parentProp]) {

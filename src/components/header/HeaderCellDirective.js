@@ -22,7 +22,7 @@ export default function HeaderCellDirective($compile) {
             data-id="{{column.$id}}"
             ng-style="hcell.styles()"
             title="{{::hcell.column.name}}">
-        <div resizable="hcell.column.resizable"
+        <div dt-resizable="hcell.column.resizable"
              on-resize="hcell.onResized(width, hcell.column)"
              min-width="hcell.column.minWidth"
              max-width="hcell.column.maxWidth">

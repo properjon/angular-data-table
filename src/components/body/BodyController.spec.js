@@ -133,7 +133,7 @@ describe('BodyController', () => {
       ctrl.treeColumn = false;
       ctrl.groupColumn = false;
 
-      ctrl.setTreeAndGroupColumns();
+      ctrl.setHierarchyColumns();
 
       expect(ctrl.treeColumn).toBe(false);
       expect(ctrl.groupColumn).toBe(false);
@@ -142,7 +142,7 @@ describe('BodyController', () => {
     it('should not set group column if a tree column is set', () => {
       ctrl.options.columns[0].isTreeColumn = true;
 
-      ctrl.setTreeAndGroupColumns();
+      ctrl.setHierarchyColumns();
 
       expect(ctrl.treeColumn).toEqual(olympicOptions.columns[0]);
       expect(ctrl.groupColumn).not.toEqual(ctrl.options.columns[1]);
