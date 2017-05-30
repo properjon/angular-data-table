@@ -1,14 +1,14 @@
 export default function MenuDirective() {
   return {
     restrict: 'E',
-    controller: 'MenuController',
+    controller: 'DtMenuController',
     controllerAs: 'dtm',
     scope: {
       current: '=',
       available: '=',
     },
     template:
-      `<div class="dt-menu dropdown" close-on-click="false">
+      `<div class="dt-menu dt-dropdown" close-on-click="false">
         <a href="#" class="dropdown-toggle icon-add">
           Configure Columns
         </a>

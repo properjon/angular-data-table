@@ -5,7 +5,7 @@ import DropdownMenuDirective from './DropdownMenuDirective';
 
 export default angular
   .module('dt.dropdown', [])
-  .controller('DropdownController', DropdownController)
-  .directive('dropdown', DropdownDirective)
+  .controller('DtDropdownController', DropdownController)
+  .directive('dtDropdown', DropdownDirective)
   .directive('dropdownToggle', DropdownToggleDirective)
   .directive('dropdownMenu', DropdownMenuDirective);

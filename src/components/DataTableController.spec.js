@@ -6,16 +6,21 @@ import * as math from '../utils/math';
 describe('DataTableController', () => {
   let ctrl = null;
   let scope = null;
+  let $timeout = null;
   let setController = null;
 
   beforeEach(inject(($rootScope, $filter) => { // eslint-disable-line no-undef
     scope = $rootScope.$new();
 
     setController = (bindings) => {
+      $timeout = (cb) => {
+        cb();
+        return jasmine.createSpy('$timeout');
+      };
       bindings.options = Object.assign({}, TableDefaults, bindings.options);
       bindings.data = bindings.rows;
 
-      ctrl = new DataTableController(scope, $filter);
+      ctrl = new DataTableController(scope, $filter, $timeout);
 
       Object.assign(ctrl, bindings);
     };

@@ -6,4 +6,4 @@ export default angular
   .module('dt.popover', [])
   .factory('PopoverRegistry', PopoverRegistry)
   .factory('PositionHelper', PositionHelper)
-  .directive('popover', PopoverDirective);
+  .directive('dtPopover', PopoverDirective);

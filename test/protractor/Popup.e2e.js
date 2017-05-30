@@ -1,6 +1,6 @@
 const PopupPage = require('./popup-page');
 
-describe('On Popup Page: ', () => {
+xdescribe('On Popup Page: ', () => {
   let page;
 
   beforeEach(() => {

@@ -1,7 +1,7 @@
 export default function DropdownDirective($document, $timeout) {
   return {
     restrict: 'C',
-    controller: 'DropdownController',
+    controller: 'DtDropdownController',
     link($scope, $elm) {
       function closeDropdown(ev) {
         if ($elm[0].contains(ev.target)) {
