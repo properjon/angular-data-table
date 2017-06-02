@@ -137,7 +137,7 @@ function releaser(RELEASE_TYPE) {
     .pipe(ngAnnotate({
       gulpWarnings: false,
     }))
-    .pipe(gulpif(RELEASE_TYPE.EXTENSION == '.min',uglify()))
+    .pipe(gulpif(RELEASE_TYPE.EXTENSION === '.min', uglify()))
     .pipe(header(banner, { pkg }))
     .pipe(rename(`dataTable${RELEASE_TYPE.EXTENSION}.js`))
     .pipe(gulp.dest('release/'));
