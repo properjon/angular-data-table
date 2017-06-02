@@ -18,6 +18,7 @@ const rename = require('gulp-rename');
 const uglify = require('gulp-uglify');
 const header = require('gulp-header');
 const gutils = require('gulp-util');
+const gulpif = require('gulp-if');
 const KarmaServer = require('karma').Server;
 
 const path = {
@@ -136,7 +137,7 @@ function releaser(RELEASE_TYPE) {
     .pipe(ngAnnotate({
       gulpWarnings: false,
     }))
-    .pipe(uglify())
+    .pipe(gulpif(RELEASE_TYPE.EXTENSION === '.min', uglify()))
     .pipe(header(banner, { pkg }))
     .pipe(rename(`dataTable${RELEASE_TYPE.EXTENSION}.js`))
     .pipe(gulp.dest('release/'));
